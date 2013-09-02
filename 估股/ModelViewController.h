@@ -31,6 +31,8 @@
 @property (nonatomic,retain) id savedStockList;
 @property BOOL isAttention;
 
+@property (nonatomic,retain) UITapGestureRecognizer *tapHide;
+
 @property (nonatomic,retain) UITextField *inputField;
 @property (nonatomic,retain) UIButton *attentionBt;
 @property (nonatomic,retain) DiscountRateViewController *disViewController;

@@ -34,11 +34,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	self.title=@"意见反馈";
     self.feedBackField.returnKeyType=UIReturnKeyGo;
     self.feedBackField.delegate=self;
 }
 
+- (IBAction)backgroundTap:(id)sender {
+    [feedBackField resignFirstResponder];
+}
 
 #pragma mark -
 #pragma mark TextField Methods Delegate

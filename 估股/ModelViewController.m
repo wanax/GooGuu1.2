@@ -36,9 +36,11 @@
 @synthesize attentionBt;
 @synthesize inputField;
 @synthesize tabController;
+@synthesize tapHide;
 
 - (void)dealloc
 {
+    SAFE_RELEASE(tapHide);
     SAFE_RELEASE(tabController);
     SAFE_RELEASE(inputField);
     SAFE_RELEASE(attentionBt);
@@ -59,6 +61,9 @@
     }
     return self;
 }
+-(void)viewDidDisappear:(BOOL)animated{
+    [self removeTextField];
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     if(browseType==MySavedType){
@@ -73,6 +78,25 @@
     inputField.delegate=self;
 }
 
+-(void)addTextField{
+    [self.view addSubview:inputField];
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.1f;
+    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+    animation.fillMode = kCAFilterLinear;
+    animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromTop;
+    [[inputField layer] addAnimation:animation forKey:@"animation"];
+    animation=nil;
+    [inputField becomeFirstResponder];
+    tapHide=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [self.view addGestureRecognizer:tapHide];
+}
+
+-(void)tapAction:(UITapGestureRecognizer *)tap{
+    [self removeTextField];
+}
+
 -(void)removeTextField{
     [inputField removeFromSuperview];
     CATransition *animation = [CATransition animation];
@@ -84,6 +108,7 @@
     [[inputField layer] addAnimation:animation forKey:@"animation"];
     animation=nil;
     [inputField resignFirstResponder];
+    [self.view removeGestureRecognizer:tapHide];
 }
 
 - (void)viewDidLoad
@@ -302,17 +327,8 @@
         [self attentionAction];
         
     }else if(bt.tag==AddComment){
-
-        [self.view addSubview:inputField];
-        CATransition *animation = [CATransition animation];
-        animation.duration = 0.1f;
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.fillMode = kCAFilterLinear;
-        animation.type = kCATransitionPush;
-        animation.subtype = kCATransitionFromTop;
-        [[inputField layer] addAnimation:animation forKey:@"animation"];
-        animation=nil;
-        [inputField becomeFirstResponder];
+        
+        [self addTextField];
         
     }else if(bt.tag==AddShare){
         
@@ -382,12 +398,14 @@
             for(id obj in temp){
                 if([[obj objectForKey:@"stockcode"] isEqual:[comInfo objectForKey:@"stockcode"]]){
                     isAttention=YES;
+                    [self.attentionBt setBackgroundImage:[UIImage imageNamed:@"deleteAttentionBt"] forState:UIControlStateNormal];
                     break;
                 }
             }
         }else{
             [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             isAttention=NO;
+            [self.attentionBt setBackgroundImage:[UIImage imageNamed:@"addAttentionBt"] forState:UIControlStateNormal];
         }
     }];
     

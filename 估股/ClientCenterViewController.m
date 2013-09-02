@@ -14,6 +14,8 @@
 #import "MBProgressHUD.h"
 #import "Reachability.h"
 #import "UIButton+BGColor.h"
+#import "ClientLoginViewController.h"
+#import "XYZAppDelegate.h"
 
 
 
@@ -59,9 +61,26 @@
     return self;
 }
 
+
 -(void)viewDidAppear:(BOOL)animated{
-    
-    if([Utiles isLogin]){
+
+    if(![Utiles isLogin]){
+        ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
+        
+        loginViewController.view.frame=CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT);
+        XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
+        [delegate.window addSubview:loginViewController.view];
+        [self addChildViewController:loginViewController];
+        [loginViewController release];
+        
+        CATransition *animation = [CATransition animation];
+        animation.duration = 0.5f;
+        animation.timingFunction = UIViewAnimationCurveEaseInOut;
+        animation.fillMode = kCAFillModeForwards;
+        animation.type = kCATransitionMoveIn;
+        animation.subtype = kCATransitionFromTop;
+        [loginViewController.view.layer addAnimation:animation forKey:@"animation"];
+    }else if([Utiles isLogin]){
         
         logoutBt.hidden=NO;
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -146,7 +165,7 @@
 -(void)setting:(id)sender{
     
     SettingCenterViewController *setingViewController=[[SettingCenterViewController alloc] init];
-    
+    setingViewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:setingViewController animated:YES];
     [setingViewController release];
     

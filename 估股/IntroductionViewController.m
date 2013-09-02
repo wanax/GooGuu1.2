@@ -14,6 +14,7 @@
 #import "MHTabBarController.h"
 #import "UIImageView+Addition.h"
 
+
 @interface IntroductionViewController ()
 
 @end
@@ -41,7 +42,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
-
+    
     
 }
 
@@ -57,39 +58,18 @@
 	// Do any additional setup after loading the view.
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
-    NSString *url=[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"companypicurl"]];
+    NSString *url=[NSString stringWithFormat:@"%@",comInfo[@"companypicurl"]];
     
     [self.view setBackgroundColor:[Utiles colorWithHexString:@"#E2DCC7"]];
-   
-    MWPhoto *photo;
-    photo = [MWPhoto photoWithURL:[NSURL URLWithString:url]];
 
-    NSMutableArray *tempPhotos = [[NSMutableArray alloc] init];
-    [tempPhotos addObject:photo];
-    self.photos=tempPhotos;
-    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    browser.view.frame=CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height);
-    browser.displayActionButton = YES;
     
-    [self.view insertSubview:browser.view atIndex:1];
     
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
     [self.view addGestureRecognizer:pan];
     [pan release];
-    SAFE_RELEASE(tempPhotos);
 }
 
-#pragma mark - MWPhotoBrowserDelegate
 
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return self.photos.count;
-}
-
-- (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < self.photos.count)
-        return [self.photos objectAtIndex:index];
-    return nil;
-}
 
 -(void)panView:(UIPanGestureRecognizer *)tap{
     CGPoint change=[tap translationInView:self.view];
@@ -103,18 +83,18 @@
 -(void)move:(UIPanGestureRecognizer *)tapGr{
     
     CGPoint change=[tapGr translationInView:self.view];
-
+    
     if(tapGr.state==UIGestureRecognizerStateChanged){
         
         imageView.frame=CGRectMake(0,MAX(MIN(standard.y+change.y,0),-2300),SCREEN_WIDTH,2600);
-
+        
     }else if(tapGr.state==UIGestureRecognizerStateEnded){
         standard=imageView.frame.origin;
     }
     
     //手指向左滑动，向右切换scrollView视图
     if(change.x<-FINGERCHANGEDISTANCE&&change.y<5){
-
+        
         [(MHTabBarController *)self.parentViewController setSelectedIndex:1 animated:YES];
     }
 }

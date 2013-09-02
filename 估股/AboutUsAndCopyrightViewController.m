@@ -35,6 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title=@"关于我们";
 	[self.checkUpdateBt setBackgroundColorString:@"#BB4C1C" forState:UIControlStateNormal];
 }
 

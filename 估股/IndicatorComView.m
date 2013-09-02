@@ -44,7 +44,7 @@
         [self addSubview:googuuPriceLabel];
         [googuuPriceLabel release];
         
-        UILabel *outLookingLabel=[[UILabel alloc] initWithFrame:CGRectMake(197,3,55,21)];
+        UILabel *outLookingLabel=[[UILabel alloc] initWithFrame:CGRectMake(208,3,55,21)];
         [outLookingLabel setFont:[UIFont fontWithName:@"Heiti SC" size:11.0]];
         [outLookingLabel setTextAlignment:NSTextAlignmentCenter];
         [outLookingLabel setText:@"潜在空间"];

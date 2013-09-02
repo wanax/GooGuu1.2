@@ -12,4 +12,6 @@
 
 @property (nonatomic,retain) IBOutlet UITextField *feedBackField;
 
+- (IBAction)backgroundTap:(id)sender;
+
 @end

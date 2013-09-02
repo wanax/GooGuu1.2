@@ -89,7 +89,6 @@
         [loginViewController release];
         
         CATransition *animation = [CATransition animation];
-        //animation.delegate = self;
         animation.duration = 0.5f;
         animation.timingFunction = UIViewAnimationCurveEaseInOut;
         animation.fillMode = kCAFillModeForwards;

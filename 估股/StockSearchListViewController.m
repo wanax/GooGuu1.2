@@ -42,11 +42,15 @@
     return self;
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [self.searchBar becomeFirstResponder];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	self.title=@"股票搜索";
-    searchTable=[[UITableView alloc] initWithFrame:CGRectMake(0,62,SCREEN_WIDTH,310)];
+    searchTable=[[UITableView alloc] initWithFrame:CGRectMake(0,62,SCREEN_WIDTH,350)];
     searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,35)];
     [[self.searchBar.subviews objectAtIndex:0] removeFromSuperview];
     [self.searchBar setPlaceholder:@"输入股票代码/名称"];

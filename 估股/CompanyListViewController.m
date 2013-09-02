@@ -245,16 +245,16 @@
     @try{
         NSDictionary *comInfo=[comList objectAtIndex:row];
         cell.stockNameLabel.text=[comInfo objectForKey:@"companyname"]==nil?@"":[comInfo objectForKey:@"companyname"];
-
+        [cell.concernBt setTitleColor:[UIColor clearColor] forState:UIControlStateHighlighted];
         if([Utiles isLogin]){
             if([self.concernStocksCodeArr containsObject:[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"stockcode"]]]){
                 [cell.concernBt setTitle:@"取消关注" forState:UIControlStateNormal];
-                [cell.concernBt setBackgroundImage:[UIImage imageNamed:@"cancelConcernBt"] forState:UIControlStateNormal];
+                [cell.concernBt setBackgroundImage:[UIImage imageNamed:@"cancelConcernBtt"] forState:UIControlStateNormal];
                 [cell.concernBt setTag:row+1];
             }else{
                 [cell.concernBt setTitle:@"添加关注" forState:UIControlStateNormal];
                 //[cell.concernBt setBackgroundColorString:@"#F21E83" forState:UIControlStateNormal];
-                [cell.concernBt setBackgroundImage:[UIImage imageNamed:@"addConcernBt"] forState:UIControlStateNormal];
+                [cell.concernBt setBackgroundImage:[UIImage imageNamed:@"addConcernBtt"] forState:UIControlStateNormal];
                 [cell.concernBt setTag:row+1];
             }
             
@@ -378,6 +378,7 @@
 {
     if(!isSearchList){
         StockSearchListViewController *searchList=[[StockSearchListViewController alloc] init];
+        searchList.hidesBottomBarWhenPushed=YES;
         [self.navigationController pushViewController:searchList animated:YES];
         SAFE_RELEASE(searchList);
         [search resignFirstResponder];

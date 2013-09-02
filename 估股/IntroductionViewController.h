@@ -9,11 +9,10 @@
 //  2013-05-08 | Wanax | 股票详细页-股票介绍
 
 #import <UIKit/UIKit.h>
-#import "MWPhotoBrowser.h"
 
 #define FINGERCHANGEDISTANCE 100.0
 
-@interface IntroductionViewController : UIViewController<MWPhotoBrowserDelegate>{
+@interface IntroductionViewController : UIViewController{
     CGPoint standard;
 }
 
