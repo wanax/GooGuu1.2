@@ -55,6 +55,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     viewController1 = [[IntroductionViewController alloc] init];
+    UINavigationController *introNav=[[UINavigationController alloc] initWithRootViewController:viewController1];
     viewController2 = [[ModelViewController alloc] init];
     viewController3 = [[AnalysisReportViewController alloc] init];
     UINavigationController *analyNav=[[UINavigationController alloc] initWithRootViewController:viewController3];
@@ -66,7 +67,7 @@
     viewController4.title=@"用户评论";
     viewController2.browseType=self.browseType;
     
-    NSArray *viewControllers = [NSArray arrayWithObjects:viewController2, viewController1,viewController3,viewController4, nil];
+    NSArray *viewControllers = [NSArray arrayWithObjects:viewController2, introNav,viewController3,viewController4, nil];
 	tabBarController = [[MHTabBarController alloc] init];
     
 	tabBarController.viewControllers = viewControllers;

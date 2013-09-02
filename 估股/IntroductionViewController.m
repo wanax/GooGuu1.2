@@ -13,6 +13,9 @@
 #import "XYZAppDelegate.h"
 #import "MHTabBarController.h"
 #import "UIImageView+Addition.h"
+#import "UIImageView+WebCache.h"
+#import "GGFullscreenImageViewController.h"
+
 
 
 @interface IntroductionViewController ()
@@ -23,9 +26,13 @@
 
 @synthesize photos;
 @synthesize imageView;
+@synthesize browser;
+@synthesize photoDataSource;
 
 - (void)dealloc
 {
+    SAFE_RELEASE(browser);
+    SAFE_RELEASE(photoDataSource);
     SAFE_RELEASE(photos);
     SAFE_RELEASE(imageView);
     [super dealloc];
@@ -35,39 +42,47 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.photoDataSource = [[NSMutableArray alloc] init];
     }
     return self;
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    
-    
-    
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    
-    imageView.frame=CGRectMake(0,0,SCREEN_WIDTH,2400);
-    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.navigationController.navigationBarHidden=YES;
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
     NSString *url=[NSString stringWithFormat:@"%@",comInfo[@"companypicurl"]];
     
-    [self.view setBackgroundColor:[Utiles colorWithHexString:@"#E2DCC7"]];
-
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
+    self.browser.wantsFullScreenLayout = NO;
     
-    
-    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-    [self.view addGestureRecognizer:pan];
-    [pan release];
+    DemoPhoto *photo = nil;
+    if([Utiles isBlankString:url]){
+        photo = [[DemoPhoto alloc] initWithImage:[UIImage imageNamed:@"defaultDiagram"]];
+    }else{
+        photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:url]];
+    }
+    [self.photoDataSource addObject:photo];
+    [self.navigationController pushViewController:self.browser animated:YES];
 }
+
+
+#pragma mark - CXPhotoBrowserDataSource
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(CXPhotoBrowser *)photoBrowser
+{
+    return [self.photoDataSource count];
+}
+- (id <CXPhotoProtocol>)photoBrowser:(CXPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index
+{
+    if (index < self.photoDataSource.count)
+        return [self.photoDataSource objectAtIndex:index];
+    return nil;
+}
+
 
 
 
