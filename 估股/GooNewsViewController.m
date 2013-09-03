@@ -21,6 +21,7 @@
 #import "SVPullToRefresh.h"
 #import "XYZAppDelegate.h"
 #import "ComFieldViewController.h"
+#import "HelpViewController.h"
 
 
 
@@ -64,12 +65,29 @@
     [self.customTableView reloadData];
     //[[self.tabBarController tabBar] setHidden:NO];
 }
+-(void)helpAction:(id)sender{
+    
+    HelpViewController *help=[[HelpViewController alloc] init];
+    help.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:help animated:YES];
+    SAFE_RELEASE(help);
+    
+}
+-(void)addHelpBt{
+    
+    UIButton *wanSay= [[UIButton alloc] initWithFrame:CGRectMake(200, 10.0, 30, 30)];
+    [wanSay setImage:[UIImage imageNamed:@"helpBt"] forState:UIControlStateNormal];
+    [wanSay addTarget:self action:@selector(helpAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *nextStepBarBtn = [[UIBarButtonItem alloc] initWithCustomView:wanSay];
+    [self.navigationItem setRightBarButtonItem:nextStepBarBtn animated:YES];
+  
+}
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     
-    [self getGooGuuNews];
+    [super viewDidLoad];
+    [self addHelpBt];
     
     self.navigationController.navigationBar.tintColor=[Utiles colorWithHexString:@"#C86125"];
     self.title=@"最新简报";
@@ -81,7 +99,7 @@
     customTableView.delegate=self;
     
     [self.view addSubview:customTableView];
-
+    [self getGooGuuNews];
     [self.customTableView addInfiniteScrollingWithActionHandler:^{
         [self addGooGuuNews];
     }];

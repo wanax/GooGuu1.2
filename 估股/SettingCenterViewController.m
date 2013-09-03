@@ -16,6 +16,8 @@
 #import "StockRiseDownColorSettingViewController.h"
 #import "AboutUsAndCopyrightViewController.h"
 #import "FeedBackViewController.h"
+#import "HelpViewController.h"
+#import "DisclaimersViewController.h"
 
 @interface SettingCenterViewController ()
 
@@ -95,7 +97,7 @@
     }else if(section==1){
         return 1;
     }else if(section==2){
-        return 2;
+        return 4;
     }
     return 0;
 }
@@ -233,41 +235,40 @@
         return cell;
         
     }else if(indexPath.section==2){
+        static NSString *TableSampleIdentifier = @"TableSampleIdentifier";
         
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                 TableSampleIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]
+                    initWithStyle:UITableViewCellStyleSubtitle
+                    reuseIdentifier:TableSampleIdentifier];
+        }
         if(row==0){
-            static NSString *TableSampleIdentifier = @"TableSampleIdentifier";
+   
+            cell.textLabel.text = @"免责声明";
+            cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
+            cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];            
+            return cell;
+        }else if(row==1){
             
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
-                                     TableSampleIdentifier];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc]
-                        initWithStyle:UITableViewCellStyleSubtitle
-                        reuseIdentifier:TableSampleIdentifier];
-            }
-            
+            cell.textLabel.text = @"帮助说明";
+            cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
+            cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];            
+            return cell;
+        }else if(row==2){
+
             cell.textLabel.text = @"意见反馈";
             cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
             cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];
             cell.detailTextLabel.text=@"用户意见反馈";
-            
             return cell;
-        }else if(row==1){
-            
-            static NSString *TableSampleIdentifier = @"TableSampleIdentifier";
-            
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
-                                     TableSampleIdentifier];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc]
-                        initWithStyle:UITableViewCellStyleSubtitle
-                        reuseIdentifier:TableSampleIdentifier];
-            }
+        }else if(row==3){
             
             cell.textLabel.text = @"关于我们";
             cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
             cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];
-            cell.detailTextLabel.text=@"关于我们，版权信息";
-            
+            cell.detailTextLabel.text=@"关于我们，版权信息";            
             return cell;
         }
         
@@ -296,11 +297,20 @@
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.detailTextLabel.text=@"0";
     }else if(section==2){
-        if(row==1){
+        if(row==0){
+            DisclaimersViewController *dis=[[DisclaimersViewController alloc] init];
+            [self.navigationController pushViewController:dis animated:YES];
+            SAFE_RELEASE(dis);
+        }else if(row==1){
+            
+            HelpViewController *help=[[HelpViewController alloc] init];
+            [self.navigationController pushViewController:help animated:YES];
+            SAFE_RELEASE(help);
+        }else if(row==3){
             AboutUsAndCopyrightViewController *us=[[AboutUsAndCopyrightViewController alloc] init];
             [self.navigationController pushViewController:us animated:YES];
             [us release];
-        }else if(row==0){
+        }else if(row==2){
             FeedBackViewController *fd=[[FeedBackViewController alloc] init];
             [self.navigationController pushViewController:fd animated:YES];
             SAFE_RELEASE(fd);

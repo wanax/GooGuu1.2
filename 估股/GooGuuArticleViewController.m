@@ -10,6 +10,8 @@
 #import "MHTabBarController.h"
 #import "MBProgressHUD.h"
 #import "MHTabBarController.h"
+#import "UIImageView+WebCache.h"
+#import "XYZAppDelegate.h"
 
 
 @interface GooGuuArticleViewController ()
@@ -76,6 +78,8 @@
         articleWeb.delegate=self;
         [articleWeb loadHTMLString:[article objectForKey:@"content"] baseURL:nil];
         //articleWeb.scalesPageToFit=YES;
+        
+        [self addTapOnWebView];
         [hud hide:YES];
         [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         [self.view addSubview:articleWeb];
@@ -90,18 +94,84 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-
+    
     //文章文字大小
     NSString *botySise=[[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.fontSize='%dpx'",12];
     NSString *imgSize=[[NSString alloc] initWithFormat:@"var temp = document.getElementsByTagName(\"img\");\
                        for (var i = 0; i < temp.length; i ++) {\
-                           temp[i].style.width = '300px';\
-                           temp[i].style.height = '200px';\
+                       temp[i].style.width = '300px';\
+                       temp[i].style.height = '200px';\
                        }"];
     [articleWeb stringByEvaluatingJavaScriptFromString:botySise];
     [articleWeb stringByEvaluatingJavaScriptFromString:imgSize];
     SAFE_RELEASE(botySise);
     SAFE_RELEASE(imgSize);
+}
+
+
+
+-(void)addTapOnWebView
+{
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self.articleWeb addGestureRecognizer:singleTap];
+    singleTap.delegate = self;
+    singleTap.cancelsTouchesInView = NO;
+}
+
+#pragma mark- TapGestureRecognizer
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+-(void)handleSingleTap:(UITapGestureRecognizer *)sender
+{
+    CGPoint pt = [sender locationInView:self.articleWeb];
+    NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
+    NSString *urlToSave = [self.articleWeb stringByEvaluatingJavaScriptFromString:imgURL];
+    NSLog(@"image url=%@", urlToSave);
+    if (urlToSave.length > 0) {
+        [self showImageURL:urlToSave point:pt];
+    }
+}
+
+//呈现图片
+-(void)showImageURL:(NSString *)url point:(CGPoint)point
+{
+    UIImageView *showView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 500)];
+    showView.center = point;
+    [UIView animateWithDuration:0.5f animations:^{
+        CGPoint newPoint = self.view.center;
+        newPoint.y += 20;
+        showView.center = newPoint;
+    }];
+    
+    showView.backgroundColor = [UIColor blackColor];
+    showView.alpha = 0.9;
+    showView.userInteractionEnabled = YES;
+    [self.view insertSubview:showView atIndex:4];
+    [showView setImageWithURL:[NSURL URLWithString:url]];
+    
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleViewTap:)];
+    [showView addGestureRecognizer:singleTap];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.parentViewController.navigationController setNavigationBarHidden:YES animated:YES];
+    //XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
+    //[[(UITabBarController *)delegate.tabBarController tabBar] setHidden:YES];
+}
+
+
+
+//移除图片查看视图
+-(void)handleSingleViewTap:(UITapGestureRecognizer *)sender
+{
+    for (id obj in self.view.subviews) {
+        if ([obj isKindOfClass:[UIImageView class]]) {
+            [obj removeFromSuperview];
+        }
+    }
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 -(void)panView:(UIPanGestureRecognizer *)tap{

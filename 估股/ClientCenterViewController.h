@@ -24,6 +24,7 @@
 @property (nonatomic,retain) IBOutlet UILabel *favoriteLabel;
 @property (nonatomic,retain) IBOutlet UILabel *tradeLabel;
 @property (nonatomic,retain) IBOutlet UILabel *regtimeLabel;
+@property (nonatomic,retain) IBOutlet UILabel *occupationalLabel;
 @property (nonatomic,retain) IBOutlet UIButton *logoutBt;
 @property (nonatomic,retain) IBOutlet UIImageView *avatar;
 

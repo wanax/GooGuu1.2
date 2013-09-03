@@ -1,0 +1,61 @@
+//
+//  HelpViewController.m
+//  googuu
+//
+//  Created by Xcode on 13-9-3.
+//  Copyright (c) 2013年 Xcode. All rights reserved.
+//
+
+#import "HelpViewController.h"
+
+@interface HelpViewController ()
+
+@end
+
+@implementation HelpViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title=@"帮助文档";
+	self.imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,1700)];
+    [self.imageView setImage:[UIImage imageNamed:@"help1"]];
+    [self.view addSubview:self.imageView];
+    
+    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panAction:)];
+    [self.view addGestureRecognizer:pan];
+    SAFE_RELEASE(pan);
+}
+
+
+-(void)panAction:(UIPanGestureRecognizer *)pan{
+    
+    CGPoint change=[pan translationInView:self.view];
+    
+    if(pan.state==UIGestureRecognizerStateChanged){
+        
+        self.imageView.frame=CGRectMake(0,MAX(MIN(standard.y+change.y,0),-2180),SCREEN_WIDTH,2600);
+        
+    }else if(pan.state==UIGestureRecognizerStateEnded){
+        standard=self.imageView.frame.origin;
+    }
+    
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

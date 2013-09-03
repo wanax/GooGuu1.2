@@ -16,6 +16,7 @@
 #import "UIButton+BGColor.h"
 #import "ClientLoginViewController.h"
 #import "XYZAppDelegate.h"
+#import "UILabel+VerticalAlign.h"
 
 
 
@@ -32,6 +33,7 @@
 @synthesize tradeLabel;
 @synthesize regtimeLabel;
 @synthesize userNameLabel;
+@synthesize occupationalLabel;
 @synthesize logoutBt;
 @synthesize avatar;
 
@@ -40,6 +42,7 @@
 
 - (void)dealloc
 {
+    SAFE_RELEASE(occupationalLabel);
     SAFE_RELEASE(userIdLabel);
     SAFE_RELEASE(favoriteLabel);
     SAFE_RELEASE(tradeLabel);
@@ -81,23 +84,31 @@
         animation.subtype = kCATransitionFromTop;
         [loginViewController.view.layer addAnimation:animation forKey:@"animation"];
     }else if([Utiles isLogin]){
-        
+
         logoutBt.hidden=NO;
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [Utiles getUserToken], @"token",@"googuu",@"from",
                                 nil];
         [Utiles postNetInfoWithPath:@"UserInfo" andParams:params besidesBlock:^(id resObj){
+
            if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
+
+               NSDictionary *occupationalList=[Utiles getConfigureInfoFrom:@"OccupationalList" andKey:nil inUserDomain:NO];
+               
                id userInfo=[resObj objectForKey:@"data"];
                [userNameLabel setText:[userInfo objectForKey:@"nickname"]];
                [userIdLabel setText:[userInfo objectForKey:@"userid"]];
-               [favoriteLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"favorite"]]?@"":[userInfo objectForKey:@"favorite"]];
-               [tradeLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"trade"]]?@"":[userInfo objectForKey:@"trade"]];
+               
+               [self setInfoType:@"trade" label:self.tradeLabel userInfo:userInfo dicName:@"TradeList"];
+               [self setInfoType:@"favorite" label:self.favoriteLabel userInfo:userInfo dicName:@"InterestList"];
+               
+               [self.occupationalLabel setText:occupationalList[userInfo[@"profile"]]];
                NSDateFormatter *date=[[NSDateFormatter alloc] init];
                [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                NSDate *d=[date dateFromString:[userInfo objectForKey:@"regtime"]];
                [date setDateFormat:@"yyyy-MM-dd"];
                [regtimeLabel setText:[date stringFromDate:d]];
+
                SAFE_RELEASE(date);
            }else{
                [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
@@ -112,6 +123,22 @@
     
 }
 
+-(void)setInfoType:(NSString *)type label:(UILabel *)label userInfo:(id)userInfo dicName:(NSString *)name{
+    NSDictionary *dic=[Utiles getConfigureInfoFrom:name andKey:nil inUserDomain:NO];
+    NSString *str=@"";
+    if(![Utiles isBlankString:[userInfo objectForKey:type]]){
+        NSArray *tradeArr=[[userInfo objectForKey:type] componentsSeparatedByString:@","];
+        
+        for(id obj in tradeArr){
+            str=[str stringByAppendingFormat:@"%@,",dic[obj]];
+        }
+        str=[str substringToIndex:([str length]-1)];
+        [label setText:str];
+        [label alignTop];        
+    }else{
+       [label setText:@""];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -123,7 +150,8 @@
 
     UIBarButtonItem *setting=[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(setting:)];
     self.navigationItem.rightBarButtonItem=setting;
-    
+    favoriteLabel.numberOfLines = 10;
+    tradeLabel.numberOfLines = 10;
     
     [setting release];
   
@@ -148,6 +176,7 @@
                 userNameLabel.text=@"";
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserToken"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserInfo"];
+                [self viewDidAppear:YES];
             }else if([[info objectForKey:@"status"] isEqualToString:@"0"]){
                 NSLog(@"logout failed:%@",[info objectForKey:@"msg"]);
             }
@@ -171,10 +200,6 @@
     
 }
 
-
-
-
-
 -(void)reachabilityChanged:(NSNotification*)note
 {
     Reachability * reach = [note object];
@@ -189,12 +214,6 @@
     }
 }
 
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
