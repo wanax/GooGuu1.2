@@ -158,7 +158,6 @@ static NSDateFormatter *formatter;
     NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory , NSUserDomainMask , YES );
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [NSString stringWithFormat:@"%@/%@.plist",documentsDirectory,fileName];
-    NSLog(@"%@",paths);
     dTmp=[[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
     if(dTmp==nil){
         dTmp=[[NSMutableDictionary alloc] init];

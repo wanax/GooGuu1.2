@@ -356,7 +356,7 @@
         
         [Utiles setConfigureInfoTo:@"readingmarks" forKey:[[self.arrList objectAtIndex:indexPath.row] objectForKey:@"title"] andContent:@"1"];
         self.readingMarksDic=[Utiles getConfigureInfoFrom:@"readingmarks" andKey:nil inUserDomain:YES];
-        
+        container.hidesBottomBarWhenPushed=YES;
         [self.navigationController pushViewController:container animated:YES];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

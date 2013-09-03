@@ -27,7 +27,8 @@
 {
     [super viewDidLoad];
     self.title=@"帮助文档";
-	self.imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,1700)];
+    [self.view setBackgroundColor:[Utiles colorWithHexString:@"#EFDCC9"]];
+	self.imageView=[[UIImageView alloc] initWithFrame:CGRectMake(0,0,320,1800)];
     [self.imageView setImage:[UIImage imageNamed:@"help1"]];
     [self.view addSubview:self.imageView];
     
@@ -43,7 +44,7 @@
     
     if(pan.state==UIGestureRecognizerStateChanged){
         
-        self.imageView.frame=CGRectMake(0,MAX(MIN(standard.y+change.y,0),-2180),SCREEN_WIDTH,2600);
+        self.imageView.frame=CGRectMake(0,MAX(MIN(standard.y+change.y,0),-1520),SCREEN_WIDTH,1800);
         
     }else if(pan.state==UIGestureRecognizerStateEnded){
         standard=self.imageView.frame.origin;

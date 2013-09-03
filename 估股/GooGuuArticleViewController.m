@@ -12,9 +12,17 @@
 #import "MHTabBarController.h"
 #import "UIImageView+WebCache.h"
 #import "XYZAppDelegate.h"
+#import "UIImageView+Addition.h"
+#import "GGFullscreenImageViewController.h"
+#import "CXPhotoBrowser.h"
+#import "DemoPhoto.h"
 
 
 @interface GooGuuArticleViewController ()
+
+#define BROWSER_TITLE_LBL_TAG 12731
+#define BROWSER_DESCRIP_LBL_TAG 178273
+#define BROWSER_LIKE_BTN_TAG 12821
 
 @end
 
@@ -23,9 +31,17 @@
 @synthesize articleTitle;
 @synthesize articleId;
 @synthesize articleWeb;
+@synthesize imageUrlList;
+@synthesize imageTitleLabel;
+@synthesize browser;
+@synthesize photoDataSource;
 
 - (void)dealloc
 {
+    SAFE_RELEASE(imageTitleLabel);
+    SAFE_RELEASE(imageUrlList);
+    SAFE_RELEASE(browser);
+    SAFE_RELEASE(photoDataSource);
     SAFE_RELEASE(articleTitle);
     [articleWeb release];
     [articleId release];
@@ -36,7 +52,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.photoDataSource = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -51,6 +67,7 @@
     [self.parentViewController.navigationController.navigationBar.layer addAnimation:transition forKey:@"animation"];
     self.parentViewController.navigationItem.rightBarButtonItem=nil;
     //[[(UITabBarController *)(self.parentViewController.parentViewController.parentViewController) tabBar] setHidden:YES];
+
 }
 
 - (void)viewDidLoad
@@ -60,6 +77,10 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     self.parentViewController.title=@"公司简报";
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
+    self.browser.wantsFullScreenLayout = NO;
     
     MBProgressHUD *hud=[[MBProgressHUD alloc] initWithView:self.view];
     [Utiles showHUD:@"Loading..." andView:self.view andHUD:hud];
@@ -102,10 +123,28 @@
                        temp[i].style.width = '300px';\
                        temp[i].style.height = '200px';\
                        }"];
+    NSString *urlStr=[articleWeb stringByEvaluatingJavaScriptFromString:@"var str=\"\";\
+                   function imgUrl(){\
+                   var temp = document.getElementsByTagName(\"img\");\
+                   for (var i = 0; i < temp.length; i ++) {\
+                       str+=temp[i].src+\"|\";\
+                   }\
+                   return str;\
+                   }\
+                   imgUrl();"];
+    NSMutableArray *tempArr=[[NSMutableArray alloc] initWithArray:[urlStr componentsSeparatedByString:@"|"]];
+    [tempArr removeLastObject];
+    self.imageUrlList=tempArr;
+    for (id obj in self.imageUrlList) {
+        DemoPhoto *photo = nil;        
+        photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:obj]];
+        [self.photoDataSource addObject:photo];
+    }
     [articleWeb stringByEvaluatingJavaScriptFromString:botySise];
     [articleWeb stringByEvaluatingJavaScriptFromString:imgSize];
     SAFE_RELEASE(botySise);
     SAFE_RELEASE(imgSize);
+    SAFE_RELEASE(tempArr);
 }
 
 
@@ -130,49 +169,85 @@
     CGPoint pt = [sender locationInView:self.articleWeb];
     NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
     NSString *urlToSave = [self.articleWeb stringByEvaluatingJavaScriptFromString:imgURL];
-    NSLog(@"image url=%@", urlToSave);
-    if (urlToSave.length > 0) {
-        [self showImageURL:urlToSave point:pt];
+
+    if (urlToSave.length > 0) {   
+        [self presentViewController:self.browser animated:YES completion:^{
+            
+        }];
     }
 }
+#pragma mark -
+#pragma mark CXPhotoBrowserDelegate
 
-//呈现图片
--(void)showImageURL:(NSString *)url point:(CGPoint)point
-{
-    UIImageView *showView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 500)];
-    showView.center = point;
-    [UIView animateWithDuration:0.5f animations:^{
-        CGPoint newPoint = self.view.center;
-        newPoint.y += 20;
-        showView.center = newPoint;
-    }];
-    
-    showView.backgroundColor = [UIColor blackColor];
-    showView.alpha = 0.9;
-    showView.userInteractionEnabled = YES;
-    [self.view insertSubview:showView atIndex:4];
-    [showView setImageWithURL:[NSURL URLWithString:url]];
-    
-    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleViewTap:)];
-    [showView addGestureRecognizer:singleTap];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.parentViewController.navigationController setNavigationBarHidden:YES animated:YES];
-    //XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-    //[[(UITabBarController *)delegate.tabBarController tabBar] setHidden:YES];
+- (void)photoBrowser:(CXPhotoBrowser *)photoBrowser didChangedToPageAtIndex:(NSUInteger)index{
+    [imageTitleLabel setText:[NSString stringWithFormat:@"%d/%d",(index+1),[self.imageUrlList count]]];
 }
 
-
-
-//移除图片查看视图
--(void)handleSingleViewTap:(UITapGestureRecognizer *)sender
+#pragma mark - CXPhotoBrowserDataSource
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(CXPhotoBrowser *)photoBrowser
 {
-    for (id obj in self.view.subviews) {
-        if ([obj isKindOfClass:[UIImageView class]]) {
-            [obj removeFromSuperview];
-        }
+    return [self.photoDataSource count];
+}
+- (id <CXPhotoProtocol>)photoBrowser:(CXPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index
+{
+    if (index < self.photoDataSource.count)
+        return [self.photoDataSource objectAtIndex:index];
+    return nil;
+}
+
+- (CXBrowserNavBarView *)browserNavigationBarViewOfOfPhotoBrowser:(CXPhotoBrowser *)photoBrowser withSize:(CGSize)size
+{
+    CGRect frame;
+    frame.origin = CGPointZero;
+    frame.size = size;
+    if (!navBarView)
+    {
+        navBarView = [[CXBrowserNavBarView alloc] initWithFrame:frame];
+        
+        [navBarView setBackgroundColor:[UIColor clearColor]];
+        
+        UIView *bkgView = [[UIView alloc] initWithFrame:CGRectMake( 0, 0, size.width, size.height)];
+        [bkgView setBackgroundColor:[UIColor blackColor]];
+        bkgView.alpha = 0.2;
+        bkgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [navBarView addSubview:bkgView];
+        
+        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [doneButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12.]];
+        [doneButton setTitle:NSLocalizedString(@"Done",@"Dismiss button title") forState:UIControlStateNormal];
+        [doneButton setFrame:CGRectMake(size.width - 60, 10, 50, 30)];
+        [doneButton addTarget:self action:@selector(photoBrowserDidTapDoneButton:) forControlEvents:UIControlEventTouchUpInside];
+        [doneButton.layer setMasksToBounds:YES];
+        [doneButton.layer setCornerRadius:4.0];
+        [doneButton.layer setBorderWidth:1.0];
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 1 });
+        [doneButton.layer setBorderColor:colorref];
+        doneButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [navBarView addSubview:doneButton];
+        
+        imageTitleLabel = [[UILabel alloc] init];
+        [imageTitleLabel setFrame:CGRectMake((size.width - 60)/2, 10, 60, 40)];
+        [imageTitleLabel setCenter:navBarView.center];
+        [imageTitleLabel setTextAlignment:NSTextAlignmentCenter];
+        [imageTitleLabel setFont:[UIFont boldSystemFontOfSize:20.]];
+        [imageTitleLabel setTextColor:[UIColor whiteColor]];
+        [imageTitleLabel setBackgroundColor:[UIColor clearColor]];
+        [imageTitleLabel setText:@""];
+        imageTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [imageTitleLabel setTag:BROWSER_TITLE_LBL_TAG];
+        [navBarView addSubview:imageTitleLabel];
     }
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    return navBarView;
 }
+
+#pragma mark - PhotBrower Actions
+- (void)photoBrowserDidTapDoneButton:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 -(void)panView:(UIPanGestureRecognizer *)tap{
     CGPoint change=[tap translationInView:self.view];

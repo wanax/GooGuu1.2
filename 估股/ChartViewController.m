@@ -307,7 +307,8 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         
         id combinedData=[DrawChartTool changedDataCombinedWebView:self.webView comInfo:comInfo ggPrice:self.priceLabel.text dragChartChangedDriverIds:self.changedDriverIds disCountIsChanged:self.disCountIsChanged];
         
-        NSDictionary *params=@{@"token": [Utiles getUserToken],@"from": @"googuu",@"data": [combinedData JSONString]};
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Utiles getUserToken],@"token",@"googuu",@"from",[combinedData JSONString],@"data", nil];
+
         [Utiles postNetInfoWithPath:@"AddModelData" andParams:params besidesBlock:^(id resObj){
             if([resObj[@"status"] isEqual:@"1"]){
                 [bt setBackgroundImage:[UIImage imageNamed:@"savedBt"] forState:UIControlStateNormal];
