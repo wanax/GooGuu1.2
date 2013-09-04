@@ -60,7 +60,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
         
     pageScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, HEIGHT)];
-    pageScroll.contentSize = CGSizeMake(5*320, HEIGHT);
+    pageScroll.contentSize = CGSizeMake(4*320, HEIGHT);
     pageScroll.pagingEnabled = YES;
     pageScroll.delegate = self;
     [pageScroll setShowsHorizontalScrollIndicator:NO];
@@ -73,23 +73,20 @@
     
     self.imageView = [[UIImageView alloc] init];
     self.imageView.frame = CGRectMake(0, 0, 320, 480);
-    self.imageView.image = [UIImage imageNamed:@"66.png"];
+    self.imageView.image = [UIImage imageNamed:@"guide4.png"];
     
     
     UIImageView * imageView1 = [[UIImageView alloc]init];
-    imageView1.image = [UIImage imageNamed:@"welcome1.png"];
+    imageView1.image = [UIImage imageNamed:@"guide1.png"];
     
     UIImageView * imageView2 = [[UIImageView alloc]init];
-    imageView2.image = [UIImage imageNamed:@"22.png"];
+    imageView2.image = [UIImage imageNamed:@"guide2.png"];
     
     UIImageView * imageView3 = [[UIImageView alloc]init];
-    imageView3.image = [UIImage imageNamed:@"33.png"];
-    
-    UIImageView * imageView4 = [[UIImageView alloc]init];
-    imageView4.image = [UIImage imageNamed:@"44.png"];
+    imageView3.image = [UIImage imageNamed:@"guide3.png"];
     
     UIView * returnView = [[UIView alloc]init];
-    returnView.backgroundColor = [UIColor redColor];
+    returnView.backgroundColor = [UIColor whiteColor];
     [returnView addSubview:self.imageView];
     [returnView addSubview:self.gotoMainViewBtn];
     
@@ -113,11 +110,6 @@
         }
         else if( i == 3 )
         {
-            [pageScroll addSubview:imageView4];
-            imageView4.frame = CGRectMake(i*320, 0, 320, HEIGHT);
-        }
-        else if( i == 4 )
-        {
             returnView.frame = CGRectMake(i*320, 0, 320, HEIGHT);
             [pageScroll addSubview:returnView];
         }
@@ -128,7 +120,7 @@
     
     pageControl = [[UIPageControl alloc] init];
     pageControl.frame = CGRectMake(141,364,50,50);
-    [pageControl setNumberOfPages:5];
+    [pageControl setNumberOfPages:4];
     pageControl.currentPage = 0;
     [pageControl addTarget:self action:@selector(pageTurn:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:pageControl];
@@ -145,8 +137,7 @@
 
 -(void)gotoMainView:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
-       
+    [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"firstLaunch"];
 
     [self.pageControl setHidden:YES];
     [self.pageScroll setHidden:YES];

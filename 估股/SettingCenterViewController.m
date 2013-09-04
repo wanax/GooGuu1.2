@@ -18,6 +18,7 @@
 #import "FeedBackViewController.h"
 #import "HelpViewController.h"
 #import "DisclaimersViewController.h"
+#import "ClientCenterViewController.h"
 
 @interface SettingCenterViewController ()
 
@@ -51,7 +52,7 @@
     [super viewDidLoad];
     [self setTitle:@"设置"];
     
-    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,420) style:UITableViewStyleGrouped];
+    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,390) style:UITableViewStyleGrouped];
     self.customTabel.delegate=self;
     self.customTabel.dataSource=self;
     [self.view addSubview:self.customTabel];
@@ -87,16 +88,17 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
     if(section==0){
-        return 3;
+        return 2;
     }else if(section==1){
-        return 1;
+        return 3;
     }else if(section==2){
+        return 1;
+    }else if(section==3){
         return 4;
     }
     return 0;
@@ -104,11 +106,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0){
-        return @"功能设置";
+    if(section==0){
+        return @"账号管理";
     }else if (section == 1){
+        return @"功能设置";
+    }else if (section == 2){
         return @"缓存设置";
-    }else if(section==2){        
+    }else if(section==3){
         return @"其它";        
     }
     return @"";
@@ -144,8 +148,34 @@
     
     NSInteger section=indexPath.section;
     NSInteger row=indexPath.row;
-    
     if(section==0){
+     
+        static NSString *TableSampleIdentifier = @"TableSampleIdentifier";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+                                 TableSampleIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]
+                    initWithStyle:UITableViewCellStyleValue1
+                    reuseIdentifier:TableSampleIdentifier];
+        }
+        cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
+        cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];
+        if (row==0) {
+            cell.textLabel.text = @"我的资料";
+            cell.detailTextLabel.text=@"我的信息,兴趣,关注行业";
+        } else if(row==1){
+            cell.textLabel.textAlignment=NSTextAlignmentCenter;
+            if ([Utiles isLogin]) {
+                cell.textLabel.text=@"                               注销";
+            } else {
+                cell.textLabel.text=@"                               登录";
+            }
+        }
+        
+        return cell;
+        
+    }else if(section==1){
        
         if(row==0){
             
@@ -210,11 +240,8 @@
             return cell;
             
         }
-        
-        
-        
-        
-    }else if(indexPath.section==1){
+  
+    }else if(indexPath.section==2){
         
         static NSString *TableSampleIdentifier = @"TableSampleIdentifier";
         
@@ -234,40 +261,37 @@
         
         return cell;
         
-    }else if(indexPath.section==2){
+    }else if(indexPath.section==3){
         static NSString *TableSampleIdentifier = @"TableSampleIdentifier";
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
                                  TableSampleIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc]
-                    initWithStyle:UITableViewCellStyleSubtitle
+                    initWithStyle:UITableViewCellStyleValue1
                     reuseIdentifier:TableSampleIdentifier];
         }
+        cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
+        cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];
+        
         if(row==0){
    
             cell.textLabel.text = @"免责声明";
-            cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
-            cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];            
+            cell.detailTextLabel.text=@"";
             return cell;
         }else if(row==1){
             
             cell.textLabel.text = @"帮助说明";
-            cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
-            cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];            
+            cell.detailTextLabel.text=@"";
             return cell;
         }else if(row==2){
 
             cell.textLabel.text = @"意见反馈";
-            cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
-            cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];
             cell.detailTextLabel.text=@"用户意见反馈";
             return cell;
         }else if(row==3){
             
             cell.textLabel.text = @"关于我们";
-            cell.textLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
-            cell.detailTextLabel.font=[UIFont fontWithName:@"Heiti SC" size:12.0f];
             cell.detailTextLabel.text=@"关于我们，版权信息";            
             return cell;
         }
@@ -281,39 +305,55 @@
 
 #pragma mark -
 #pragma mark Table Delegate Methods
+-(void)pushViewController:(NSString *)viewName{
+    
+    UIViewController *viewController = [[NSClassFromString(viewName) alloc] init];
+    viewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:viewController animated:YES];
+    SAFE_RELEASE(viewController);
+    
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row=indexPath.row;
     NSInteger section=indexPath.section;
-    
     if(section==0){
+        if (row==0) {
+            if([Utiles isLogin]){
+                [self pushViewController:@"ClientCenterViewController"];
+            }else{
+                [Utiles ToastNotification:@"您尚未登录" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+            }
+        } else {
+            if ([Utiles isLogin]) {
+                [self logout];
+                [self.customTabel reloadData];
+            } else {
+                ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
+                loginViewController.sourceType=SettingBar;
+                [self presentViewController:loginViewController animated:YES completion:nil];
+            }
+        }
+   
+    }else if(section==1){
         if(row==0){
             StockRiseDownColorSettingViewController *set=[[StockRiseDownColorSettingViewController alloc] init];
             [self presentViewController:set animated:YES completion:nil];
             [set release];
         }
-    }else if(section==1){
+    }else if(section==2){
         //[Utiles deleteSandBoxContent];
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.detailTextLabel.text=@"0";
-    }else if(section==2){
+    }else if(section==3){
         if(row==0){
-            DisclaimersViewController *dis=[[DisclaimersViewController alloc] init];
-            [self.navigationController pushViewController:dis animated:YES];
-            SAFE_RELEASE(dis);
+            [self pushViewController:@"DisclaimersViewController"];
         }else if(row==1){
-            
-            HelpViewController *help=[[HelpViewController alloc] init];
-            [self.navigationController pushViewController:help animated:YES];
-            SAFE_RELEASE(help);
+            [self pushViewController:@"HelpViewController"];
         }else if(row==3){
-            AboutUsAndCopyrightViewController *us=[[AboutUsAndCopyrightViewController alloc] init];
-            [self.navigationController pushViewController:us animated:YES];
-            [us release];
+            [self pushViewController:@"AboutUsAndCopyrightViewController"];
         }else if(row==2){
-            FeedBackViewController *fd=[[FeedBackViewController alloc] init];
-            [self.navigationController pushViewController:fd animated:YES];
-            SAFE_RELEASE(fd);
+            [self pushViewController:@"FeedBackViewController"];
         }
     }
 
@@ -321,7 +361,35 @@
 }
 
 
-
+-(void)logout{
+    
+    NSString *token= [Utiles getUserToken];
+    if(token){
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserToken"];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                token, @"token",@"googuu",@"from",
+                                nil];
+        [Utiles postNetInfoWithPath:@"LogOut" andParams:params besidesBlock:^(id info){
+            
+            if([[info objectForKey:@"status"] isEqualToString:@"1"]){
+                
+                [Utiles ToastNotification:@"注销成功" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"LogOut" object:nil];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserToken"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserInfo"];
+                
+            }else if([[info objectForKey:@"status"] isEqualToString:@"0"]){
+                NSLog(@"logout failed:%@",[info objectForKey:@"msg"]);
+            }
+            
+        }];
+        
+    }else{
+        NSLog(@"logout failed");
+    }
+    
+    
+}
 
 
 

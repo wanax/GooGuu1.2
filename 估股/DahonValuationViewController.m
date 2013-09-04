@@ -106,11 +106,13 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
     [self.view addSubview:topBar];
     //公司名称
     [tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",comInfo[@"companyname"],comInfo[@"stockcode"],comInfo[@"marketname"]] Tag:6 frame:CGRectMake(70,0,340,40) fontSize:18.0 color:nil textColor:@"#F9F8F6" location:NSTextAlignmentCenter];
-    
+    //提示信息
+    [tool addLabelToView:self.view withTitle:@"*点击图标查看大行估值" Tag:6 frame:CGRectMake(335,265,140,40) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
+    //title
     titleLabel=[tool addLabelToView:self.view withTitle:@"" Tag:6 frame:CGRectMake(0,40,480,30) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     
     [tool addButtonToView:self.view withTitle:@"返回" Tag:5 frame:CGRectMake(15,5,54,30) andFun:@selector(backTo:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"backBt" highBackGroundImg:nil];
-    [tool addButtonToView:self.view withTitle:@"刷新" Tag:6 frame:CGRectMake(406,5,54,30) andFun:@selector(reflash:) withType:UIButtonTypeCustom andColor:nil textColor:@"#000000" normalBackGroundImg:@"reflashBt" highBackGroundImg:nil];
+    [tool addButtonToView:self.view withTitle:@"刷新" Tag:6 frame:CGRectMake(406,5,54,30) andFun:@selector(reflash:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"reflashBt" highBackGroundImg:nil];
     
     oneMonth=[tool addButtonToView:self.view withTitle:@"一个月" Tag:OneMonth frame:CGRectMake(145,272,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
     [oneMonth.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:10.0]];
@@ -233,7 +235,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
             XRANGEBEGIN=count-269;
             XRANGELENGTH=269;
             XINTERVALLENGTH=50;
-            
+            [MBProgressHUD hideHUDForView:self.hostView animated:YES];
             SAFE_RELEASE(formatter);
         }
         @catch (NSException *exception) {
@@ -329,7 +331,8 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
 
 -(void)reflash:(UIButton *)bt{
     [MBProgressHUD showHUDAddedTo:self.hostView animated:YES];
-    [MBProgressHUD hideHUDForView:self.hostView animated:YES];
+    [self initData];
+    
 }
 
 -(void)backTo:(UIButton *)bt{

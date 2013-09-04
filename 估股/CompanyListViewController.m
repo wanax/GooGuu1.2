@@ -161,21 +161,23 @@
      
 -(void)getConcernStocksCode{
 
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Utiles getUserToken],@"token",@"googuu",@"from", nil];
-    [Utiles postNetInfoWithPath:@"AttentionData" andParams:params besidesBlock:^(id resObj){
-        if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
-            self.concernStocksCodeArr=[[NSMutableArray alloc] init];
-            NSArray *temp=[resObj objectForKey:@"data"];
-            for(id obj in temp){
-                [concernStocksCodeArr addObject:[NSString stringWithFormat:@"%@",[obj objectForKey:@"stockcode"]]];
-            }
-            [self.table reloadData];
-        }else{
-            [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
-            self.concernStocksCodeArr=[[NSMutableArray alloc] init];
-        }        
-    }];
-    
+    if([Utiles isLogin]){
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Utiles getUserToken],@"token",@"googuu",@"from", nil];
+        [Utiles postNetInfoWithPath:@"AttentionData" andParams:params besidesBlock:^(id resObj){
+            if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
+                self.concernStocksCodeArr=[[NSMutableArray alloc] init];
+                NSArray *temp=[resObj objectForKey:@"data"];
+                for(id obj in temp){
+                    [concernStocksCodeArr addObject:[NSString stringWithFormat:@"%@",[obj objectForKey:@"stockcode"]]];
+                }
+                [self.table reloadData];
+            }else{
+                [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                self.concernStocksCodeArr=[[NSMutableArray alloc] init];
+            }        
+        }];
+    }
+ 
 }
 
 -(void)panView:(UIPanGestureRecognizer *)tap{

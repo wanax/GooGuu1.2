@@ -24,6 +24,8 @@
 #import "ChartViewController.h"
 #import "CommonlyMacros.h"
 #import <Crashlytics/Crashlytics.h>
+#import "SettingCenterViewController.h"
+#import "AgreementViewController.h"
 
 
 @implementation XYZAppDelegate
@@ -53,26 +55,18 @@
 {
     [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"stockColorSetting" andContent:[NSString stringWithFormat:@"%d",0]];
     [Crashlytics startWithAPIKey:@"c59317990c405b2f42582cacbe9f4fa9abe1fefb"];
-    // Override point for customization after application launch.
-    //增加标识，用于判断是否是第一次启动应用...
-
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLaunched"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunched"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
-    }
-
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"firstLaunch"]==nil) {
         //用户初次使用进入使用引导界面
         tipViewController * startView = [[tipViewController alloc]init];
         self.window.rootViewController = startView;
         [startView release];
-        DBLite *tool=[[DBLite alloc] init];
-        [tool openSQLiteDB];
-        [tool initDB];
-        [tool closeDB];
-        [tool initDBData];
-        [tool release];
+    }else if([[NSUserDefaults standardUserDefaults] objectForKey:@"agreement"]==nil){
+        
+        AgreementViewController * agreement = [[AgreementViewController alloc]init];
+        self.window.rootViewController = agreement;
+        [agreement release];
+        
     }else {
        
         UITabBarItem *barItem=[[UITabBarItem alloc] initWithTitle:@"最新简报" image:[UIImage imageNamed:@"googuuNewsBar"] tag:1];      
@@ -88,9 +82,9 @@
 
         
         //客户设置
-        ClientCenterViewController *clientView=[[ClientCenterViewController alloc] init];
-        clientView.tabBarItem=barItem4;
-        PrettyNavigationController *clientCenterNav=[[PrettyNavigationController alloc] initWithRootViewController:clientView];
+        SettingCenterViewController *settingView=[[SettingCenterViewController alloc] init];
+        settingView.tabBarItem=barItem4;
+        PrettyNavigationController *clientCenterNav=[[PrettyNavigationController alloc] initWithRootViewController:settingView];
         
         
         //估股新闻
@@ -120,7 +114,7 @@
         SAFE_RELEASE(barItem5);
 
         SAFE_RELEASE(myGooGuu);
-        SAFE_RELEASE(clientView);
+        SAFE_RELEASE(settingView);
         SAFE_RELEASE(gooNewsNavController);
         SAFE_RELEASE(universeViewController);
 

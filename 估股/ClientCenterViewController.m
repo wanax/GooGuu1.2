@@ -7,7 +7,6 @@
 //
 
 #import "ClientCenterViewController.h"
-#import "SettingCenterViewController.h"
 #import "DBLite.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
@@ -17,6 +16,8 @@
 #import "ClientLoginViewController.h"
 #import "XYZAppDelegate.h"
 #import "UILabel+VerticalAlign.h"
+#import "SDWebImageDownloader.h"
+#import "MBProgressHUD.h"
 
 
 
@@ -67,24 +68,9 @@
 
 -(void)viewDidAppear:(BOOL)animated{
 
-    if(![Utiles isLogin]){
-        ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
-        
-        loginViewController.view.frame=CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT);
-        XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-        [delegate.window addSubview:loginViewController.view];
-        [self addChildViewController:loginViewController];
-        [loginViewController release];
-        
-        CATransition *animation = [CATransition animation];
-        animation.duration = 0.5f;
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.fillMode = kCAFillModeForwards;
-        animation.type = kCATransitionMoveIn;
-        animation.subtype = kCATransitionFromTop;
-        [loginViewController.view.layer addAnimation:animation forKey:@"animation"];
-    }else if([Utiles isLogin]){
+    if([Utiles isLogin]){
 
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         logoutBt.hidden=NO;
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [Utiles getUserToken], @"token",@"googuu",@"from",
@@ -108,12 +94,17 @@
                NSDate *d=[date dateFromString:[userInfo objectForKey:@"regtime"]];
                [date setDateFormat:@"yyyy-MM-dd"];
                [regtimeLabel setText:[date stringFromDate:d]];
+               
+               [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:userInfo[@"headerpicurl"]] options:SDWebImageDownloaderProgressiveDownload progress:^(NSUInteger receivedSize, long long expectedSize) {
+               } completed:^(UIImage *aImage, NSData *data, NSError *error, BOOL finished) {
+                   [self.avatar setImage:aImage];
+               }];
 
                SAFE_RELEASE(date);
            }else{
                [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
            }
-            
+           [MBProgressHUD hideHUDForView:self.view animated:YES];
             
         }];
         
@@ -148,13 +139,9 @@
     self.view.backgroundColor=[Utiles colorWithHexString:@"#F3EFE1"];
     [self.logoutBt setBackgroundColorString:@"#C96125" forState:UIControlStateNormal];
 
-    UIBarButtonItem *setting=[[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(setting:)];
-    self.navigationItem.rightBarButtonItem=setting;
     favoriteLabel.numberOfLines = 10;
     tradeLabel.numberOfLines = 10;
-    
-    [setting release];
-  
+
 }
 
 
@@ -170,13 +157,10 @@
         [Utiles postNetInfoWithPath:@"LogOut" andParams:params besidesBlock:^(id info){
            
             if([[info objectForKey:@"status"] isEqualToString:@"1"]){
-                NSLog(@"logout success");
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"LogOut" object:nil];
-                logoutBt.hidden=YES;
-                userNameLabel.text=@"";
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserToken"];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserInfo"];
-                [self viewDidAppear:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             }else if([[info objectForKey:@"status"] isEqualToString:@"0"]){
                 NSLog(@"logout failed:%@",[info objectForKey:@"msg"]);
             }
@@ -188,16 +172,6 @@
     }
     
 
-}
-
-
--(void)setting:(id)sender{
-    
-    SettingCenterViewController *setingViewController=[[SettingCenterViewController alloc] init];
-    setingViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:setingViewController animated:YES];
-    [setingViewController release];
-    
 }
 
 -(void)reachabilityChanged:(NSNotification*)note

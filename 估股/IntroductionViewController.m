@@ -50,6 +50,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[Utiles colorWithHexString:@"#F3F2EF"]];
     self.navigationController.navigationBarHidden=YES;
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
@@ -58,7 +59,7 @@
     [[SDImageCache sharedImageCache] clearDisk];
     [[SDImageCache sharedImageCache] clearMemory];
     self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
-    self.browser.wantsFullScreenLayout = NO;
+    self.browser.wantsFullScreenLayout = YES;
     
     DemoPhoto *photo = nil;
     if([Utiles isBlankString:url]){

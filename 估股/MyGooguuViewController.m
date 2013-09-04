@@ -81,20 +81,8 @@
     
     if(![Utiles isLogin]){
         ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
-        
-        loginViewController.view.frame=CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT);
-        XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-        [delegate.window addSubview:loginViewController.view];
-        [self addChildViewController:loginViewController];
-        [loginViewController release];
-        
-        CATransition *animation = [CATransition animation];
-        animation.duration = 0.5f;
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.fillMode = kCAFillModeForwards;
-        animation.type = kCATransitionMoveIn;
-        animation.subtype = kCATransitionFromTop;
-        [loginViewController.view.layer addAnimation:animation forKey:@"animation"];
+        loginViewController.sourceType=MyGooGuuBar;
+        [self presentViewController:loginViewController animated:YES completion:nil];
     }
  
 }

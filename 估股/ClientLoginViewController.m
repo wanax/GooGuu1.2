@@ -27,12 +27,26 @@
 
 @implementation ClientLoginViewController
 
-@synthesize loginView;
-
+@synthesize userNameField;
+@synthesize userPwdField;
+@synthesize loginBt;
+@synthesize cancelBt;
+@synthesize regBt;
+@synthesize findPwdBt;
+@synthesize autoCheckImg;
+@synthesize autoLoginBt;
+@synthesize sourceType;
 
 - (void)dealloc
 {   
-    [loginView release];loginView=nil;
+    SAFE_RELEASE(userNameField);
+    SAFE_RELEASE(userPwdField);
+    SAFE_RELEASE(loginBt);
+    SAFE_RELEASE(regBt);
+    SAFE_RELEASE(cancelBt);
+    SAFE_RELEASE(findPwdBt);
+    SAFE_RELEASE(autoLoginBt);
+    SAFE_RELEASE(autoCheckImg);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
@@ -48,23 +62,16 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        autoCheckImg=[[UIImageView alloc] init];
     }
     return self;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    loginView=[[LoginView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    [loginView setBackgroundColor:[[Utiles class] colorWithHexString:@"#34C3C1"]];
-    
-    [self.view addSubview:loginView];
-    loginView.delegate=self;
-    
-    [loginView userNameField].delegate=self;
-    [loginView userPwdField].delegate=self;
-    UITapGestureRecognizer *out=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDisMiss)];
-    [[loginView cancel] addGestureRecognizer:out];
+    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"autoLogin" inUserDomain:YES] isEqual:@"1"]){
+        
+    }
 
 }
 
@@ -72,85 +79,135 @@
 {
     [super viewDidLoad];
     isGoIn=NO;
+    userNameField.delegate=self;
+    userPwdField.delegate=self;
+    
+    UIImageView *image=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"userNameImg"]];
+    image.frame=CGRectMake(0,0,20,20);
+    userNameField.leftView=image;
+    userNameField.leftViewMode = UITextFieldViewModeUnlessEditing;
+    
+    UIImageView *image2=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pwdImg"]];
+    image2.frame=CGRectMake(0,0,20,20);
+    userPwdField.leftView=image2;
+    userPwdField.leftViewMode = UITextFieldViewModeUnlessEditing;
+    
+    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"autoLogin" inUserDomain:YES] isEqual:@"1"]){
+        [autoCheckImg setImage:[UIImage imageNamed:@"autoLoginCheck"]];
+    }else{
+        [autoCheckImg setImage:nil];
+    }
 
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    
-}
 
+#pragma mark -
+#pragma mark TextField Method Delegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-
     if(textField.tag==100){
-        [textField resignFirstResponder];
+        [userNameField resignFirstResponder];
+        [userPwdField becomeFirstResponder];
     }else if(textField.tag==200){
-        
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
-        [Utiles showHUD:@"正在加载" andView:self.view andHUD:hud];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES ;
-        NSString *name=[loginView userNameField].text;
-        NSString *pwd=[loginView userPwdField].text;
-        
-        //NSString *name=@"mxchenry@163.com";
-        //NSString *pwd=@"123456";
-        
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[name lowercaseString],@"username",[Utiles md5:pwd],@"password",@"googuu",@"from", nil];
-        [Utiles getNetInfoWithPath:@"Login" andParams:params besidesBlock:^(id info){
-
-            if([[info objectForKey:@"status"] isEqualToString:@"1"]){
-             
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginKeeping" object:nil];
-                [[NSUserDefaults standardUserDefaults] setObject:[info objectForKey:@"token"] forKey:@"UserToken"];
-                NSDictionary *userInfo=[NSDictionary dictionaryWithObjectsAndKeys:name,@"username",pwd,@"password", nil];
-                [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"UserInfo"];
-                
-                NSLog(@"%@",[info objectForKey:@"token"]);
-                isGoIn=YES;
-                [self viewDisMiss];
-                [textField resignFirstResponder];
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO ;
-                [hud hide:YES];
-                [hud release];
-                NSArray *controllers=self.parentViewController.childViewControllers;
-                for(id obj in controllers){
-                    if([obj isKindOfClass:[GooGuuContainerViewController class]]){
-                        ConcernedViewController *test= (ConcernedViewController *)[[(GooGuuContainerViewController *)obj tabBarController] selectedViewController];
-                        [test viewDidAppear:YES];
-                    }
-                }
-            }else {
-                NSLog(@"%@",[info objectForKey:@"msg"]);
-            }
-            
-        }];
-        
+ 
+        NSString *name=userNameField.text;
+        NSString *pwd=userPwdField.text;
+        [self userLoginUserName:name pwd:pwd];
         [textField resignFirstResponder];
     }
-    
     return YES;
 }
 
+#pragma mark -
+#pragma mark Button Methods
 
--(void)viewDisMiss{
-    [[loginView userNameField] resignFirstResponder];
-    [[loginView userPwdField] resignFirstResponder];
-    XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-    [delegate.window addSubview:delegate.tabBarController.view];
-    if(isGoIn){
-        [delegate.tabBarController setSelectedIndex:2];
-    }else if(!isGoIn){
-        [delegate.tabBarController setSelectedIndex:0];
+-(IBAction)autoBtClicked:(id)sender{
+    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"autoLogin" inUserDomain:YES] isEqual:@"1"]){        
+        [autoCheckImg setImage:nil];
+        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"autoLogin" andContent:@"0"];
+    }else{
+        [autoCheckImg setImage:[UIImage imageNamed:@"autoLoginCheck"]];
+        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"autoLogin" andContent:@"1"];
     }
     
-    CATransition *transition=[CATransition animation];
-    transition.duration=0.5f;
-    transition.fillMode=kCAFillRuleEvenOdd;
-    transition.type=kCATransitionReveal;
-    transition.subtype=kCATransitionFromBottom;
-    [delegate.window.layer addAnimation:transition forKey:@"animation"];
+}
+
+-(IBAction)freeRegBtClicked:(id)sender{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.googuu.net/pages/user/newRegister.htm"]]; 
+}
+
+-(IBAction)findPwdBtClicked:(id)sender{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.googuu.net/pages/user/forgotPassword.htm"]]; 
+}
+
+-(IBAction)loginBtClicked:(id)sender{
+    [self userLoginUserName:userNameField.text pwd:userPwdField.text];
+}
+
+-(IBAction)cancelBtClicked:(UIButton *)bt{
+    [self viewDisMiss];
+}
+
+-(IBAction)backGroundIsClicked{
+    [self.userNameField resignFirstResponder];
+    [self.userPwdField resignFirstResponder];
+}
+
+-(void)viewDisMiss{
+    [userNameField resignFirstResponder];
+    [userPwdField resignFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
+    if(isGoIn){
+        [delegate.tabBarController setSelectedIndex:sourceType];
+    }else if(!isGoIn){
+        if (sourceType==MyGooGuuBar) {
+            [delegate.tabBarController setSelectedIndex:NewsBar];
+        } else {
+            [delegate.tabBarController setSelectedIndex:sourceType];
+        }
+    }
+}
+
+-(void)userLoginUserName:(NSString *)userName pwd:(NSString *)pwd{
+    [MBProgressHUD showHUDAddedTo:self.view withTitle:@"正在登录" animated:YES];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES ;
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[userName lowercaseString],@"username",[Utiles md5:pwd],@"password",@"googuu",@"from", nil];
+    [Utiles getNetInfoWithPath:@"Login" andParams:params besidesBlock:^(id info){
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO ;
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if([[info objectForKey:@"status"] isEqualToString:@"1"]){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginKeeping" object:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:[info objectForKey:@"token"] forKey:@"UserToken"];
+            NSDictionary *userInfo=[NSDictionary dictionaryWithObjectsAndKeys:userName,@"username",pwd,@"password", nil];
+            [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"UserInfo"];
+            
+            NSLog(@"%@",[info objectForKey:@"token"]);
+            isGoIn=YES;
+            [self viewDisMiss];
+            NSArray *controllers=self.parentViewController.childViewControllers;
+            for(id obj in controllers){
+                if([obj isKindOfClass:[GooGuuContainerViewController class]]){
+                    ConcernedViewController *test= (ConcernedViewController *)[[(GooGuuContainerViewController *)obj tabBarController] selectedViewController];
+                    [test viewDidAppear:YES];
+                }
+            }
+        }else {
+            NSString *msg=@"";
+            if ([info[@"status"] isEqual:@"0"]) {
+                msg=@"用户不存在";
+            } else if ([info[@"status"] isEqual:@"2"]){
+                msg=@"邮箱未激活";
+            } else if ([info[@"status"] isEqual:@"3"]){
+                msg=@"密码错误";
+            }
+            [Utiles ToastNotification:msg andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+        }
+        
+    }];
+  
 }
 
 -(void)animationFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context{

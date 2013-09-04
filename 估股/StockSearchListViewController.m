@@ -53,7 +53,7 @@
     searchTable=[[UITableView alloc] initWithFrame:CGRectMake(0,62,SCREEN_WIDTH,350)];
     searchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,35)];
     [[self.searchBar.subviews objectAtIndex:0] removeFromSuperview];
-    [self.searchBar setPlaceholder:@"输入股票代码/名称"];
+    [self.searchBar setPlaceholder:@"输入股票代码/名称/拼音"];
     self.searchBar.backgroundColor = [UIColor grayColor];
     searchBar.delegate=self;
     [self.view addSubview:searchBar];
@@ -68,7 +68,7 @@
     [self.view insertSubview:indicator aboveSubview:self.searchTable];
     [indicator release];
     
-    [self getcomListByKey:@"1"];
+    [self getcomListByKey:@""];
     
     if(_refreshHeaderView == nil)
     {

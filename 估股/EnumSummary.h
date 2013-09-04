@@ -30,6 +30,13 @@ typedef enum {
     FinancalModelChart
 } BrowseSourceType;
 
+typedef enum {
+    NewsBar=0,
+    ValuationModelBar=1,
+    MyGooGuuBar=2,
+    SettingBar=3
+} TabBarType;
+
 //股票市场 CompanyListViewController
 typedef enum {
     HK=1,//港股
@@ -84,7 +91,6 @@ typedef enum {
     DahonModel//大行数据
     
 } ChartType;
-
 
 
 

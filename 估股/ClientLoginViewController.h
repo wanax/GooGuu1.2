@@ -16,8 +16,32 @@
 @interface ClientLoginViewController : UIViewController<UITextFieldDelegate>{
     BOOL isGoIn;
 }
+@property TabBarType sourceType;
 
-@property (nonatomic,retain) LoginView *loginView;
+@property (nonatomic,retain) IBOutlet UITextField *userNameField;
+@property (nonatomic,retain) IBOutlet UITextField *userPwdField;
+@property (nonatomic,retain) IBOutlet UIButton *loginBt;
+@property (nonatomic,retain) IBOutlet UIButton *cancelBt;
+@property (nonatomic,retain) IBOutlet UIButton *regBt;
+@property (nonatomic,retain) IBOutlet UIButton *findPwdBt;
+@property (nonatomic,retain) IBOutlet UIButton *autoLoginBt;
+@property (nonatomic,retain) IBOutlet UIImageView *autoCheckImg;
+
+-(IBAction)cancelBtClicked:(UIButton *)bt;
+-(IBAction)loginBtClicked:(id)sender;
+-(IBAction)backGroundIsClicked;
+-(IBAction)autoBtClicked:(id)sender;
+-(IBAction)freeRegBtClicked:(id)sender;
+-(IBAction)findPwdBtClicked:(id)sender;
+
+
+
+
+
+
+
+
+
 
 
 @end

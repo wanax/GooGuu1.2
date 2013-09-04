@@ -144,26 +144,28 @@
 
 -(void)getComList{
    
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [Utiles getUserToken], @"token",@"googuu",@"from",
-                            nil];
-    [Utiles postNetInfoWithPath:self.type andParams:params besidesBlock:^(id obj){
-        if(![[obj objectForKey:@"status"] isEqualToString:@"0"]){
-            @try {
-                self.comInfoList=[NSMutableArray arrayWithArray:[obj objectForKey:@"data"]];
-                [customTableView reloadData];
+    if([Utiles isLogin]){
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [Utiles getUserToken], @"token",@"googuu",@"from",
+                                nil];
+        [Utiles postNetInfoWithPath:self.type andParams:params besidesBlock:^(id obj){
+            if(![[obj objectForKey:@"status"] isEqualToString:@"0"]){
+                @try {
+                    self.comInfoList=[NSMutableArray arrayWithArray:[obj objectForKey:@"data"]];
+                    [customTableView reloadData];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"%@",exception);
+                }
+                
+            }else{
+                [Utiles ToastNotification:[obj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                self.comInfoList=[NSMutableArray arrayWithCapacity:0];
             }
-            @catch (NSException *exception) {
-                NSLog(@"%@",exception);
-            }
-        
-        }else{
-            [Utiles ToastNotification:[obj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
-            self.comInfoList=[NSMutableArray arrayWithCapacity:0];
-        }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }];
-    
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -254,7 +256,7 @@
     [customTableView setEditing:YES animated:YES];
     isEditing=YES;
 
-    UIBarButtonItem *cancelEdit=[[UIBarButtonItem alloc] initWithTitle:@"取消删除" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction)];
+    UIBarButtonItem *cancelEdit=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction)];
     [self.parentViewController.parentViewController.parentViewController.navigationItem setRightBarButtonItem:cancelEdit animated:NO];
     SAFE_RELEASE(cancelEdit);
 
