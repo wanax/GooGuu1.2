@@ -19,6 +19,7 @@
 #import "ComFieldViewController.h"
 #import "AddCommentViewController.h"
 #import "PrettyKit.h"
+#import "Toast+UIView.h"
 
 
 @interface GuestCommentViewController ()
@@ -224,6 +225,11 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.view makeToast:[[self.commentList objectAtIndex:indexPath.row] objectForKey:@"content"]
+                duration:2.0
+                position:@"center"
+                   title:@"用户评论"
+     ];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

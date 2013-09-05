@@ -14,6 +14,7 @@
 #import "AddCommentViewController.h"
 #import "PrettyKit.h"
 #import "AnalyDetailViewController.h"
+#import "Toast+UIView.h"
 
 @interface ArticleCommentViewController ()
 
@@ -222,6 +223,11 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.view makeToast:[[self.commentArr objectAtIndex:indexPath.row] objectForKey:@"content"]
+                duration:2.0
+                position:@"center"
+                   title:@"用户评论"
+     ];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

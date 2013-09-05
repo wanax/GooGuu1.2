@@ -95,7 +95,7 @@
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:articleId,@"articleid", nil];
     [Utiles getNetInfoWithPath:@"ArticleURL" andParams:params besidesBlock:^(id article){
 
-        articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-35)];
+        articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-55)];
         articleWeb.delegate=self;
         [articleWeb loadHTMLString:[article objectForKey:@"content"] baseURL:nil];
         //articleWeb.scalesPageToFit=YES;
@@ -214,7 +214,7 @@
         
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [doneButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12.]];
-        [doneButton setTitle:NSLocalizedString(@"Done",@"Dismiss button title") forState:UIControlStateNormal];
+        [doneButton setTitle:NSLocalizedString(@"返回",@"Dismiss button title") forState:UIControlStateNormal];
         [doneButton setFrame:CGRectMake(size.width - 60, 10, 50, 30)];
         [doneButton addTarget:self action:@selector(photoBrowserDidTapDoneButton:) forControlEvents:UIControlEventTouchUpInside];
         [doneButton.layer setMasksToBounds:YES];

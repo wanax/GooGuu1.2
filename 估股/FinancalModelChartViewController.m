@@ -109,16 +109,16 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
     DrawChartTool *tool=[[DrawChartTool alloc] init];
     tool.standIn=self;
     
-    UILabel *nameLabel=[tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",[comInfo objectForKey:@"companyname"],[comInfo objectForKey:@"stockcode"],[comInfo objectForKey:@"marketname"]] Tag:11 frame:CGRectMake(65,0,100, 40) fontSize:12.0 color:nil textColor:@"#3e2000" location:NSTextAlignmentCenter];
+    UILabel *nameLabel=[tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",[comInfo objectForKey:@"companyname"],[comInfo objectForKey:@"stockcode"],[comInfo objectForKey:@"marketname"]] Tag:11 frame:CGRectMake(65,0,110,40) fontSize:11.0 color:nil textColor:@"#3e2000" location:NSTextAlignmentCenter];
     nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
     nameLabel.numberOfLines = 0;
     
     financalTitleLabel=[tool addLabelToView:self.view withTitle:@"" Tag:11 frame:CGRectMake(0,40,SCREEN_HEIGHT,30) fontSize:12.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     
     
-    [tool addButtonToView:self.view withTitle:@"财务比例" Tag:FinancialRatio frame:CGRectMake(165,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"ratioBt" highBackGroundImg:@"selectedRatioBt"];
-    [tool addButtonToView:self.view withTitle:@"财务图表" Tag:FinancialChart frame:CGRectMake(265,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"chartBt" highBackGroundImg:@"selectedChartBt"];
-    [tool addButtonToView:self.view withTitle:@"其它指标" Tag:FinancialOther frame:CGRectMake(365,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"otherBt" highBackGroundImg:@"selectedChartBt"];
+    [tool addButtonToView:self.view withTitle:@"财务比例" Tag:FinancialRatio frame:CGRectMake(175,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"ratioBt" highBackGroundImg:@"selectedRatioBt"];
+    [tool addButtonToView:self.view withTitle:@"财务图表" Tag:FinancialChart frame:CGRectMake(275,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"chartBt" highBackGroundImg:@"selectedChartBt"];
+    [tool addButtonToView:self.view withTitle:@"其它指标" Tag:FinancialOther frame:CGRectMake(375,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"otherBt" highBackGroundImg:@"selectedChartBt"];
     
     [tool addButtonToView:self.view withTitle:@"返回" Tag:FinancialBack frame:CGRectMake(10,5,50,32) andFun:@selector(backTo:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"backBt" highBackGroundImg:nil];
 

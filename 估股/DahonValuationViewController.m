@@ -320,7 +320,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
         YORTHOGONALCOORDINATE=[xyDic[@"yOrigin"] doubleValue];
         YINTERVALLENGTH=[xyDic[@"yInterval"] doubleValue];
         plotSpace.globalYRange=[CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(YRANGEBEGIN) length:CPTDecimalFromDouble(YRANGELENGTH)];
-        plotSpace.globalXRange=[CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(-30) length:CPTDecimalFromDouble(300)];
+        plotSpace.globalXRange=[CPTPlotRange plotRangeWithLocation:CPTDecimalFromDouble(-30) length:CPTDecimalFromDouble(270)];
         DrawXYAxisWithoutXAxisOrYAxis;
         [graph reloadData];
     }

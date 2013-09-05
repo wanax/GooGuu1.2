@@ -461,7 +461,7 @@ static NSDateFormatter *formatter;
             resultStr = data;
             unitStr = @"百分比";
         } else if ([unit isEqualToString:@"day"]) {
-            resultStr = [NSString stringWithFormat:@"%d",[data intValue]];
+            resultStr = [NSString stringWithFormat:@"%.1f",[data floatValue]];
             unitStr = @"天";
         } else {
             double unitNum = [unit doubleValue];
@@ -474,7 +474,7 @@ static NSDateFormatter *formatter;
                 resultStr =[NSString stringWithFormat:@"%.2f",result/10000];
                 unitStr = @"万";
             } else {
-                resultStr = [NSString stringWithFormat:@"%.0f",result];
+                resultStr = [NSString stringWithFormat:@"%.2f",result];
                 unitStr = @"1.0";
             }
         }

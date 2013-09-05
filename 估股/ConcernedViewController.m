@@ -241,7 +241,6 @@
     }
     
     
-    
     UILongPressGestureRecognizer *longP=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longAction:andCellIndex:)];
     [cell addGestureRecognizer:longP];
    
@@ -267,6 +266,17 @@
     [self.parentViewController.parentViewController.parentViewController.navigationItem setRightBarButtonItem:nil animated:NO];
 }
 
+#pragma mark -
+#pragma mark Edit Mothods Delegate
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (browseType==MyConcernedType) {
+        return @"  取消关注  ";
+    } else {
+        return @"  删除模型  ";
+    }
+    
+}
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -296,10 +306,10 @@
     }
     
 }
+
 //单元格返回的编辑风格，包括删除 添加 和 默认  和不可编辑三种风格
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
+{   
     return UITableViewCellEditingStyleDelete;
 }
 
