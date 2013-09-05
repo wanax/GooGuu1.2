@@ -125,6 +125,13 @@
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     comInfo=delegate.comInfo;
     
+    [marketBetaSlider setMinimumTrackTintColor:[Utiles colorWithHexString:@"#EA7A1F"]];
+    [marketBetaSlider setMaximumTrackTintColor:[Utiles colorWithHexString:@"#0B0B0B"]];
+    [unRiskRateSlider setMinimumTrackTintColor:[Utiles colorWithHexString:@"#EA7A1F"]];
+    [unRiskRateSlider setMaximumTrackTintColor:[Utiles colorWithHexString:@"#0B0B0B"]];
+    [marketPremiumSlider setMinimumTrackTintColor:[Utiles colorWithHexString:@"#EA7A1F"]];
+    [marketPremiumSlider setMaximumTrackTintColor:[Utiles colorWithHexString:@"#0B0B0B"]];
+    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
@@ -185,19 +192,15 @@
         }];
     }else if(bt.tag==BackToSuperView){
         
-        if(sourceType==MySavedType){            
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }else{
-            CATransition *transition=[CATransition animation];
-            transition.duration=0.5f;
-            transition.fillMode=kCAFillRuleNonZero;
-            transition.type=kCATransitionFade;
-            transition.subtype=kCATransitionFromTop;
-            [self.view removeFromSuperview];
-            [self.chartViewController.view.layer addAnimation:transition forKey:@"animation"];
-            [self.chartViewController viewDidAppear:YES];
-        }
-        
+        CATransition *transition=[CATransition animation];
+        transition.duration=0.5f;
+        transition.fillMode=kCAFillRuleNonZero;
+        transition.type=kCATransitionFade;
+        transition.subtype=kCATransitionFromTop;
+        [self.view removeFromSuperview];
+        [self.chartViewController.view.layer addAnimation:transition forKey:@"animation"];
+        [self.chartViewController viewDidAppear:YES];
+
     }
 }
 

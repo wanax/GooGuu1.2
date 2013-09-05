@@ -78,6 +78,7 @@
 @property BOOL disCountIsChanged;
 @property BOOL isShowDiscountView;
 @property BrowseSourceType sourceType;
+@property BrowseSourceType wantSavedType;
 @property (nonatomic,retain) id comInfo;
 @property (nonatomic,retain) NSString *globalDriverId;
 @property (nonatomic,retain) NSString *valuesStr;

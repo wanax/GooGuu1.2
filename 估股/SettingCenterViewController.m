@@ -50,7 +50,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTitle:@"设置"];
+    [self setTitle:@"功能设置"];
     
     self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,390) style:UITableViewStyleGrouped];
     self.customTabel.delegate=self;

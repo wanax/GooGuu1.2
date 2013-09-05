@@ -220,6 +220,7 @@ static NSDateFormatter *formatter;
 }
 
 + (BOOL) isBlankString:(NSString *)string {
+    
     if (string == nil || string == NULL) {
         return YES;
     }
@@ -230,6 +231,9 @@ static NSDateFormatter *formatter;
         if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
             return YES;
         }
+    }
+    if([string isEqualToString:@"<null>"]||[string isEqualToString:@"<NUll>"]){
+        return YES;
     }
     
     return NO;

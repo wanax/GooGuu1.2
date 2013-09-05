@@ -35,6 +35,11 @@
     [super dealloc];
 }
 
++ (UINib *)nib
+{
+    return [UINib nibWithNibName:@"UserCell" bundle:nil];
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

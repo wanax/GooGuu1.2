@@ -20,9 +20,15 @@
 #import "AddCommentViewController.h"
 #import "PrettyKit.h"
 #import "Toast+UIView.h"
+#import "ComfieldTabelDataSource.h"
+#import "UserCell+ConfigureForComment.h"
+
+static NSString * const UserCellIdentifier = @"UserCellIdentifier";
 
 
 @interface GuestCommentViewController ()
+
+@property (nonatomic, strong) ComfieldTabelDataSource *commentsArrayDataSource;
 
 @end
 
@@ -102,19 +108,31 @@
     
 }
 
+- (void)setupTableView
+{    
+    TableViewCellConfigureBlock configureCell = ^(UserCell *cell, id model) {
+        [cell configureForCommentCell:model];
+    };
+    NSArray *models = self.commentList;
+    self.commentsArrayDataSource = [[ComfieldTabelDataSource alloc] initWithItems:models
+                                                         cellIdentifier:UserCellIdentifier
+                                                     configureCellBlock:configureCell];
+    self.table.dataSource = self.commentsArrayDataSource;
+    [self.table registerNib:[UserCell nib] forCellReuseIdentifier:UserCellIdentifier];
+
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor redColor]];
-    
+    [self getComments];
     self.table=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,388)];
     [self.table setBackgroundColor:[Utiles colorWithHexString:@"#EFEBD9"]];
     self.table.delegate=self;
-    self.table.dataSource=self;
-    
     [self.view addSubview:self.table];
-    
+    [self setupTableView];
+  
     if(_refreshHeaderView == nil)
     {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.table.bounds.size.height, self.view.frame.size.width, self.table.bounds.size.height)];
@@ -126,7 +144,7 @@
         [view release];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    [self getComments];
+    
     
 
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
@@ -152,7 +170,7 @@
         if([obj JSONString].length>5){
             self.commentList=obj;
             [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.table];
-            [table reloadData];
+            [self setupTableView];
         }else{
             [Utiles ToastNotification:@"暂无评论" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.table];
@@ -161,63 +179,6 @@
 
     
 }
-
-
-
-#pragma mark -
-#pragma mark Table Data Source Methods
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.commentList count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *UserCellIdentifier = @"UserCellIdentifier";
-    
-    if(!nibsRegistered){
-        UINib *nib=[UINib nibWithNibName:@"UserCell" bundle:nil];
-        [tableView registerNib:nib forCellReuseIdentifier:UserCellIdentifier];
-        nibsRegistered = YES;
-    }
-    
-    UserCell *cell = [tableView dequeueReusableCellWithIdentifier:UserCellIdentifier];
-    if (cell == nil) {
-        cell = [[UserCell alloc]
-                initWithStyle:UITableViewCellStyleDefault
-                reuseIdentifier:UserCellIdentifier];
-    }
-    
-    NSUInteger row = [indexPath row];
-    id model=[self.commentList objectAtIndex:row];
-    
-    cell.name = [model objectForKey:@"author"];
-    cell.dec = [model objectForKey:@"content"];
-    cell.loc = [model objectForKey:@"updatetime"];
-    
-    @try {
-        if([[NSString stringWithFormat:@"%@",[model objectForKey:@"headerpicurl"]] length]>7){
-            //异步加载cell图片
-            [cell.imageView setImageWithURLRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[model objectForKey:@"headerpicurl"]]]
-              placeholderImage:[UIImage imageNamed:@"pumpkin.png"]
-                       success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
-                           cell.image = image;
-                           
-                       }
-                       failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error){
-                           
-                       }];
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@",exception);
-    }
-    UIView *backView=[[UIView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,86)];
-    backView.backgroundColor=[Utiles colorWithHexString:@"#EFEBD9"];
-    [cell setBackgroundView:backView];
-    return cell;
-}
-
 
 #pragma mark Table Delegate Methods
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -241,7 +202,7 @@
     
     
     [self getComments];
-    [self.table reloadData];
+    [self setupTableView];
     
     _reloading = NO;
     

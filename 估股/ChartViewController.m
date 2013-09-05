@@ -34,6 +34,7 @@
 @implementation ChartViewController
 
 @synthesize sourceType;
+@synthesize wantSavedType;
 @synthesize comInfo;
 @synthesize disCountIsChanged;
 @synthesize globalDriverId;
@@ -122,6 +123,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 #pragma mark -
 #pragma mark General Methods
 -(void)addToDriverIds:(NSString *)driverId{
+    //NSLog(@"addToDriverIds");
     if(![self.changedDriverIds containsObject:driverId]){
         [self.changedDriverIds addObject:driverId];
     }
@@ -159,23 +161,25 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    //NSLog(@"viewDidAppear");
     if(webIsLoaded){
         if(![Utiles isBlankString:self.valuesStr]){
             self.valuesStr=[self.valuesStr stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
             [Utiles getObjectDataFromJsFun:self.webView funName:@"setValues" byData:self.valuesStr shouldTrans:NO];
             [self modelClassChanged:globalDriverId];
         }
-        
     }
 }
 
 - (void)viewDidLoad
 {
+    //NSLog(@"viewDidLoad");
     [super viewDidLoad];
     linkage=YES;
     _isSaved=YES;
     webIsLoaded=NO;
     [self.view setBackgroundColor:[Utiles colorWithHexString:@"#F6F1E6"]];
+    [self.discountBt setEnabled:NO];
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     comInfo=delegate.comInfo;
     self.changedDriverIds=[[NSMutableArray alloc] init];
@@ -228,6 +232,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 }
 
 -(void)initChartViewComponents{
+    //NSLog(@"initChartViewComponents");
     UIImageView *topBar=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dragChartBar"]];
     topBar.frame=CGRectMake(0,0,SCREEN_HEIGHT,40);
     [self.view addSubview:topBar];
@@ -241,6 +246,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     [tool addButtonToView:self.view withTitle:@"运营资本" Tag:OperaCap frame:CGRectMake(277,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainFeeBt" highBackGroundImg:@"selectedMainfee"];
     
     self.discountBt=[tool addButtonToView:self.view withTitle:@"折现率" Tag:DiscountRate frame:CGRectMake(377,5,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"discountBt" highBackGroundImg:@"selectedDiscount"];
+    [self.discountBt setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
     
     [tool addButtonToView:self.view withTitle:@"返回" Tag:BackToSuperView frame:CGRectMake(10,5,50,32) andFun:@selector(chartAction:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"backBt" highBackGroundImg:nil];
     
@@ -293,6 +299,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     [tool addLabelToView:self.view withTitle:[numberFormatter stringFromNumber:@([comInfo[@"marketprice"] floatValue])] Tag:11 frame:CGRectMake(companyNameLabelLenght+40+markPriceLabelSize.width,45,markPriceSize.width,markPriceSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#817a6b" location:NSTextAlignmentLeft];
     
     [self addScatterChart];
+    [self.discountBt setEnabled:YES];
     SAFE_RELEASE(topBar);
     SAFE_RELEASE(tool);
     SAFE_RELEASE(numberFormatter);
@@ -302,6 +309,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 #pragma mark -
 #pragma Button Clicked Methods
 -(void)chartAction:(UIButton *)bt{
+    //NSLog(@"chartAction");
     bt.showsTouchWhenHighlighted=YES;
     if(bt.tag==SaveData){
         
@@ -338,7 +346,8 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         for(id obj in self.forecastDefaultPoints){
             [self.forecastPoints addObject:[obj mutableCopy]];
         }
-        [self.hisPoints lastObject][@"v"] = (self.forecastDefaultPoints)[0][@"v"];
+        [self.forecastPoints removeObjectAtIndex:0];
+        [self.hisPoints lastObject][@"v"] = (self.forecastDefaultPoints)[1][@"v"];
         [self addToDriverIds:globalDriverId];
         [self setStockPrice];
         [self setXYAxis];
@@ -351,21 +360,18 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 
 
 -(void)selectIndustry:(UIButton *)sender forEvent:(UIEvent*)event{
-    
+    //NSLog(@"selectIndustry");
     sender.showsTouchWhenHighlighted=YES;
 	CQMFloatingController *floatingController = [CQMFloatingController sharedFloatingController];
     floatingController.frameSize=CGSizeMake(280,280);
     floatingController.frameColor=[Utiles colorWithHexString:@"#e26b17"];
-    if(sender.tag==MainIncome){
-        [self removeDiscountView];
+    if(sender.tag==MainIncome){        
         [floatingController presentWithContentViewController:modelMainViewController
                                                     animated:YES];
     }else if(sender.tag==OperaFee){
-        [self removeDiscountView];
         [floatingController presentWithContentViewController:modelFeeViewController
                                                     animated:YES];
     }else if(sender.tag==OperaCap){
-        [self removeDiscountView];
         [floatingController presentWithContentViewController:modelCapViewController
                                                     animated:YES];
     }else if(sender.tag==DiscountRate){
@@ -383,7 +389,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-    
+    //NSLog(@"webViewDidFinishLoad");
     webIsLoaded=YES;
     [MBProgressHUD showHUDAddedTo:self.hostView animated:YES];
     NSDictionary *params=@{@"stockCode": comInfo[@"stockcode"]};
@@ -395,10 +401,6 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         
         id resTmp=[Utiles getObjectDataFromJsFun:self.webView funName:@"initData" byData:self.jsonForChart shouldTrans:YES];
         
-        
-        if(self.sourceType==MySavedType){
-            [self adjustChartDataForSaved:comInfo[@"stockcode"] andToken:[Utiles getUserToken]];
-        }
         self.industryClass=resTmp;
         id transObj=resTmp;
         self.modelMainViewController.jsonData=transObj;
@@ -408,11 +410,16 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         self.modelFeeViewController.indicator=@"listFee";
         self.modelCapViewController.indicator=@"listCap";
         
-        if(globalDriverId==0){
-            globalDriverId=(self.industryClass)[@"listMain"][0][@"id"];
+        if(self.sourceType==MySavedType){
+            [self adjustChartDataForSaved:comInfo[@"stockcode"] andToken:[Utiles getUserToken]];
+        }else{
+            if(globalDriverId==0){
+                globalDriverId=self.industryClass[@"listMain"][0][@"id"];
+                NSLog(@"%@",globalDriverId);
+            }
+            [self modelClassChanged:globalDriverId];
         }
-        [self modelClassChanged:globalDriverId];
-        
+    
         [MBProgressHUD hideHUDForView:self.hostView animated:YES];
         if(!isAddGesture){
             //手势添加
@@ -431,21 +438,24 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 #pragma mark -
 #pragma mark ModelClass Methods Delegate
 -(void)modelClassChanged:(NSString *)driverId{
+    //NSLog(@"modelClassChanged");
     id chartData=[Utiles getObjectDataFromJsFun:self.webView funName:@"returnChartData" byData:driverId shouldTrans:YES];
     globalDriverId=driverId;
     
     [self divideData:chartData];
-    
+ 
     self.yAxisUnit=chartData[@"unit"];
     NSDictionary *pointData=[Utiles unitConversionData:[(self.forecastPoints)[0][@"v"] stringValue] andUnit:self.yAxisUnit];
     graph.title=[NSString stringWithFormat:@"%@(单位:%@)",chartData[@"title"],pointData[@"unit"]];
     [self setXYAxis];
     [self setStockPrice];
+    [self removeDiscountView];
 }
 
 #pragma mark -
 #pragma mark General Methods
 -(void)divideData:(id)sourceData{
+    //NSLog(@"divideData");
     [self.hisPoints removeAllObjects];
     [self.forecastDefaultPoints removeAllObjects];
     [self.forecastPoints removeAllObjects];
@@ -464,15 +474,16 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         [self.forecastPoints addObject:mutableObj];
     }
     //历史数据与预测数据线拼接
-    [self.hisPoints addObject:(self.forecastPoints)[0]];
+    [self.forecastDefaultPoints insertObject:[self.hisPoints lastObject] atIndex:0];
     //[self.forecastPoints insertObject:[self.hisPoints lastObject] atIndex:0];
-    //[self.forecastDefaultPoints insertObject:[self.forecastPoints objectAtIndex:0] atIndex:0];
+    [self.hisPoints addObject:self.forecastPoints[0]];
     SAFE_RELEASE(mutableObj);
 }
 
 
 
 -(void)adjustChartDataForSaved:(NSString *)stockCode andToken:(NSString*)token{
+    //NSLog(@"adjustChartDataForSaved");
     NSDictionary *params=@{@"stockcode": stockCode,@"token": token,@"from": @"googuu"};
     [Utiles getNetInfoWithPath:@"AdjustedData" andParams:params besidesBlock:^(id resObj){
         if(resObj!=nil){
@@ -486,13 +497,16 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
                 chartStr=[chartStr stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
                 [Utiles getObjectDataFromJsFun:self.webView funName: @"chartCalu" byData:chartStr shouldTrans:NO];
             }
-            [self modelClassChanged:globalDriverId];
+            if(self.wantSavedType==DiscountSaved){
+                [self.discountBt sendActionsForControlEvents: UIControlEventTouchUpInside];
+            }else
+                [self modelClassChanged:globalDriverId];
         }
     }];
 }
 
 -(void)setStockPrice{
-    
+    //NSLog(@"setStockPrice");
     NSString *jsonPrice=[self.forecastPoints JSONString];
     jsonPrice=[jsonPrice stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
     NSString *backInfo=[Utiles getObjectDataFromJsFun:self.webView funName:@"chartCalu" byData:jsonPrice shouldTrans:NO];
@@ -512,6 +526,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 
 -(void)viewPan:(UIPanGestureRecognizer *)tapGr
 {
+    //NSLog(@"viewPan");
     CGPoint now=[tapGr locationInView:self.view];
     CGPoint change=[tapGr translationInView:self.view];
     CGPoint coordinate=[self CoordinateTransformRealToAbstract:now];
@@ -537,7 +552,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         
         coordinate.x=(int)(coordinate.x+0.5);
         
-        int subscript=coordinate.x-XRANGEBEGIN-([self.hisPoints count]<3?[self.hisPoints count]:3);
+        int subscript=coordinate.x-XRANGEBEGIN-([self.hisPoints count]-1<3?[self.hisPoints count]-1:3);
         subscript=subscript<0?0:subscript;
         subscript=subscript>=[self.forecastPoints count]-1?[self.forecastPoints count]-1:subscript;
         NSAssert(subscript<=[self.forecastPoints count]-1&&coordinate.x>=0,@"over bounds");
@@ -769,6 +784,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 
 
 -(void)setXYAxis{
+    //NSLog(@"setXYAxis");
     NSMutableArray *xTmp=[[NSMutableArray alloc] init];
     NSMutableArray *yTmp=[[NSMutableArray alloc] init];
     for(id obj in self.hisPoints){
@@ -796,7 +812,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 }
 
 -(void)addBarChart{
-    
+    //NSLog(@"addBarChart");
     if(![graph plotWithIdentifier:COLUMNAR_DATALINE_IDENTIFIER]){
         CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
         lineStyle.miterLimit=0.0f;
@@ -821,7 +837,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 }
 
 -(void)addScatterChart{
-    
+    //NSLog(@"addScatterChart");
     linkage=YES;
     if([graph plotWithIdentifier:COLUMNAR_DATALINE_IDENTIFIER]){
         [graph removePlot:barPlot];

@@ -111,8 +111,9 @@
         [userPwdField becomeFirstResponder];
     }else if(textField.tag==200){
  
-        NSString *name=userNameField.text;
-        NSString *pwd=userPwdField.text;
+        NSString *name=[userNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSString *pwd=[userPwdField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
         [self userLoginUserName:name pwd:pwd];
         [textField resignFirstResponder];
     }

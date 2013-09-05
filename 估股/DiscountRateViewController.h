@@ -24,10 +24,10 @@
 @property BrowseSourceType sourceType;
 @property (nonatomic,retain) id comInfo;
 @property (nonatomic,retain) id jsonData;
-@property (nonatomic,retain) NSArray *dragChartChangedDriverIds;
 @property (nonatomic,retain) NSString *valuesStr;
 @property (nonatomic,retain) NSArray *defaultTransData;
 @property (nonatomic,retain) NSMutableArray *transData;
+@property (nonatomic,retain) NSArray *dragChartChangedDriverIds;
 
 @property (nonatomic,retain) IBOutlet UIButton *resetBt;
 @property (nonatomic,retain) IBOutlet UIButton *saveBt;

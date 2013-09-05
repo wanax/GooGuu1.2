@@ -82,8 +82,8 @@
                NSDictionary *occupationalList=[Utiles getConfigureInfoFrom:@"OccupationalList" andKey:nil inUserDomain:NO];
                
                id userInfo=[resObj objectForKey:@"data"];
-               [userNameLabel setText:[userInfo objectForKey:@"nickname"]];
-               [userIdLabel setText:[userInfo objectForKey:@"userid"]];
+               [userNameLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"nickname"]]?@"":[userInfo objectForKey:@"nickname"]];
+               [userIdLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"userid"]]?@"":[userInfo objectForKey:@"userid"]];
                
                [self setInfoType:@"trade" label:self.tradeLabel userInfo:userInfo dicName:@"TradeList"];
                [self setInfoType:@"favorite" label:self.favoriteLabel userInfo:userInfo dicName:@"InterestList"];
@@ -95,10 +95,17 @@
                [date setDateFormat:@"yyyy-MM-dd"];
                [regtimeLabel setText:[date stringFromDate:d]];
                
-               [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:userInfo[@"headerpicurl"]] options:SDWebImageDownloaderProgressiveDownload progress:^(NSUInteger receivedSize, long long expectedSize) {
-               } completed:^(UIImage *aImage, NSData *data, NSError *error, BOOL finished) {
-                   [self.avatar setImage:aImage];
-               }];
+               NSString *url=[Utiles isBlankString:userInfo[@"headerpicurl"]]?@"":userInfo[@"headerpicurl"];
+               if([Utiles isBlankString:url]){
+                   [self.avatar setImage:[UIImage imageNamed:@"defaultAvatar"]];
+               }else{
+                   [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:userInfo[@"headerpicurl"]] options:SDWebImageDownloaderProgressiveDownload progress:^(NSUInteger receivedSize, long long expectedSize) {
+                   } completed:^(UIImage *aImage, NSData *data, NSError *error, BOOL finished) {
+                       [self.avatar setImage:aImage];
+                   }];
+               }
+               
+               
 
                SAFE_RELEASE(date);
            }else{

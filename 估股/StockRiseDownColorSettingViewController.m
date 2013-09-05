@@ -54,7 +54,7 @@
     
     [self.view setBackgroundColor:[UIColor grayColor]];
     PrettyToolbar *top=[[PrettyToolbar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,44)];
-    UIBarButtonItem *back=[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
+    UIBarButtonItem *back=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
     NSMutableArray *myToolBarItems=[[NSMutableArray alloc] init];
     [myToolBarItems addObject:back];
     [top setItems:myToolBarItems];
@@ -96,9 +96,9 @@
     if(indexPath.row==0){
         setCellBlock(@"红涨绿跌",@"大陆常用",cell);
     }else if(indexPath.row==1){
-        setCellBlock(@"绿涨红跌",@"墙外常用",cell);
+        setCellBlock(@"绿涨红跌",@"海外常用",cell);
     }else if(indexPath.row==2){
-        setCellBlock(@"黄涨蓝跌",@"估股高端大气上档次必用",cell);
+        setCellBlock(@"黄涨蓝跌",@"估股色",cell);
     }
     int tag=[[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"stockColorSetting" inUserDomain:YES] intValue];
     if(tag==indexPath.row){

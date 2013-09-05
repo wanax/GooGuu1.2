@@ -68,8 +68,6 @@
     [self.view insertSubview:indicator aboveSubview:self.searchTable];
     [indicator release];
     
-    [self getcomListByKey:@""];
-    
     if(_refreshHeaderView == nil)
     {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.searchTable.bounds.size.height, self.view.frame.size.width, self.searchTable.bounds.size.height)];

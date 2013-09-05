@@ -50,29 +50,8 @@
 //退回主菜单
 -(void)back:(id)sender{
     
-    //XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-    
-    //viewController1.imageView.frame=CGRectMake(0,0,320,2600);
-    
-    /*[UIView beginAnimations:@"animation" context:nil];
-     [UIView setAnimationDuration:0.8f];
-     [UIView setAnimationCurve:UIViewAnimationCurveLinear];
-     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:delegate.window cache:YES];
-     [UIView commitAnimations];
-    
-    CATransition *animation = [CATransition animation];
-    animation.duration = 0.5f;
-    animation.timingFunction = UIViewAnimationCurveEaseInOut;
-    animation.fillMode = kCAFilterNearest;
-    animation.type = kCATransitionReveal;
-    animation.subtype = kCATransitionFromBottom;
-    [[delegate.window layer] addAnimation:animation forKey:@"animation"];
-    animation=nil;
-    
-    [self removeFromParentViewController];
-    [self.view removeFromSuperview];*/
     [self dismissViewControllerAnimated:YES completion:nil];
-    //[self.navigationController popToViewController:self animated:YES];
+
 }
 
 
@@ -114,7 +93,7 @@
     [top addSubview:companyNameLabel];
     SAFE_RELEASE(companyNameLabel);
     UIBarButtonItem *back=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    [back setBackgroundImage:[UIImage imageNamed:@"backBt"] forState:UIControlStateNormal barMetrics:nil];
+    [back setBackgroundImage:[UIImage imageNamed:@"backBt"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     myToolBarItems=[[NSMutableArray alloc] init];
     [myToolBarItems addObject:back];
     [top setItems:myToolBarItems];

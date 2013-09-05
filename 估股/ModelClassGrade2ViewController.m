@@ -71,7 +71,7 @@
 #pragma mark UITableViewController
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell  forRowAtIndexPath:(NSIndexPath *)indexPath{
     if([self.savedDataName containsObject:[[self.indicatorClass objectAtIndex:indexPath.row] objectForKey:@"name"]]){
-      [cell setBackgroundColor:[Utiles colorWithHexString:@"#BABABA"]];
+      [cell setBackgroundColor:[Utiles colorWithHexString:@"#ccd4d9"]];
     }
 }
 

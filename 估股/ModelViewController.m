@@ -273,17 +273,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    chartViewController=[[ChartViewController alloc] init];
+    chartViewController.sourceType=self.browseType;
+    chartViewController.globalDriverId=[[self.savedStockList objectAtIndex:indexPath.row] objectForKey:@"itemcode"];
+    chartViewController.view.frame=CGRectMake(0,0,SCREEN_HEIGHT,SCREEN_WIDTH);
     if([[[self.savedStockList objectAtIndex:indexPath.row] objectForKey:@"data"] count]==1){
-        disViewController.sourceType=MySavedType;
-        [self presentViewController:disViewController animated:YES completion:nil];
+        chartViewController.wantSavedType=DiscountSaved;
     }else{
-        chartViewController=[[ChartViewController alloc] init];
-        chartViewController.sourceType=self.browseType;
-        chartViewController.globalDriverId=[[self.savedStockList objectAtIndex:indexPath.row] objectForKey:@"itemcode"];
-        chartViewController.view.frame=CGRectMake(0,0,SCREEN_HEIGHT,SCREEN_WIDTH);
-        [self presentViewController:chartViewController animated:YES completion:nil];
-    }
-    
+        chartViewController.wantSavedType=ChartSaved;
+    }    
+    [self presentViewController:chartViewController animated:YES completion:nil];    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

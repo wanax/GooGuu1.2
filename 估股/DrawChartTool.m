@@ -110,7 +110,7 @@
         [button setBackgroundImage:[UIImage imageNamed:hUrl] forState:UIControlStateHighlighted];
     }
     
-    [button addTarget:standIn action:fun forControlEvents:UIControlEventTouchDown];
+    [button addTarget:standIn action:fun forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     
     return button;
