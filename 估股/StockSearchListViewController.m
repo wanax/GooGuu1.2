@@ -168,9 +168,7 @@
         }else{
             [cell.comBriefImg setImage:[UIImage imageNamed:@"hasnoBriefSymbol"]];
         }
-        
-        
-    
+ 
     }@catch (NSException *e) {
         NSLog(@"%@",e);
     }
@@ -197,7 +195,7 @@
     delegate.comInfo=[self.comList objectAtIndex:row];
     NSLog(@"%@",delegate.comInfo);
     ComFieldViewController *com=[[ComFieldViewController alloc] init];
-    com.browseType=ValuationModelType;
+    com.browseType=SearchStockList;
     com.view.frame=CGRectMake(0,20,SCREEN_WIDTH,SCREEN_HEIGHT);
     [self presentViewController:com animated:YES completion:nil];
     

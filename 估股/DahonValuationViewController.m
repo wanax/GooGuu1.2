@@ -213,7 +213,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
 
 -(void)initData{
     
-    NSDictionary *params=@{@"stockcode": comInfo[@"stockcode"],@"marketname": comInfo[@"marketname"]};
+    NSDictionary *params=@{@"stockcode": comInfo[@"stockcode"]};
     [Utiles getNetInfoWithPath:@"GetStockHistoryData" andParams:params besidesBlock:^(id resObj){
         NSNumberFormatter * formatter   = [[NSNumberFormatter alloc] init];
         [formatter setNumberStyle:NSNumberFormatterDecimalStyle];

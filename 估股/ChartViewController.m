@@ -428,7 +428,6 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         }else{
             if(globalDriverId==0){
                 globalDriverId=self.industryClass[@"listMain"][0][@"id"];
-                NSLog(@"%@",globalDriverId);
             }
             [self modelClassChanged:globalDriverId];
         }

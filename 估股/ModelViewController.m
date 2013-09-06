@@ -120,29 +120,11 @@
     self.tabController=(MHTabBarController *)self.parentViewController;
     
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-    comInfo=delegate.comInfo;
-    
-	// Do any additional setup after loading the view.
+    comInfo=delegate.comInfo;    
     [self.view setBackgroundColor:[Utiles colorWithHexString:@"#F3EFE1"]];
-
-    UIImageView *backGround1=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"valuationModelBack"]];
-    backGround1.frame=CGRectMake(0,0, SCREEN_WIDTH,60);
-    [self.view addSubview:backGround1];
-    UIImageView *backGround2=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"valuationModelBack"]];
-    backGround2.frame=CGRectMake(0,60, SCREEN_WIDTH,60);
-    [self.view addSubview:backGround2];
     
-    [self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
-    [self addNewButton:@"查看大行估值" Tag:3 frame:CGRectMake(8, 15, 150, 26)];
-    [self addNewButton:@"调整模型参数" Tag:2 frame:CGRectMake(84, 78, 150, 26)];
-    
-    if(isAttention){
-        attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 345, 106, 45) img:@"deleteAttentionBt"];
-    }else{
-        attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 345, 106, 45) img:@"addAttentionBt"];
-    }
-    [self addActionButtonTag:AddComment frame:CGRectMake(106, 345, 106, 45) img:@"addCommentBt"];
-    [self addActionButtonTag:AddShare frame:CGRectMake(212, 345, 108, 45) img:@"addShareBt"];
+    [self initBackground];
+    [self addButtons];
     
     if(self.browseType==MySavedType){
         [self initSavedTable];
@@ -153,10 +135,69 @@
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
     [self.view addGestureRecognizer:pan];
     [pan release];
-    SAFE_RELEASE(backGround1);
-    SAFE_RELEASE(backGround2);
 
 }
+-(void)initBackground{
+    
+    UIImageView *backGround1=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"valuationModelBack"]];
+    backGround1.frame=CGRectMake(0,0, SCREEN_WIDTH,60);
+    [self.view addSubview:backGround1];
+    UIImageView *backGround2=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"valuationModelBack"]];
+    backGround2.frame=CGRectMake(0,60, SCREEN_WIDTH,60);
+    [self.view addSubview:backGround2];
+    SAFE_RELEASE(backGround1);
+    SAFE_RELEASE(backGround2);
+    
+}
+-(void)requestValution:(UIButton *)bt{
+    NSString *stockCode=[comInfo objectForKey:@"stockcode"];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:stockCode,@"stockcode", nil];
+    [Utiles postNetInfoWithPath:@"Request" andParams:params besidesBlock:^(id resObj){
+        if(resObj){
+            if([[resObj objectForKey:@"status"] boolValue]){
+                [bt setBackgroundImage:[UIImage imageNamed:@"hasDoneRequestedBt"] forState:UIControlStateNormal];
+                [bt setTitle:@"请求送达" forState:UIControlStateNormal];
+                
+                [Utiles showToastView:self.view withTitle:@"谢谢" andContent:[NSString stringWithFormat:@"共计已发送%@次请求,我们会尽快处理.",[resObj objectForKey:@"data"]] duration:2.0];
+            }
+        }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }];
+}
+-(void)addButtons{
+    [self addNewButton:@"查看大行估值" Tag:3 frame:CGRectMake(8, 15, 150, 26)];
+    
+    if(self.browseType==ValuationModelType){
+        [self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
+        [self addNewButton:@"调整模型参数" Tag:2 frame:CGRectMake(84, 78, 150, 26)];
+    }else if(self.browseType==SearchStockList){
+        if([comInfo[@"hasmodel"] boolValue]){
+            [self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
+            [self addNewButton:@"调整模型参数" Tag:2 frame:CGRectMake(84, 78, 150, 26)];
+        }else{
+            UIButton *fBt=[self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
+            [fBt setEnabled:NO];
+            UIButton *reqBt=[UIButton buttonWithType:UIButtonTypeCustom];
+            [reqBt setFrame:CGRectMake(120, 78, 80, 26)];
+            reqBt.titleLabel.font=[UIFont fontWithName:@"Heiti SC" size:14.0f];
+            [reqBt setBackgroundImage:[UIImage imageNamed:@"requestValuationBt"] forState:UIControlStateNormal];
+            [reqBt setTitle:@"请求估值" forState:UIControlStateNormal];
+            [reqBt addTarget:self action:@selector(requestValution:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:reqBt];
+        }
+    }
+    
+    
+    if(isAttention){
+        attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 345, 106, 45) img:@"deleteAttentionBt"];
+    }else{
+        attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 345, 106, 45) img:@"addAttentionBt"];
+    }
+    [self addActionButtonTag:AddComment frame:CGRectMake(106, 345, 106, 45) img:@"addCommentBt"];
+    [self addActionButtonTag:AddShare frame:CGRectMake(212, 345, 108, 45) img:@"addShareBt"];
+}
+
 -(UIButton *)addActionButtonTag:(NSInteger)tag frame:(CGRect)rect img:(NSString *)img{
     UIButton *bt1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     bt1.frame = rect;
@@ -291,7 +332,7 @@
 }
 
 
--(void)addNewButton:(NSString *)title Tag:(NSInteger)tag frame:(CGRect)rect{
+-(UIButton *)addNewButton:(NSString *)title Tag:(NSInteger)tag frame:(CGRect)rect{
     UIButton *bt1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     bt1.frame = rect;
     [bt1 setTitle:title forState: UIControlStateNormal];
@@ -302,6 +343,7 @@
     bt1.tag = tag;
     [bt1 addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bt1];
+    return bt1;
 }
 
 -(void)panView:(UIPanGestureRecognizer *)tap{

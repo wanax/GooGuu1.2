@@ -379,7 +379,7 @@
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     int row=indexPath.row;
     delegate.comInfo=[self.comList objectAtIndex:row];
-    NSLog(@"%@",delegate.comInfo);
+
     com=[[ComFieldViewController alloc] init];
     com.browseType=ValuationModelType;
     com.view.frame=CGRectMake(0,20,SCREEN_WIDTH,SCREEN_HEIGHT);

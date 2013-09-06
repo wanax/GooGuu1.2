@@ -29,7 +29,8 @@ typedef enum {
     DragableChart,
     FinancalModelChart,
     ChartSaved,
-    DiscountSaved
+    DiscountSaved,
+    SearchStockList
 } BrowseSourceType;
 
 typedef enum {

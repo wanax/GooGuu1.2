@@ -61,7 +61,7 @@
     self.navigationController.navigationBarHidden=YES;
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
-    NSString *url=[NSString stringWithFormat:@"%@",comInfo[@"companypicurl"]];
+    NSString *comPicUrl=[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"companypicourl"]];
     if ([Utiles isNetConnected]) {
         [[SDImageCache sharedImageCache] clearDisk];
         [[SDImageCache sharedImageCache] clearMemory];
@@ -69,10 +69,10 @@
         self.browser.wantsFullScreenLayout = YES;
         
         DemoPhoto *photo = nil;
-        if([Utiles isBlankString:url]){
+        if([Utiles isBlankString:comPicUrl]){
             photo = [[DemoPhoto alloc] initWithImage:[UIImage imageNamed:@"defaultDiagram"]];
         }else{
-            photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:url]];
+            photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:comPicUrl]];
         }
         [self.photoDataSource addObject:photo];
         [self.navigationController pushViewController:self.browser animated:YES];
