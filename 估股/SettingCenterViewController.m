@@ -9,7 +9,6 @@
 #import "SettingCenterViewController.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "ClientLoginViewController.h"
-#import "XYZAppDelegate.h"
 #import "PrettyKit.h"
 #import "DoubleLabelCell.h"
 #import "LabelSwitchCell.h"
@@ -44,24 +43,31 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self.customTabel reloadData];
 }
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self setTitle:@"功能设置"];
-    
+    [self initCommonents];
+
+}
+#pragma mark -
+#pragma mark General Methods
+
+-(void)initCommonents{
     self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,390) style:UITableViewStyleGrouped];
     self.customTabel.delegate=self;
     self.customTabel.dataSource=self;
     [self.view addSubview:self.customTabel];
-    
-    
-    
 }
-#pragma mark -
-#pragma mark General Methods
 
 -(void)switchChange:(UISwitch *)p{
 
@@ -318,23 +324,27 @@
     NSInteger row=indexPath.row;
     NSInteger section=indexPath.section;
     if(section==0){
-        if (row==0) {
-            if([Utiles isLogin]){
-                [self pushViewController:@"ClientCenterViewController"];
-            }else{
-                [Utiles ToastNotification:@"您尚未登录" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+        if ([Utiles isNetConnected]) {
+            if (row==0) {
+                if([Utiles isLogin]){
+                    [self pushViewController:@"ClientCenterViewController"];
+                }else{
+                    [Utiles ToastNotification:@"您尚未登录" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                }
+            } else {
+                if ([Utiles isLogin]) {
+                    [self logout];
+                    [self.customTabel reloadData];
+                } else {
+                    ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
+                    loginViewController.sourceType=SettingBar;
+                    [self presentViewController:loginViewController animated:YES completion:nil];
+                }
             }
         } else {
-            if ([Utiles isLogin]) {
-                [self logout];
-                [self.customTabel reloadData];
-            } else {
-                ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
-                loginViewController.sourceType=SettingBar;
-                [self presentViewController:loginViewController animated:YES completion:nil];
-            }
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }
-   
+
     }else if(section==1){
         if(row==0){
             StockRiseDownColorSettingViewController *set=[[StockRiseDownColorSettingViewController alloc] init];
@@ -353,7 +363,11 @@
         }else if(row==3){
             [self pushViewController:@"AboutUsAndCopyrightViewController"];
         }else if(row==2){
-            [self pushViewController:@"FeedBackViewController"];
+            if ([Utiles isNetConnected]) {
+                [self pushViewController:@"FeedBackViewController"];
+            } else {
+                [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+            }        
         }
     }
 
@@ -376,12 +390,14 @@
                 [Utiles ToastNotification:@"注销成功" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"LogOut" object:nil];
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserToken"];
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserInfo"];
+                //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserInfo"];
                 
             }else if([[info objectForKey:@"status"] isEqualToString:@"0"]){
                 NSLog(@"logout failed:%@",[info objectForKey:@"msg"]);
             }
             
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
         
     }else{

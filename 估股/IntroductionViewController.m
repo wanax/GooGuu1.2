@@ -10,7 +10,6 @@
 
 #import "IntroductionViewController.h"
 #import "UIImageView+AFNetworking.h"
-#import "XYZAppDelegate.h"
 #import "MHTabBarController.h"
 #import "UIImageView+Addition.h"
 #import "UIImageView+WebCache.h"
@@ -47,6 +46,14 @@
     return self;
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,20 +62,24 @@
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
     NSString *url=[NSString stringWithFormat:@"%@",comInfo[@"companypicurl"]];
-    
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
-    self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
-    self.browser.wantsFullScreenLayout = YES;
-    
-    DemoPhoto *photo = nil;
-    if([Utiles isBlankString:url]){
-        photo = [[DemoPhoto alloc] initWithImage:[UIImage imageNamed:@"defaultDiagram"]];
-    }else{
-        photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:url]];
+    if ([Utiles isNetConnected]) {
+        [[SDImageCache sharedImageCache] clearDisk];
+        [[SDImageCache sharedImageCache] clearMemory];
+        self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
+        self.browser.wantsFullScreenLayout = YES;
+        
+        DemoPhoto *photo = nil;
+        if([Utiles isBlankString:url]){
+            photo = [[DemoPhoto alloc] initWithImage:[UIImage imageNamed:@"defaultDiagram"]];
+        }else{
+            photo = [[DemoPhoto alloc] initWithURL:[NSURL URLWithString:url]];
+        }
+        [self.photoDataSource addObject:photo];
+        [self.navigationController pushViewController:self.browser animated:YES];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }
-    [self.photoDataSource addObject:photo];
-    [self.navigationController pushViewController:self.browser animated:YES];
+    
 }
 
 

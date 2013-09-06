@@ -17,4 +17,6 @@
 #import "JSONKit.h"
 #import "EnumSummary.h"
 #import "BaiduMobStat.h"
+#import "XYZAppDelegate.h"
+#import "MBProgressHUD.h"
 #endif

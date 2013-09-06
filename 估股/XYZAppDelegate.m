@@ -50,20 +50,20 @@
     [super dealloc];
 }
 
-/*-(void)beginStatistics{
+-(void)beginStatistics{
     
     BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
     statTracker.enableExceptionLog = YES;
-    statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
-    statTracker.logSendInterval = 1;  
+    //statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
+    //statTracker.logSendInterval=1;
     statTracker.logSendWifiOnly = YES;
-    [statTracker startWithAppId:@"NusSX3PvVC1VoE8YeyqO4OUM"];
+    [statTracker startWithAppId:@"0737a8b0ff"];
     
-}*/
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[self beginStatistics];
+    [self beginStatistics];
     [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"stockColorSetting" andContent:[NSString stringWithFormat:@"%d",0]];
     [Crashlytics startWithAPIKey:@"c59317990c405b2f42582cacbe9f4fa9abe1fefb"];
     
@@ -79,9 +79,9 @@
         [agreement release];
         
     }else {
-       
-        UITabBarItem *barItem=[[UITabBarItem alloc] initWithTitle:@"最新简报" image:[UIImage imageNamed:@"googuuNewsBar"] tag:1];      
-        UITabBarItem *barItem2=[[UITabBarItem alloc] initWithTitle:@"我的估股" image:[UIImage imageNamed:@"myGooGuuBar"] tag:2];        
+        
+        UITabBarItem *barItem=[[UITabBarItem alloc] initWithTitle:@"最新简报" image:[UIImage imageNamed:@"googuuNewsBar"] tag:1];
+        UITabBarItem *barItem2=[[UITabBarItem alloc] initWithTitle:@"我的估股" image:[UIImage imageNamed:@"myGooGuuBar"] tag:2];
         UITabBarItem *barItem3=[[UITabBarItem alloc] initWithTitle:@"金融工具" image:[UIImage imageNamed:@"hammer.png"] tag:3];
         UITabBarItem *barItem4=[[UITabBarItem alloc] initWithTitle:@"功能设置" image:[UIImage imageNamed:@"moreAboutBar"] tag:4];
         UITabBarItem *barItem5=[[UITabBarItem alloc] initWithTitle:@"估值模型" image:[UIImage imageNamed:@"companyListBar"] tag:5];
@@ -90,7 +90,7 @@
         MyGooguuViewController *myGooGuu=[[MyGooguuViewController alloc] init];
         myGooGuu.tabBarItem=barItem2;
         PrettyNavigationController *myGooGuuNavController=[[PrettyNavigationController alloc] initWithRootViewController:myGooGuu];
-
+        
         
         //客户设置
         SettingCenterViewController *settingView=[[SettingCenterViewController alloc] init];
@@ -109,33 +109,33 @@
         universeViewController.tabBarItem=barItem5;
         PrettyNavigationController *universeNav=[[PrettyNavigationController alloc] initWithRootViewController:universeViewController];
         
-      
+        
         self.tabBarController = [[PrettyTabBarViewController alloc] init];
-
+        
         self.tabBarController.viewControllers = [NSArray arrayWithObjects:gooNewsNavController,universeNav,myGooGuuNavController, clientCenterNav ,nil];
         
-        self.window.backgroundColor=[UIColor clearColor];       
+        self.window.backgroundColor=[UIColor clearColor];
         self.window.rootViewController = self.tabBarController;
-
+        
         
         SAFE_RELEASE(barItem);
         SAFE_RELEASE(barItem2);
         SAFE_RELEASE(barItem3);
         SAFE_RELEASE(barItem4);
         SAFE_RELEASE(barItem5);
-
+        
         SAFE_RELEASE(myGooGuu);
         SAFE_RELEASE(settingView);
         SAFE_RELEASE(gooNewsNavController);
         SAFE_RELEASE(universeViewController);
-
+        
         SAFE_RELEASE(myGooGuuNavController);
         SAFE_RELEASE(clientCenterNav);
         SAFE_RELEASE(gooNewsNavController);
         SAFE_RELEASE(universeNav);
-
+        
     }
-
+    
     if([Utiles isLogin]){
         
         [self handleTimer:nil];
@@ -146,7 +146,7 @@
                                                     userInfo: nil
                                                      repeats: YES];
     }
-    Reachability* reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    Reachability* reach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
     
     reach.reachableOnWWAN = NO;
     
@@ -156,12 +156,12 @@
                                                object:nil];
     
     [reach startNotifier];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginKeeping:) name:@"LoginKeeping" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelLoginKeeping:) name:@"LogOut" object:nil];
     
     [self.window makeKeyAndVisible];
-
+    
     return YES;
 }
 
@@ -169,20 +169,17 @@
 {
     Reachability * reach = [note object];
     
-    if([reach isReachable])
-    {
+    if([reach isReachable]){
         NSLog(@"Reachable");
-    }
-    else
-    {
+        self.isReachable=YES;
+    }else{
         NSLog(@"NReachable");
+        self.isReachable=NO;
     }
 }
 
-
-
 -(void)loginKeeping:(NSNotification*)notification{
-
+    
     loginTimer = [NSTimer scheduledTimerWithTimeInterval: 7000// 当函数正在调用时，及时间隔时间到了 也会忽略此次调用
                                                   target: self
                                                 selector: @selector(handleTimer:)
@@ -199,45 +196,25 @@
     NSUserDefaults *userDeaults=[NSUserDefaults standardUserDefaults];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[[[userDeaults objectForKey:@"UserInfo"] objectForKey:@"username"] lowercaseString],@"username",[Utiles md5:[[userDeaults objectForKey:@"UserInfo"] objectForKey:@"password"]],@"password",@"googuu",@"from", nil];
     [Utiles getNetInfoWithPath:@"Login" andParams:params besidesBlock:^(id resObj){
-    
+        
         if([[resObj objectForKey:@"status"] isEqualToString:@"1"]){
             NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
             [userDefaults removeObjectForKey:@"UserToke"];
             [userDefaults setObject:[resObj objectForKey:@"token"] forKey:@"UserToken"];
             
             NSLog(@"%@",[resObj objectForKey:@"token"]);
-
+            
         }else {
             NSLog(@"%@",[resObj objectForKey:@"msg"]);
         }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
     
     
 }
 
-/*-(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-    
-    //return UIInterfaceOrientationMaskAllButUpsideDown;
-}*/
-
-
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
 
 
 

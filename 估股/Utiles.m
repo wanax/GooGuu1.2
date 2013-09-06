@@ -9,8 +9,8 @@
 #import "Utiles.h"
 #import "GCDiscreetNotificationView.h"
 #import "MBProgressHUD.h"
-#import "AFHTTPClient.h"
-#import "AFHTTPRequestOperation.h"
+#import "Reachability.h"
+#import "Toast+UIView.h"
 
 
 @implementation Utiles
@@ -169,8 +169,7 @@ static NSDateFormatter *formatter;
 }
 
 
-+(void)getNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void (^)(id))block{
-    
++(void)getNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void (^)(id))block failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
     @try {
         AFHTTPClient *getAction=[[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[Utiles getConfigureInfoFrom:@"netrequesturl" andKey:@"GooGuuBaseURL" inUserDomain:NO]]];
         [getAction getPath:[Utiles getConfigureInfoFrom:@"netrequesturl" andKey:url inUserDomain:NO] parameters:params success:^(AFHTTPRequestOperation *operation,id responseObject){
@@ -181,7 +180,7 @@ static NSDateFormatter *formatter;
             }
             
         }failure:^(AFHTTPRequestOperation *operation,NSError *error){
-            NSLog(@"%@",error.localizedDescription);
+            failure(operation,error);
         }];
         [getAction release];
     }
@@ -194,7 +193,7 @@ static NSDateFormatter *formatter;
     
 }
 
-+(void)postNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void (^)(id))block{
++(void)postNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void (^)(id))block failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
     
     @try {
         AFHTTPClient *postAction=[[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[Utiles getConfigureInfoFrom:@"netrequesturl" andKey:@"GooGuuBaseURL" inUserDomain:NO]]];
@@ -206,7 +205,7 @@ static NSDateFormatter *formatter;
             }
             
         }failure:^(AFHTTPRequestOperation *operation,NSError *error){
-            NSLog(@"%@",error.localizedDescription);
+            failure(operation,error);
         }];
         [postAction release];
     }
@@ -541,7 +540,17 @@ NSComparator cmptr1 = ^(id obj1, id obj2){
     return [arr sortedArrayUsingComparator:cmptr1];
 }
 
++(BOOL)isNetConnected{    
+    return ((XYZAppDelegate *)[[UIApplication sharedApplication] delegate]).isReachable;
+}
 
++(void)showToastView:(UIView *)view withTitle:(NSString *)title andContent:(NSString *)content duration:(float)duration{
+    if(title){
+        [view makeToast:content duration:duration position:@"center" title:title];
+    }else{
+        [view makeToast:content duration:duration position:@"center"];
+    }
+}
 
 
 @end

@@ -13,15 +13,15 @@
 #import "WebKitAvailability.h"
 #import "UIImageView+AFNetworking.h"
 #import "GooGuuArticleViewController.h"
-#import "MBProgressHUD.h"
 #import "MHTabBarController.h"
 #import "ArticleCommentViewController.h"
 #import "DailyStockCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "SVPullToRefresh.h"
-#import "XYZAppDelegate.h"
 #import "ComFieldViewController.h"
 #import "HelpViewController.h"
+#import "Reachability.h"
+#import "Toast+UIView.h"
 
 
 
@@ -61,9 +61,13 @@
     return self;
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
 -(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self.customTableView reloadData];
-    //[[self.tabBarController tabBar] setHidden:NO];
 }
 -(void)helpAction:(id)sender{
     
@@ -93,17 +97,29 @@
     self.title=@"最新简报";
     self.readingMarksDic=[Utiles getConfigureInfoFrom:@"readingmarks" andKey:nil inUserDomain:YES];
     
-   	customTableView=[[CustomTableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,370)];
+   	
+    [self addTable];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self getGooGuuNews];    
+    [self addTableAction];
     
+}
+
+-(void)addTable{
+    
+    customTableView=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,370)];
+    [self.customTableView setBackgroundColor:[Utiles colorWithHexString:[Utiles getConfigureInfoFrom:@"colorconfigure" andKey:@"NormalCellColor" inUserDomain:NO]]];
     customTableView.dataSource=self;
     customTableView.delegate=self;
-    
     [self.view addSubview:customTableView];
-    [self getGooGuuNews];
+    
+}
+
+-(void)addTableAction{
+    
     [self.customTableView addInfiniteScrollingWithActionHandler:^{
         [self addGooGuuNews];
-    }];
-   
+    }];    
     if(_refreshHeaderView == nil)
     {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.customTableView.bounds.size.height, self.view.frame.size.width, self.customTableView.bounds.size.height)];
@@ -114,10 +130,7 @@
         [view release];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
-
-
 
 
 
@@ -139,21 +152,26 @@
         [self.customTableView reloadData];
         [self.customTableView.infiniteScrollingView stopAnimating];
         
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
 }
 
 //网络获取数据
 - (void)getGooGuuNews{
-    
+ 
     [Utiles getNetInfoWithPath:@"NewesAnalysereportURL" andParams:nil besidesBlock:^(id news){
-       
+        
         self.arrList=[news objectForKey:@"data"];
-       
         [self.customTableView reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.customTableView];
         
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        NSLog(@"%@",error.localizedDescription);
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
     [Utiles getNetInfoWithPath:@"DailyStock" andParams:nil besidesBlock:^(id obj){
@@ -161,12 +179,22 @@
         self.imageUrl=[NSString stringWithFormat:@"%@",[obj objectForKey:@"comanylogourl"]];
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[obj objectForKey:@"stockcode"],@"stockcode", nil];
         [Utiles getNetInfoWithPath:@"QueryCompany" andParams:params besidesBlock:^(id resObj){
-           
+            
             self.companyInfo=resObj;
             [self.customTableView reloadData];
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            NSLog(@"%@",error.localizedDescription);
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
         [self.customTableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        NSLog(@"%@",error.localizedDescription);
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.customTableView];
     }];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

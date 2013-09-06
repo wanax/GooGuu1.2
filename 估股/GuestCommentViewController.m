@@ -12,14 +12,12 @@
 #import "UserCell.h"
 #import "NSDictionary+MutableDeepCopy.h"
 #import "UIImageView+AFNetworking.h"
-#import "XYZAppDelegate.h"
 #import "MHTabBarController.h"
 #import "CustomTableView.h"
 #import "EGORefreshTableHeaderView.h"
 #import "ComFieldViewController.h"
 #import "AddCommentViewController.h"
 #import "PrettyKit.h"
-#import "Toast+UIView.h"
 #import "ComfieldTabelDataSource.h"
 #import "UserCell+ConfigureForComment.h"
 
@@ -94,18 +92,21 @@ static NSString * const UserCellIdentifier = @"UserCellIdentifier";
 
 -(void)wanSay:(id)sender{
     
-    XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
-    id comInfo=delegate.comInfo;
-    
-    NSString *code=[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"stockcode"]];
-    
-    AddCommentViewController *addCommentViewController=[[AddCommentViewController alloc] initWithNibName:@"AddCommentView" bundle:nil];
-    addCommentViewController.articleId=code;
-    addCommentViewController.type=CompanyType;
-    
-    [self presentViewController:addCommentViewController animated:YES completion:nil];
-    [addCommentViewController release];
-    
+    if ([Utiles isNetConnected]) {
+        XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
+        id comInfo=delegate.comInfo;
+        
+        NSString *code=[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"stockcode"]];
+        
+        AddCommentViewController *addCommentViewController=[[AddCommentViewController alloc] initWithNibName:@"AddCommentView" bundle:nil];
+        addCommentViewController.articleId=code;
+        addCommentViewController.type=CompanyType;
+        
+        [self presentViewController:addCommentViewController animated:YES completion:nil];
+        [addCommentViewController release];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }  
 }
 
 - (void)setupTableView
@@ -175,6 +176,8 @@ static NSString * const UserCellIdentifier = @"UserCellIdentifier";
             [Utiles ToastNotification:@"暂无评论" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.table];
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 
     
@@ -186,11 +189,8 @@ static NSString * const UserCellIdentifier = @"UserCellIdentifier";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.view makeToast:[[self.commentList objectAtIndex:indexPath.row] objectForKey:@"content"]
-                duration:2.0
-                position:@"center"
-                   title:@"用户评论"
-     ];
+
+    [Utiles showToastView:self.view withTitle:@"用户评论" andContent:[[self.commentList objectAtIndex:indexPath.row] objectForKey:@"content"] duration:2.0];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

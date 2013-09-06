@@ -9,7 +9,6 @@
 #import "DiscountRateViewController.h"
 #import "DrawChartTool.h"
 #import "ChartViewController.h"
-#import "XYZAppDelegate.h"
 
 
 @interface DiscountRateViewController ()
@@ -103,7 +102,13 @@
     }
     return self;
 }
+
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
 -(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     self.chartViewController.isShowDiscountView=NO;
     NSString *values=[Utiles getObjectDataFromJsFun:self.webView funName:@"getValues" byData:nil shouldTrans:NO];
     self.chartViewController.valuesStr=values;
@@ -189,6 +194,8 @@
                 [saveBt setEnabled:NO];
                 isSaved=YES;
             }
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
     }else if(bt.tag==BackToSuperView){
         
@@ -257,6 +264,8 @@
             }
             
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 

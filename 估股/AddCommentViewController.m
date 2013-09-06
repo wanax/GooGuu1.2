@@ -78,7 +78,9 @@
             }else{
                 [Utiles ToastNotification:@"发布失败" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             }
-        }];        
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        }];
     }else{
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:articleId,@"articleid",textField.text,@"msg",[Utiles getUserToken],@"token",@"googuu",@"from",nil];
         [Utiles postNetInfoWithPath:@"ContentrReply" andParams:params besidesBlock:^(id resObj){
@@ -92,6 +94,8 @@
             }else{
                 [Utiles ToastNotification:@"发布失败" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             }
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
     }
     return YES;

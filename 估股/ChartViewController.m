@@ -15,7 +15,6 @@
 #import "ModelViewController.h"
 #import "MHTabBarController.h"
 #import "MBProgressHUD.h"
-#import "XYZAppDelegate.h"
 #import "TSPopoverController.h"
 #import "PrettyNavigationController.h"
 #import "CQMFloatingController.h"
@@ -131,16 +130,20 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     }
 }
 -(void)addDiscountView{
-    if(!isShowDiscountView){
-        isShowDiscountView=YES;
-        [self.discountBt setEnabled:NO];
-        [self.view addSubview:self.rateViewController.view];
-        CATransition *transition=[CATransition animation];
-        transition.duration=0.1f;
-        transition.fillMode=kCAFillRuleNonZero;
-        transition.type=kCATransitionFade;
-        transition.subtype=kCATransitionFromTop;
-        [self.rateViewController.view.layer addAnimation:transition forKey:@"animation"];
+    if([Utiles isNetConnected]){
+        if(!isShowDiscountView){
+            isShowDiscountView=YES;
+            [self.discountBt setEnabled:NO];
+            [self.view addSubview:self.rateViewController.view];
+            CATransition *transition=[CATransition animation];
+            transition.duration=0.1f;
+            transition.fillMode=kCAFillRuleNonZero;
+            transition.type=kCATransitionFade;
+            transition.subtype=kCATransitionFromTop;
+            [self.rateViewController.view.layer addAnimation:transition forKey:@"animation"];
+        }
+    }else{
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }
 }
 -(void)removeDiscountView{
@@ -163,7 +166,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    //NSLog(@"viewDidAppear");
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     if(webIsLoaded){
         if(![Utiles isBlankString:self.valuesStr]){
             self.valuesStr=[self.valuesStr stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
@@ -171,6 +174,10 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
             [self modelClassChanged:globalDriverId];
         }
     }
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
 }
 
 - (void)viewDidLoad
@@ -254,9 +261,9 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     
     saveBt=[tool addButtonToView:self.view withTitle:@"保存" Tag:SaveData frame:CGRectMake(418,47,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#d0d1d2" textColor:@"#FFFEFE" normalBackGroundImg:@"saveBt" highBackGroundImg:nil];
     
-    [tool addButtonToView:self.view withTitle:@"点动" Tag:DragChartType frame:CGRectMake(300,47,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
+    self.linkBt=[tool addButtonToView:self.view withTitle:@"点动" Tag:DragChartType frame:CGRectMake(300,47,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
     
-    [tool addButtonToView:self.view withTitle:@"复位" Tag:ResetChart frame:CGRectMake(359,47,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
+    self.resetBt=[tool addButtonToView:self.view withTitle:@"复位" Tag:ResetChart frame:CGRectMake(359,47,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
     
     //公司名称label
     CGSize labelsize1 = [tool getLabelSizeFromString:comInfo[@"companyname"] font:@"Heiti SC" fontSize:14.0];
@@ -301,7 +308,9 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     [tool addLabelToView:self.view withTitle:[numberFormatter stringFromNumber:@([comInfo[@"marketprice"] floatValue])] Tag:11 frame:CGRectMake(companyNameLabelLenght+40+markPriceLabelSize.width,45,markPriceSize.width,markPriceSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#817a6b" location:NSTextAlignmentLeft];
     
     [self addScatterChart];
-    [self.discountBt setEnabled:YES];
+    if ([Utiles isNetConnected]) {
+        [self.discountBt setEnabled:YES];
+    }    
     SAFE_RELEASE(topBar);
     SAFE_RELEASE(tool);
     SAFE_RELEASE(numberFormatter);
@@ -330,6 +339,8 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
             }else{
                 [Utiles ToastNotification:@"保存失败" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             }
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
         [self.changedDriverIds removeAllObjects];
         
@@ -430,8 +441,14 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
             [panGr release];
             isAddGesture=YES;
         }
-        
-        
+     
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.hostView animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        [self.discountBt setEnabled:NO];
+        [self.saveBt setEnabled:NO];
+        [self.resetBt setEnabled:NO];
+        [self.linkBt setEnabled:NO];
     }];
     
     
@@ -506,6 +523,9 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
             }else
                 [self modelClassChanged:globalDriverId];
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.hostView animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 

@@ -25,7 +25,7 @@
     
 }
 
-@property (nonatomic,retain) CustomTableView *customTableView;
+@property (nonatomic,retain) UITableView *customTableView;
 
 @property (nonatomic,retain) NSMutableArray *arrList;
 @property (nonatomic,retain) NSString *imageUrl;

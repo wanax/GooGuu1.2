@@ -14,8 +14,6 @@
 #import "MHTabBarController.h"
 #import "FinancalModelChartViewController.h"
 #import "DahonValuationViewController.h"
-#import "XYZAppDelegate.h"
-#import "MBProgressHUD.h"
 #import "DiscountRateViewController.h"
 #import "MHTabBarController.h"
 
@@ -62,10 +60,12 @@
     return self;
 }
 -(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self removeTextField];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     if(browseType==MySavedType){
         [self.savedTable reloadData];
     }
@@ -210,6 +210,8 @@
             }
             
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 
@@ -228,6 +230,8 @@
         }else{
             _count++;
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 
@@ -326,9 +330,12 @@
         [self attentionAction];
         
     }else if(bt.tag==AddComment){
-        
-        [self addTextField];
-        
+        if ([Utiles isNetConnected]) {
+            [self addTextField];
+        } else {
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        }
+     
     }else if(bt.tag==AddShare){
         
     }
@@ -349,6 +356,8 @@
             }else{
                 [Utiles ToastNotification:@"发布失败" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             }
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
     }else{
         [Utiles ToastNotification:@"请填写内容" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
@@ -384,6 +393,8 @@
             }
         }
         
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 
 }
@@ -406,6 +417,8 @@
             isAttention=NO;
             [self.attentionBt setBackgroundImage:[UIImage imageNamed:@"addAttentionBt"] forState:UIControlStateNormal];
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
 }

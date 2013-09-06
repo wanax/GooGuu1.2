@@ -9,7 +9,6 @@
 #import "AnalyDetailViewController.h"
 #import "UILabel+VerticalAlign.h"
 #import "PrettyToolbar.h"
-#import "XYZAppDelegate.h"
 #import "AnalyDetailContainerViewController.h"
 
 @interface AnalyDetailViewController ()

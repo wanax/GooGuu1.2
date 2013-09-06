@@ -13,7 +13,6 @@
 #import "CompanyListViewController.h"
 #import "DBLite.h"
 #import "math.h"
-#import "XYZAppDelegate.h"
 #import "MHTabBarController.h"
 #import "ComFieldViewController.h"
 #import "CustomTableView.h"
@@ -21,7 +20,6 @@
 #import "UIButton+BGColor.h"
 #import "AFHTTPClient.h"
 #import "AFHTTPRequestOperation.h"
-#import "MBProgressHUD.h"
 #import "SVPullToRefresh.h"
 #import "IndicatorComView.h"
 #import "StockSearchListViewController.h"
@@ -59,7 +57,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self getConcernStocksCode];
     [self.table reloadData];
     if(isSearchList){
@@ -67,19 +65,35 @@
     }
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+    [search resignFirstResponder];
+}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     nibsRegistered = NO;
-    if(isSearchList){
-        self.title=@"股票搜索";
-    }else{
-        self.title=@"估值模型";
-    }
+
+    self.title=@"估值模型";
+    [self initViewComponents];
+    [self addTableHeaderAndFooter];
     
-    [self getCompanyList];
-   
+    if ([Utiles isNetConnected]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self getCompanyList];
+        [self getConcernStocksCode];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }
+
+    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+    [self.view addGestureRecognizer:pan];
+    [pan release];
+
+}
+-(void)initViewComponents{
+    
     table=[[UITableView alloc] initWithFrame:CGRectMake(0,62,SCREEN_WIDTH,320)];
     search=[[UISearchBar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,35)];
     [[self.search.subviews objectAtIndex:0] removeFromSuperview];
@@ -97,19 +111,8 @@
     table.delegate=self;
     
     [self.view addSubview:table];
-    [self getConcernStocksCode];
-    
-    if(!self.isSearchList){
-        [self.table addInfiniteScrollingWithActionHandler:^{
-            [self addCompany];
-        }];
-    }
-    
-    
-    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-    [self.view addGestureRecognizer:pan];
-    [pan release];
-    
+}
+-(void)addTableHeaderAndFooter{
     if(_refreshHeaderView == nil)
     {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.table.bounds.size.height, self.view.frame.size.width, self.table.bounds.size.height)];
@@ -120,7 +123,11 @@
         [view release];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
+    [self.table addInfiniteScrollingWithActionHandler:^{
+        [self addCompany];
+    }];
+
 }
 
 #pragma mark -
@@ -131,8 +138,7 @@
     NSString *updateTime=[[self.comList lastObject] objectForKey:@"updatetime"];   
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:type],@"market",updateTime,@"updatetime", nil];
     
-    [Utiles getNetInfoWithPath:@"QueryAllCompany" andParams:params besidesBlock:^(id resObj){
-        
+    [Utiles getNetInfoWithPath:@"QueryAllCompany" andParams:params besidesBlock:^(id resObj){        
         NSMutableArray *temp=[NSMutableArray arrayWithArray:self.comList];
         for(id obj in resObj){
             [temp addObject:obj];
@@ -140,6 +146,10 @@
         self.comList=temp;
         [self.table reloadData];
         [self.table.infiniteScrollingView stopAnimating];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
 }
@@ -148,20 +158,24 @@
 #pragma mark Init Methods
 
 -(void)getCompanyList{
- 
+
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:type],@"market", nil];
     [Utiles getNetInfoWithPath:@"QueryAllCompany" andParams:params besidesBlock:^(id resObj){
         
         self.comList=resObj;
         [self.table reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
 }
      
 -(void)getConcernStocksCode{
-
+    
     if([Utiles isLogin]){
+
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Utiles getUserToken],@"token",@"googuu",@"from", nil];
         [Utiles postNetInfoWithPath:@"AttentionData" andParams:params besidesBlock:^(id resObj){
             if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
@@ -174,7 +188,11 @@
             }else{
                 [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
                 self.concernStocksCodeArr=[[NSMutableArray alloc] init];
-            }        
+            }
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
     }
  
@@ -318,7 +336,7 @@
     __block Boolean tag;
 
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Utiles getUserToken],@"token",@"googuu",@"from",stockCode,@"stockcode", nil];
-    
+
     [Utiles postNetInfoWithPath:url andParams:params besidesBlock:^(id resObj){
 
         if(![[resObj objectForKey:@"status"] isEqualToString:@"1"]){
@@ -336,7 +354,10 @@
             tag=YES;
             [self.table reloadData];
         }
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 
     return tag;
@@ -352,16 +373,13 @@
     return indexPath;
 }
 
--(void)viewDidDisappear:(BOOL)animated{
-    [search resignFirstResponder];
-}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
   
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     int row=indexPath.row;
     delegate.comInfo=[self.comList objectAtIndex:row];
-    
+    NSLog(@"%@",delegate.comInfo);
     com=[[ComFieldViewController alloc] init];
     com.browseType=ValuationModelType;
     com.view.frame=CGRectMake(0,20,SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -378,50 +396,13 @@
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    if(!isSearchList){
-        StockSearchListViewController *searchList=[[StockSearchListViewController alloc] init];
-        searchList.hidesBottomBarWhenPushed=YES;
-        [self.navigationController pushViewController:searchList animated:YES];
-        SAFE_RELEASE(searchList);
-        [search resignFirstResponder];
-    }
+
+    StockSearchListViewController *searchList=[[StockSearchListViewController alloc] init];
+    searchList.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:searchList animated:YES];
+    SAFE_RELEASE(searchList);
+    [search resignFirstResponder];
   
-}
-//搜索实现
--(void)resetSearch
-{  
-    [self handleSearchForTerm:@""];
-    
-}
--(void)handleSearchForTerm:(NSString *)searchTerm
-{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:searchTerm,@"q", nil];
-    [Utiles postNetInfoWithPath:@"Query" andParams:params besidesBlock:^(id resObj){
-        
-        self.comList=resObj;
-        [self.table reloadData];
-        
-    }];
-}
-
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    NSString *searchTerm=[searchBar text];
-    [self handleSearchForTerm:searchTerm];
-    [search resignFirstResponder];
-    
-}
-
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [self resetSearch];
-    //重置
-    searchBar.text=@"";
-    //输入框清空
-    [table reloadData];
-    [search resignFirstResponder];
-    //重新载入数据，隐藏软键盘
-    
 }
 
 #pragma mark -

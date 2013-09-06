@@ -11,8 +11,6 @@
 #import "AFHTTPRequestOperation.h"
 #import "math.h"
 #import <AddressBook/AddressBook.h>
-#import "MBProgressHUD.h"
-#import "XYZAppDelegate.h"
 #import "TSPopoverController.h"
 #import "PrettyNavigationController.h"
 #import "CQMFloatingController.h"
@@ -72,6 +70,12 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
         // Custom initialization
     }
     return self;
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
 }
 
 - (void)viewDidLoad
@@ -220,7 +224,6 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     
     [MBProgressHUD showHUDAddedTo:self.hostView animated:YES];
-    //[MBProgressHUD showHUDAddedTo:self.hostView animated:YES];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[comInfo objectForKey:@"stockcode"],@"stockCode", nil];
     [Utiles getNetInfoWithPath:@"CompanyModel" andParams:params besidesBlock:^(id resObj){
         
@@ -242,6 +245,9 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
         barPlot.baseValue=CPTDecimalFromFloat(XORTHOGONALCOORDINATE);
         [MBProgressHUD hideHUDForView:self.hostView animated:YES];
 
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.hostView animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
     

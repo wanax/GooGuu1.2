@@ -7,7 +7,6 @@
 //
 
 #import "UniverseViewController.h"
-#import "XYZAppDelegate.h"
 #import "StockContainerViewController.h"
 #import "CompanyListViewController.h"
 #import "DBLite.h"

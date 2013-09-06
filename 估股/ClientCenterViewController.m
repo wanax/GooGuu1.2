@@ -14,7 +14,6 @@
 #import "Reachability.h"
 #import "UIButton+BGColor.h"
 #import "ClientLoginViewController.h"
-#import "XYZAppDelegate.h"
 #import "UILabel+VerticalAlign.h"
 #import "SDWebImageDownloader.h"
 #import "MBProgressHUD.h"
@@ -68,57 +67,57 @@
 
 -(void)viewDidAppear:(BOOL)animated{
 
-    if([Utiles isLogin]){
-
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        logoutBt.hidden=NO;
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [Utiles getUserToken], @"token",@"googuu",@"from",
-                                nil];
-        [Utiles postNetInfoWithPath:@"UserInfo" andParams:params besidesBlock:^(id resObj){
-
-           if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
-
-               NSDictionary *occupationalList=[Utiles getConfigureInfoFrom:@"OccupationalList" andKey:nil inUserDomain:NO];
-               
-               id userInfo=[resObj objectForKey:@"data"];
-               [userNameLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"nickname"]]?@"":[userInfo objectForKey:@"nickname"]];
-               [userIdLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"userid"]]?@"":[userInfo objectForKey:@"userid"]];
-               
-               [self setInfoType:@"trade" label:self.tradeLabel userInfo:userInfo dicName:@"TradeList"];
-               [self setInfoType:@"favorite" label:self.favoriteLabel userInfo:userInfo dicName:@"InterestList"];
-               
-               [self.occupationalLabel setText:occupationalList[userInfo[@"profile"]]];
-               NSDateFormatter *date=[[NSDateFormatter alloc] init];
-               [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-               NSDate *d=[date dateFromString:[userInfo objectForKey:@"regtime"]];
-               [date setDateFormat:@"yyyy-MM-dd"];
-               [regtimeLabel setText:[date stringFromDate:d]];
-               
-               NSString *url=[Utiles isBlankString:userInfo[@"headerpicurl"]]?@"":userInfo[@"headerpicurl"];
-               if([Utiles isBlankString:url]){
-                   [self.avatar setImage:[UIImage imageNamed:@"defaultAvatar"]];
-               }else{
-                   [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:userInfo[@"headerpicurl"]] options:SDWebImageDownloaderProgressiveDownload progress:^(NSUInteger receivedSize, long long expectedSize) {
-                   } completed:^(UIImage *aImage, NSData *data, NSError *error, BOOL finished) {
-                       [self.avatar setImage:aImage];
-                   }];
-               }
-               
-               
-
-               SAFE_RELEASE(date);
-           }else{
-               [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
-           }
-           [MBProgressHUD hideHUDForView:self.view animated:YES];
-            
-        }];
-        
-    }else{
-        logoutBt.hidden=YES;
+    if ([Utiles isNetConnected]) {
+        if([Utiles isLogin]){            
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            logoutBt.hidden=NO;
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [Utiles getUserToken], @"token",@"googuu",@"from",
+                                    nil];
+            [Utiles postNetInfoWithPath:@"UserInfo" andParams:params besidesBlock:^(id resObj){
+                
+                if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
+                    
+                    NSDictionary *occupationalList=[Utiles getConfigureInfoFrom:@"OccupationalList" andKey:nil inUserDomain:NO];
+                    
+                    id userInfo=[resObj objectForKey:@"data"];
+                    [userNameLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"nickname"]]?@"":[userInfo objectForKey:@"nickname"]];
+                    [userIdLabel setText:[Utiles isBlankString:[userInfo objectForKey:@"userid"]]?@"":[userInfo objectForKey:@"userid"]];
+                    
+                    [self setInfoType:@"trade" label:self.tradeLabel userInfo:userInfo dicName:@"TradeList"];
+                    [self setInfoType:@"favorite" label:self.favoriteLabel userInfo:userInfo dicName:@"InterestList"];
+                    
+                    [self.occupationalLabel setText:occupationalList[userInfo[@"profile"]]];
+                    NSDateFormatter *date=[[NSDateFormatter alloc] init];
+                    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    NSDate *d=[date dateFromString:[userInfo objectForKey:@"regtime"]];
+                    [date setDateFormat:@"yyyy-MM-dd"];
+                    [regtimeLabel setText:[date stringFromDate:d]];
+                    
+                    NSString *url=[Utiles isBlankString:userInfo[@"headerpicurl"]]?@"":userInfo[@"headerpicurl"];
+                    if([Utiles isBlankString:url]){
+                        [self.avatar setImage:[UIImage imageNamed:@"defaultAvatar"]];
+                    }else{
+                        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:userInfo[@"headerpicurl"]] options:SDWebImageDownloaderProgressiveDownload progress:^(NSUInteger receivedSize, long long expectedSize) {
+                        } completed:^(UIImage *aImage, NSData *data, NSError *error, BOOL finished) {
+                            [self.avatar setImage:aImage];
+                        }];
+                    }               
+                    SAFE_RELEASE(date);
+                }else{
+                    [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                }
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                
+            } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+            }];            
+        }
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }
-    
+
 }
 
 -(void)setInfoType:(NSString *)type label:(UILabel *)label userInfo:(id)userInfo dicName:(NSString *)name{
@@ -172,6 +171,9 @@
                 NSLog(@"logout failed:%@",[info objectForKey:@"msg"]);
             }
             
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
         
     }else{
@@ -180,21 +182,6 @@
     
 
 }
-
--(void)reachabilityChanged:(NSNotification*)note
-{
-    Reachability * reach = [note object];
-    
-    if([reach isReachable])
-    {
-        //NSLog(@"Reachable");
-    }
-    else
-    {
-        //NSLog(@"NReachable");
-    }
-}
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

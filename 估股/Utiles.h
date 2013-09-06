@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "CPTColor.h"
+#import "AFHTTPClient.h"
+#import "AFHTTPRequestOperation.h"
 
 @class MBProgressHUD;
 @interface Utiles : NSObject
@@ -30,8 +32,9 @@
 + (id)getConfigureInfoFrom:(NSString *)fileName andKey:(NSString *)key inUserDomain:(BOOL)isIn;
 +(void)setConfigureInfoTo:(NSString *)fileName forKey:(NSString *)key andContent:(NSString *)content;
 
-+(void)getNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void(^)(id obj))block;
-+(void)postNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void(^)(id obj))block;
++(void)getNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void(^)(id obj))block failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
++(void)postNetInfoWithPath:(NSString *)url andParams:(NSDictionary *)params besidesBlock:(void(^)(id obj))block failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 //字符串判空
@@ -66,7 +69,9 @@
 
 +(NSArray *)arrSort:(NSArray *)arr;
 
++(BOOL)isNetConnected;
 
++(void)showToastView:(UIView *)view withTitle:(NSString *)title andContent:(NSString *)content duration:(float)duration;
 
 
 

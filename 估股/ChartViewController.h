@@ -116,6 +116,8 @@
 @property (nonatomic,retain) UILabel *myGGpriceLabel;
 @property (nonatomic,retain) UILabel *priceLabel;
 @property (nonatomic,retain) UIButton *saveBt;
+@property (nonatomic,retain) UIButton *resetBt;
+@property (nonatomic,retain) UIButton *linkBt;
 @property (nonatomic,retain) UIButton *discountBt;
 
 //绘图view

@@ -9,7 +9,6 @@
 //  2013-04-10 | Wanax | 初次使用引导界面
 
 #import "tipViewController.h"
-#import "XYZAppDelegate.h"
 
 
 

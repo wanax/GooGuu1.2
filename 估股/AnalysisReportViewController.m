@@ -9,7 +9,6 @@
 //  2013-05-08 | Wanax | 股票详细页-股票分析
 
 #import "AnalysisReportViewController.h"
-#import "XYZAppDelegate.h"
 #import "UILabel+VerticalAlign.h"
 #import "MHTabBarController.h"
 #import "CustomTableView.h"
@@ -50,10 +49,14 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self.customTableView reloadData];
-    
 }
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
 
 - (void)viewDidLoad
 {
@@ -117,6 +120,9 @@
             [Utiles ToastNotification:@"暂无数据" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 

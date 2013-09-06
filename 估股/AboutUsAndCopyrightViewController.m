@@ -39,6 +39,14 @@
 	[self.checkUpdateBt setBackgroundColorString:@"#BB4C1C" forState:UIControlStateNormal];
 }
 
+- (BOOL)shouldAutorotate{
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

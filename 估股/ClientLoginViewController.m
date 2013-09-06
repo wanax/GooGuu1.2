@@ -12,7 +12,6 @@
 #import "LoginView.h"
 #import "DBLite.h"
 #import "ConcernedViewController.h"
-#import "XYZAppDelegate.h"
 #import "LoginView.h"
 #import "MBProgressHUD.h"
 #import "PrettyTabBarViewController.h"
@@ -52,6 +51,7 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self removeFromParentViewController];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
@@ -67,12 +67,20 @@
     return self;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"autoLogin" inUserDomain:YES] isEqual:@"1"]){
-        
-    }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"rememberPwd" inUserDomain:YES] isEqual:@"1"]){
+        id userInfo=[[NSUserDefaults standardUserDefaults] objectForKey:@"UserInfo"];
+        if (userInfo) {
+            [self.userNameField setText:userInfo[@"username"]];
+            [self.userPwdField setText:userInfo[@"password"]];
+        }
+        [autoCheckImg setImage:[UIImage imageNamed:@"autoLoginCheck"]];
+    }else{
+        [autoCheckImg setImage:nil];
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -91,12 +99,6 @@
     image2.frame=CGRectMake(0,0,20,20);
     userPwdField.leftView=image2;
     userPwdField.leftViewMode = UITextFieldViewModeUnlessEditing;
-    
-    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"autoLogin" inUserDomain:YES] isEqual:@"1"]){
-        [autoCheckImg setImage:[UIImage imageNamed:@"autoLoginCheck"]];
-    }else{
-        [autoCheckImg setImage:nil];
-    }
 
 }
 
@@ -124,12 +126,12 @@
 #pragma mark Button Methods
 
 -(IBAction)autoBtClicked:(id)sender{
-    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"autoLogin" inUserDomain:YES] isEqual:@"1"]){        
+    if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"rememberPwd" inUserDomain:YES] isEqual:@"1"]){        
         [autoCheckImg setImage:nil];
-        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"autoLogin" andContent:@"0"];
+        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"rememberPwd" andContent:@"0"];
     }else{
         [autoCheckImg setImage:[UIImage imageNamed:@"autoLoginCheck"]];
-        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"autoLogin" andContent:@"1"];
+        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"rememberPwd" andContent:@"1"];
     }
     
 }
@@ -172,42 +174,51 @@
 }
 
 -(void)userLoginUserName:(NSString *)userName pwd:(NSString *)pwd{
-    [MBProgressHUD showHUDAddedTo:self.view withTitle:@"正在登录" animated:YES];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES ;
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[userName lowercaseString],@"username",[Utiles md5:pwd],@"password",@"googuu",@"from", nil];
-    [Utiles getNetInfoWithPath:@"Login" andParams:params besidesBlock:^(id info){
+    if ([Utiles isNetConnected]) {
         
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO ;
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if([[info objectForKey:@"status"] isEqualToString:@"1"]){
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginKeeping" object:nil];
-            [[NSUserDefaults standardUserDefaults] setObject:[info objectForKey:@"token"] forKey:@"UserToken"];
-            NSDictionary *userInfo=[NSDictionary dictionaryWithObjectsAndKeys:userName,@"username",pwd,@"password", nil];
-            [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"UserInfo"];
+        [MBProgressHUD showHUDAddedTo:self.view withTitle:@"正在登录" animated:YES];
+       
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[userName lowercaseString],@"username",[Utiles md5:pwd],@"password",@"googuu",@"from", nil];
+        
+        [Utiles getNetInfoWithPath:@"Login" andParams:params besidesBlock:^(id info){
+
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSLog(@"%@",[info objectForKey:@"token"]);
-            isGoIn=YES;
-            [self viewDisMiss];
-            NSArray *controllers=self.parentViewController.childViewControllers;
-            for(id obj in controllers){
-                if([obj isKindOfClass:[GooGuuContainerViewController class]]){
-                    ConcernedViewController *test= (ConcernedViewController *)[[(GooGuuContainerViewController *)obj tabBarController] selectedViewController];
-                    [test viewDidAppear:YES];
+            if([[info objectForKey:@"status"] isEqualToString:@"1"]){
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginKeeping" object:nil];
+                [[NSUserDefaults standardUserDefaults] setObject:[info objectForKey:@"token"] forKey:@"UserToken"];
+                
+                NSDictionary *userInfo=[NSDictionary dictionaryWithObjectsAndKeys:userName,@"username",pwd,@"password", nil];
+                [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"UserInfo"];
+                
+                NSLog(@"%@",[info objectForKey:@"token"]);
+                isGoIn=YES;
+                
+                [self viewDisMiss];
+                
+            }else {
+                NSString *msg=@"";
+                if ([info[@"status"] isEqual:@"0"]) {
+                    msg=@"用户不存在";
+                } else if ([info[@"status"] isEqual:@"2"]){
+                    msg=@"邮箱未激活";
+                } else if ([info[@"status"] isEqual:@"3"]){
+                    msg=@"密码错误";
                 }
+                [Utiles ToastNotification:msg andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
             }
-        }else {
-            NSString *msg=@"";
-            if ([info[@"status"] isEqual:@"0"]) {
-                msg=@"用户不存在";
-            } else if ([info[@"status"] isEqual:@"2"]){
-                msg=@"邮箱未激活";
-            } else if ([info[@"status"] isEqual:@"3"]){
-                msg=@"密码错误";
-            }
-            [Utiles ToastNotification:msg andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
-        }
-        
-    }];
+            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        }];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }
+    
   
 }
 

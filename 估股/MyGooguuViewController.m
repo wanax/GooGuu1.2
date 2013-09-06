@@ -11,8 +11,6 @@
 #import "ClientLoginViewController.h"
 #import "MHTabBarController.h"
 #import "GooGuuContainerViewController.h"
-#import "XYZAppDelegate.h"
-
 
 @interface MyGooguuViewController ()
 

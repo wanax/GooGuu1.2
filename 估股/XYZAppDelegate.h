@@ -17,6 +17,8 @@
     IBOutlet UIWindow *window;
     NSString *_stockCode;
 }
+
+@property BOOL isReachable;
 @property (nonatomic,retain) TSPopoverController *popoverController;
 @property (nonatomic,retain) UIScrollView *scrollView;
 @property (strong, nonatomic) UIWindow *window;

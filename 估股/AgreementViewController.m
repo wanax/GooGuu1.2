@@ -8,7 +8,6 @@
 
 #import "AgreementViewController.h"
 #import "UIButton+BGColor.h"
-#import "XYZAppDelegate.h"
 
 @interface AgreementViewController ()
 

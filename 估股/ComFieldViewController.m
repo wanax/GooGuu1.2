@@ -7,7 +7,6 @@
 //
 
 #import "ComFieldViewController.h"
-#import "XYZAppDelegate.h"
 #import "IntroductionViewController.h"
 #import "ModelViewController.h"
 #import "AnalysisReportViewController.h"
@@ -54,6 +53,13 @@
 
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

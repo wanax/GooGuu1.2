@@ -9,10 +9,7 @@
 #import "StockSearchListViewController.h"
 #import "IndicatorSearchView.h"
 #import "SearchStockCell.h"
-#import "XYZAppDelegate.h"
 #import "ComFieldViewController.h"
-#import "MBProgressHUD.h"
-#import "Toast+UIView.h"
 
 @interface StockSearchListViewController ()
 
@@ -43,7 +40,13 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self.searchBar becomeFirstResponder];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+    [searchBar resignFirstResponder];
 }
 
 - (void)viewDidLoad
@@ -89,6 +92,9 @@
         self.comList=resObj;
         [self.searchTable reloadData];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 
@@ -100,13 +106,12 @@
             if([[resObj objectForKey:@"status"] boolValue]){
                 [bt setBackgroundImage:[UIImage imageNamed:@"hasDoneRequestedBt"] forState:UIControlStateNormal];
                 [bt setTitle:@"请求送达" forState:UIControlStateNormal];
-                [self.view makeToast:[NSString stringWithFormat:@"共计已发送%@次请求,我们会尽快处理.",[resObj objectForKey:@"data"]]
-                            duration:2.0
-                            position:@"center"
-                               title:@"谢谢"
-                 ];
+
+                [Utiles showToastView:self.view withTitle:@"谢谢" andContent:[NSString stringWithFormat:@"共计已发送%@次请求,我们会尽快处理.",[resObj objectForKey:@"data"]] duration:2.0];
             }
         }        
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 
@@ -184,16 +189,13 @@
     return indexPath;
 }
 
--(void)viewDidDisappear:(BOOL)animated{
-    [searchBar resignFirstResponder];
-}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     int row=indexPath.row;
     delegate.comInfo=[self.comList objectAtIndex:row];
-    
+    NSLog(@"%@",delegate.comInfo);
     ComFieldViewController *com=[[ComFieldViewController alloc] init];
     com.browseType=ValuationModelType;
     com.view.frame=CGRectMake(0,20,SCREEN_WIDTH,SCREEN_HEIGHT);

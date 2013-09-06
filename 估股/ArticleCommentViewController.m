@@ -14,7 +14,6 @@
 #import "AddCommentViewController.h"
 #import "PrettyKit.h"
 #import "AnalyDetailViewController.h"
-#import "Toast+UIView.h"
 
 @interface ArticleCommentViewController ()
 
@@ -44,8 +43,9 @@
     return self;
 }
 
+
 -(void)viewDidDisappear:(BOOL)animated{
-    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     if([Utiles isLogin]){
         if(self.type==StockCompany){
             NSMutableArray *arr=[(AnalyDetailViewController *)self.parentViewController.parentViewController.parentViewController myToolBarItems];
@@ -58,7 +58,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     if([Utiles isLogin]){
         if(self.type==News){
             UIBarButtonItem *wanSay=[[UIBarButtonItem alloc] initWithTitle:@"添加评论" style:UIBarButtonItemStyleBordered target:self action:@selector(wanSay:)];
@@ -152,6 +152,8 @@
         
         [self.cusTable reloadData];
         [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.cusTable];
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
 }
@@ -223,11 +225,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.view makeToast:[[self.commentArr objectAtIndex:indexPath.row] objectForKey:@"content"]
-                duration:2.0
-                position:@"center"
-                   title:@"用户评论"
-     ];
+
+    [Utiles showToastView:self.view withTitle:@"用户评论" andContent:[[self.commentArr objectAtIndex:indexPath.row] objectForKey:@"content"] duration:2.0];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

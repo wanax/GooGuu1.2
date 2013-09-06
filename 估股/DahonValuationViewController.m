@@ -8,9 +8,6 @@
 
 #import "DahonValuationViewController.h"
 #import "DrawChartTool.h"
-#import "XYZAppDelegate.h"
-#import "MBProgressHUD.h"
-#import "Toast+UIView.h"
 #import "UIButton+BGColor.h"
 
 @interface DahonValuationViewController ()
@@ -84,6 +81,13 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
         // Custom initialization
     }
     return self;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
 }
 
 - (void)viewDidLoad
@@ -250,6 +254,13 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
         [oneYear setEnabled:YES];
         [MBProgressHUD hideHUDForView:self.hostView animated:YES];
         
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [MBProgressHUD hideHUDForView:self.hostView animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        [oneMonth setEnabled:NO];
+        [threeMonth setEnabled:NO];
+        [sixMonth setEnabled:NO];
+        [oneYear setEnabled:NO];
     }];
 }
 
@@ -455,12 +466,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
     }else{
         msg=[NSString stringWithFormat:@"%@",info[@"msg"]];
     }
-    [self.view makeToast:msg
-                duration:1.5
-                position:@"center"
-                   title:info[@"title"]
-     ];
-    
+    [Utiles showToastView:self.view withTitle:info[@"title"] andContent:msg duration:1.5];
 }
 
 #pragma mark -

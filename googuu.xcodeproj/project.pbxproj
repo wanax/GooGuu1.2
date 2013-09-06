@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE0395FE17D97DF100533CE0 /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE0395FD17D97DF100533CE0 /* libBaiduMobStat.a */; };
 		AE03FCD817C5A86000AA90B3 /* dragChartBar.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03FCD717C5A86000AA90B3 /* dragChartBar.png */; };
 		AE03FCDB17C5BA9500AA90B3 /* resetBt.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03FCD917C5BA9400AA90B3 /* resetBt.png */; };
 		AE03FCDC17C5BA9500AA90B3 /* saveBt.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03FCDA17C5BA9400AA90B3 /* saveBt.png */; };
@@ -64,7 +65,6 @@
 		AE1E7CE417D437AF00A13D63 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1E7CD517D437AF00A13D63 /* ASIInputStream.m */; };
 		AE1E7CE517D437AF00A13D63 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1E7CD717D437AF00A13D63 /* ASINetworkQueue.m */; };
 		AE1E7CE817D437F900A13D63 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1E7CE717D437F900A13D63 /* CFNetwork.framework */; };
-		AE1E7CEA17D4380700A13D63 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1E7CE917D4380700A13D63 /* libz.dylib */; };
 		AE1E7D2B17D43B0100A13D63 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE1E7D2817D43B0100A13D63 /* SVProgressHUD.bundle */; };
 		AE1E7D2C17D43B0100A13D63 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1E7D2A17D43B0100A13D63 /* SVProgressHUD.m */; };
 		AE1E7D2E17D43B4D00A13D63 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1E7D2D17D43B4C00A13D63 /* AssetsLibrary.framework */; };
@@ -323,6 +323,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE0395FC17D97A3100533CE0 /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobStat.h; sourceTree = "<group>"; };
+		AE0395FD17D97DF100533CE0 /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
 		AE03FCD717C5A86000AA90B3 /* dragChartBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragChartBar.png; sourceTree = "<group>"; };
 		AE03FCD917C5BA9400AA90B3 /* resetBt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resetBt.png; sourceTree = "<group>"; };
 		AE03FCDA17C5BA9400AA90B3 /* saveBt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = saveBt.png; sourceTree = "<group>"; };
@@ -352,7 +354,6 @@
 		AE129C0417D72AA900059D58 /* AgreementView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AgreementView.xib; sourceTree = "<group>"; };
 		AE129C0617D72D2500059D58 /* agreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = agreement.txt; sourceTree = "<group>"; };
 		AE13BE0917D86A86005A313B /* goinBt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goinBt.png; sourceTree = "<group>"; };
-		AE13BE0B17D87106005A313B /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaiduMobStat.h; path = ../../BaiduMobStat.h; sourceTree = "<group>"; };
 		AE13BE0F17D87132005A313B /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		AE13BE1017D87132005A313B /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		AE13BE1217D87132005A313B /* CFilteringJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFilteringJSONSerializer.h; sourceTree = "<group>"; };
@@ -377,7 +378,6 @@
 		AE13BE3117D8717B005A313B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		AE13BE3317D87187005A313B /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		AE13BE3717D8736F005A313B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		AE13BE3917D89265005A313B /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = "../../../Desktop/手机端/Products/ios_api/Release-iphoneos/libBaiduMobStat.a"; sourceTree = "<group>"; };
 		AE13BE3B17D8936F005A313B /* defaultIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultIcon.png; sourceTree = "<group>"; };
 		AE15103717A7968E007B9E66 /* readed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = readed.png; sourceTree = "<group>"; };
 		AE15103D17A79C52007B9E66 /* unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unread.png; sourceTree = "<group>"; };
@@ -1199,7 +1199,6 @@
 				AE1E7D3217D43B9700A13D63 /* MapKit.framework in Frameworks */,
 				AE1E7D3017D43B5500A13D63 /* ImageIO.framework in Frameworks */,
 				AE1E7D2E17D43B4D00A13D63 /* AssetsLibrary.framework in Frameworks */,
-				AE1E7CEA17D4380700A13D63 /* libz.dylib in Frameworks */,
 				AE1E7CE817D437F900A13D63 /* CFNetwork.framework in Frameworks */,
 				AE6B973C17A119C800DBE0C6 /* CoreLocation.framework in Frameworks */,
 				AE6B96E717A1181800DBE0C6 /* CoreText.framework in Frameworks */,
@@ -1216,6 +1215,7 @@
 				AE2E91A6179D061A0049B28E /* CoreGraphics.framework in Frameworks */,
 				AE2E950E179D1A5B0049B28E /* libCorePlot-CocoaTouch.a in Frameworks */,
 				AEF2EF9B17BB13A800B7B9A2 /* Crashlytics.framework in Frameworks */,
+				AE0395FE17D97DF100533CE0 /* libBaiduMobStat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1480,7 +1480,7 @@
 		AE2E91A0179D061A0049B28E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AE13BE3917D89265005A313B /* libBaiduMobStat.a */,
+				AE0395FD17D97DF100533CE0 /* libBaiduMobStat.a */,
 				AE2E950C179D1A5B0049B28E /* libCorePlot-CocoaTouch.a */,
 				AE1E7CE917D4380700A13D63 /* libz.dylib */,
 				AE2E92D9179D07BE0049B28E /* libsqlite3.0.dylib */,
@@ -1561,8 +1561,8 @@
 		AE2E91BE179D06890049B28E /* Plugs */ = {
 			isa = PBXGroup;
 			children = (
+				AE0395FC17D97A3100533CE0 /* BaiduMobStat.h */,
 				AE13BE0E17D87132005A313B /* TouchJSON */,
-				AE13BE0B17D87106005A313B /* BaiduMobStat.h */,
 				AE272B7317D496D300405295 /* DemoPhotoLoadingView.h */,
 				AE272B7417D496D300405295 /* DemoPhotoLoadingView.m */,
 				AE272B7017D4954600405295 /* DemoPhoto.h */,
@@ -3144,10 +3144,12 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../Desktop/手机端/Products/ios_api/Release-iphonesimulator\"",
 					"\"$(SRCROOT)/../../../Desktop/手机端/Products/ios_api/Release-iphoneos\"",
+					"\"$(SRCROOT)/Release-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
+					"-lBaiduMobStat",
 				);
 				PRODUCT_NAME = googuu;
 				PROVISIONING_PROFILE = "E84AC48A-29D6-4395-A592-C51F58DB041A";
@@ -3175,10 +3177,12 @@
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../../../Desktop/手机端/Products/ios_api/Release-iphonesimulator\"",
 					"\"$(SRCROOT)/../../../Desktop/手机端/Products/ios_api/Release-iphoneos\"",
+					"\"$(SRCROOT)/Release-iphoneos\"",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
+					"-lBaiduMobStat",
 				);
 				PRODUCT_NAME = googuu;
 				PROVISIONING_PROFILE = "E84AC48A-29D6-4395-A592-C51F58DB041A";

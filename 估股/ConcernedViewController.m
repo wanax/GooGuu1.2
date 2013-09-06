@@ -12,12 +12,10 @@
 #import "CustomCell.h"
 #import "AddCell.h"
 #import "UserCell.h"
-#import "XYZAppDelegate.h"
 #import "MHTabBarController.h"
 #import "ComFieldViewController.h"
 #import "PrettyTabBarViewController.h"
 #import "PrettyNavigationController.h"
-#import "MBProgressHUD.h"
 #import "IndicatorView.h"
 #import "Indicator2View.h"
 
@@ -67,8 +65,13 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self getComList];
 
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
 }
 
 - (void)viewDidLoad
@@ -78,7 +81,26 @@
     _showToast=NO;
     nibsRegistered=NO;
     nibsRegistered2=NO;
-    self.comInfoList=[[NSMutableArray alloc] initWithObjects:[[NSDictionary alloc] initWithObjectsAndKeys:@"",@"googuuprice",@"",@"marketprice",@"",@"market",@"",@"companyname", nil],nil];
+    
+    [self initViewComponents];
+    [self addTableHeader];
+    
+    if ([Utiles isNetConnected]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self getComList];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }
+
+    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+    [self.view addGestureRecognizer:pan];
+    [pan release];
+    
+}
+
+-(void)initViewComponents{
+    
+    self.comInfoList=[[NSMutableArray alloc] init];
     if(browseType==MyConcernedType){
         IndicatorView *indicator=[[IndicatorView alloc] init];
         [self.view addSubview:indicator];
@@ -93,13 +115,11 @@
     [customTableView setBackgroundColor:[Utiles colorWithHexString:[Utiles getConfigureInfoFrom:@"colorconfigure" andKey:@"NormalCellColor" inUserDomain:NO]]];
     customTableView.dataSource=self;
     customTableView.delegate=self;
-
-    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-    [self.view addGestureRecognizer:pan];
-    [pan release];
-    
     [self.view addSubview:customTableView];
-    [self getComList];
+}
+
+-(void)addTableHeader{
+
     if(_refreshHeaderView == nil)
     {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.customTableView.bounds.size.height, self.view.frame.size.width, self.customTableView.bounds.size.height)];
@@ -110,11 +130,7 @@
         [view release];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
-    /*UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
-    [self.view addGestureRecognizer:tap];
-    SAFE_RELEASE(tap);*/
+  
 }
 
 -(void)tapAction:(UITapGestureRecognizer *)tap{
@@ -163,6 +179,9 @@
                 self.comInfoList=[NSMutableArray arrayWithCapacity:0];
             }
             [MBProgressHUD hideHUDForView:self.view animated:YES];
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
     }
 
@@ -297,6 +316,8 @@
                 if(![[resObj objectForKey:@"status"] isEqualToString:@"1"]){
                     [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
                 }
+            } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+                [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
             }];
             [stockCode release];
         }
@@ -348,7 +369,7 @@
 - (void)doneLoadingTableViewData{
     
     [self getComList];
-   _reloading = NO;
+    _reloading = NO;
     [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.customTableView];
     
 }
@@ -359,7 +380,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
     [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    //[customTableView setEditing:NO animated:YES];
     _showToast=NO;
 }
 
@@ -378,8 +398,7 @@
     
 }
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
-    
+
     return _reloading; // should return if data source model is reloading
     
 }
@@ -388,8 +407,6 @@
     return [NSDate date]; // should return date data source was last changed
     
 }
-
-
 
 -(NSUInteger)supportedInterfaceOrientations{
     

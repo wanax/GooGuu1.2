@@ -8,10 +8,8 @@
 
 #import "GooGuuArticleViewController.h"
 #import "MHTabBarController.h"
-#import "MBProgressHUD.h"
 #import "MHTabBarController.h"
 #import "UIImageView+WebCache.h"
-#import "XYZAppDelegate.h"
 #import "UIImageView+Addition.h"
 #import "GGFullscreenImageViewController.h"
 #import "CXPhotoBrowser.h"
@@ -57,8 +55,12 @@
     return self;
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewDidDisappear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewEndWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
+}
 
+-(void)viewDidAppear:(BOOL)animated{
+    [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     CATransition *transition=[CATransition animation];
     transition.duration=0.4f;
     transition.fillMode=kCAFillModeRemoved;
@@ -82,9 +84,7 @@
     self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
     self.browser.wantsFullScreenLayout = NO;
     
-    MBProgressHUD *hud=[[MBProgressHUD alloc] initWithView:self.view];
-    [Utiles showHUD:@"Loading..." andView:self.view andHUD:hud];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,40)];
     [titleLabel setBackgroundColor:[Utiles colorWithHexString:@"#FDFBE4"]];
     [titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:16.0]];
@@ -98,14 +98,15 @@
         articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-55)];
         articleWeb.delegate=self;
         [articleWeb loadHTMLString:[article objectForKey:@"content"] baseURL:nil];
-        //articleWeb.scalesPageToFit=YES;
-        
+
         [self addTapOnWebView];
-        [hud hide:YES];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.view addSubview:articleWeb];
         [articleWeb release];
         
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+         [MBProgressHUD hideHUDForView:self.view animated:YES];
+         [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
   
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
