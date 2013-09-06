@@ -59,11 +59,12 @@
 +(BOOL)isLogin;
 +(NSString *)getUserToken;
 
-+(NSDictionary *)unitConversionData:(NSString *)data andUnit:(NSString *)unit;
++(NSString *)unitConversionData:(NSString *)data andUnit:(NSString *)unit trueUnit:(NSString *)tUnit;
++(NSString *)getUnitFromData:(NSString *)data andUnit:(NSString *)unit;
 
 +(id)getObjectDataFromJsFun:(UIWebView *)webView funName:(NSString *)funName byData:(NSString *)data shouldTrans:(BOOL)isTrans;
 
-
++(NSArray *)arrSort:(NSArray *)arr;
 
 
 

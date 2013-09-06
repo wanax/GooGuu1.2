@@ -33,6 +33,7 @@
 
 @implementation ChartViewController
 
+@synthesize trueUnit;
 @synthesize sourceType;
 @synthesize wantSavedType;
 @synthesize comInfo;
@@ -84,6 +85,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
 
 - (void)dealloc
 {
+    SAFE_RELEASE(trueUnit);
     SAFE_RELEASE(discountBt);
     SAFE_RELEASE(changedDriverIds);
     SAFE_RELEASE(saveBt);
@@ -444,9 +446,11 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     
     [self divideData:chartData];
  
-    self.yAxisUnit=chartData[@"unit"];
-    NSDictionary *pointData=[Utiles unitConversionData:[(self.forecastPoints)[0][@"v"] stringValue] andUnit:self.yAxisUnit];
-    graph.title=[NSString stringWithFormat:@"%@(单位:%@)",chartData[@"title"],pointData[@"unit"]];
+    self.trueUnit=chartData[@"unit"];
+    NSArray *sort=[Utiles arrSort:self.forecastPoints];
+    self.yAxisUnit=[Utiles getUnitFromData:[[[sort lastObject] objectForKey:@"v"] stringValue] andUnit:self.trueUnit];
+    
+    graph.title=[NSString stringWithFormat:@"%@(单位:%@)",chartData[@"title"],self.yAxisUnit];
     [self setXYAxis];
     [self setStockPrice];
     [self removeDiscountView];
@@ -629,14 +633,13 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setNumberStyle:NSNumberFormatterPercentStyle];
     
-    if([self.yAxisUnit isEqualToString:@"%"]){
-        [formatter setPositiveFormat:@"0.0%;0.0%;-0.0%"];
+    if([self.trueUnit isEqualToString:@"%"]){
+        [formatter setPositiveFormat:@"0.00%;0.00%;-0.00%"];
         numberString = [formatter stringFromNumber:@([arr[index][@"v"] floatValue])];
         SAFE_RELEASE(formatter);
     }else{
         numberString=[arr[index][@"v"] stringValue];
-        NSDictionary *pointData=[Utiles unitConversionData:numberString andUnit:self.yAxisUnit];
-        numberString=pointData[@"result"];
+        numberString=[Utiles unitConversionData:numberString andUnit:self.yAxisUnit trueUnit:self.trueUnit];
     }
     return numberString;
 }
@@ -863,7 +866,8 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         //forecastLinePlot.delegate=self;
         
         //创建默认对比数据线
-        lineStyle.lineColor=[CPTColor grayColor];
+        lineStyle.lineWidth=1.0f;
+        lineStyle.lineColor=[Utiles cptcolorWithHexString:@"#9B9689" andAlpha:0.8];
         forecastDefaultLinePlot = [[CPTScatterPlot alloc] init];
         forecastDefaultLinePlot.dataLineStyle = lineStyle;
         forecastDefaultLinePlot.identifier = FORECAST_DEFAULT_DATALINE_IDENTIFIER;
@@ -871,6 +875,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         
         
         //创建历史数据线段
+        lineStyle.lineWidth=2.0f;
         lineStyle.lineColor=[CPTColor colorWithComponentRed:144/255.0 green:142/255.0 blue:140/255.0 alpha:1.0];
         historyLinePlot = [[CPTScatterPlot alloc] init];
         historyLinePlot.dataLineStyle = lineStyle;

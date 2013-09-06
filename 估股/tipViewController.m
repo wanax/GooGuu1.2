@@ -66,8 +66,9 @@
     [pageScroll setShowsHorizontalScrollIndicator:NO];
     
     self.gotoMainViewBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.gotoMainViewBtn.frame = CGRectMake(110, 200, 80, 30);
-    [self.gotoMainViewBtn setTitle:@"Go In To" forState:UIControlStateNormal];
+    self.gotoMainViewBtn.frame = CGRectMake(137, 400, 127, 27);
+    //[self.gotoMainViewBtn setTitle:@"Go In To" forState:UIControlStateNormal];
+    [self.gotoMainViewBtn setBackgroundImage:[UIImage imageNamed:@"goinBt"] forState:UIControlStateNormal];
     [self.gotoMainViewBtn addTarget:self action:@selector(gotoMainView:) forControlEvents:UIControlEventTouchUpInside];
     
     

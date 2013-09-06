@@ -35,6 +35,7 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
 @synthesize jsonForChart;
 @synthesize barPlot;
 @synthesize yAxisUnit;
+@synthesize trueUnit;
 @synthesize webView;
 @synthesize graph;
 @synthesize hostView;
@@ -46,6 +47,7 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
 
 - (void)dealloc
 {
+    SAFE_RELEASE(trueUnit);
     SAFE_RELEASE(colorArr);
     SAFE_RELEASE(financalTitleLabel);
     SAFE_RELEASE(comInfo);
@@ -202,9 +204,10 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
         }
     }
     self.points=tempHisPoints;
-    self.yAxisUnit=[temp objectForKey:@"unit"];
-    NSDictionary *pointData=[Utiles unitConversionData:[[[self.points objectAtIndex:0] objectForKey:@"v"] stringValue] andUnit:self.yAxisUnit];
-    self.financalTitleLabel.text=[NSString stringWithFormat:@"%@(单位:%@)",[temp objectForKey:@"title"],[pointData objectForKey:@"unit"]];
+    self.trueUnit=[temp objectForKey:@"unit"];
+    NSArray *sort=[Utiles arrSort:self.points];
+    self.yAxisUnit=[Utiles getUnitFromData:[[[sort lastObject] objectForKey:@"v"] stringValue] andUnit:self.trueUnit];
+    self.financalTitleLabel.text=[NSString stringWithFormat:@"%@(单位:%@)",[temp objectForKey:@"title"],self.yAxisUnit];
     [self setXYAxis];
     barPlot.baseValue=CPTDecimalFromFloat(XORTHOGONALCOORDINATE);
     [graph reloadData];
@@ -261,17 +264,19 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
 
     CPTTextLayer *newLayer = nil ;
     NSString *numberString =nil;
-    if([self.yAxisUnit isEqualToString:@"%"]){
-        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-        [formatter setNumberStyle:NSNumberFormatterPercentStyle];
-        numberString = [formatter stringFromNumber:[NSNumber numberWithFloat:[[[self.points objectAtIndex:index] objectForKey:@"v"] floatValue]]];
-        SAFE_RELEASE(formatter);
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    if([self.trueUnit isEqualToString:@"%"]){
+        
+        //[formatter setNumberStyle:NSNumberFormatterPercentStyle];
+        [formatter setPositiveFormat:@"0.00;0.00;-0.00"];
+        numberString = [formatter stringFromNumber:[NSNumber numberWithFloat:[[[self.points objectAtIndex:index] objectForKey:@"v"] floatValue]*100]];
+        
     }else{
         numberString=[[[self.points objectAtIndex:index] objectForKey:@"v"] stringValue];
-        NSDictionary *pointData=[Utiles unitConversionData:numberString andUnit:self.yAxisUnit];
-        numberString=[pointData objectForKey:@"result"];
+        numberString=[Utiles unitConversionData:numberString andUnit:self.yAxisUnit trueUnit:self.trueUnit];
     }
     newLayer=[[CPTTextLayer alloc] initWithText:numberString style:whiteText];
+    SAFE_RELEASE(formatter);
     return [newLayer autorelease];
 }
 

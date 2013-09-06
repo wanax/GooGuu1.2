@@ -50,9 +50,20 @@
     [super dealloc];
 }
 
+/*-(void)beginStatistics{
+    
+    BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+    statTracker.enableExceptionLog = YES;
+    statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
+    statTracker.logSendInterval = 1;  
+    statTracker.logSendWifiOnly = YES;
+    [statTracker startWithAppId:@"NusSX3PvVC1VoE8YeyqO4OUM"];
+    
+}*/
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //[self beginStatistics];
     [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"stockColorSetting" andContent:[NSString stringWithFormat:@"%d",0]];
     [Crashlytics startWithAPIKey:@"c59317990c405b2f42582cacbe9f4fa9abe1fefb"];
     

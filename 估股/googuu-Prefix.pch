@@ -16,4 +16,5 @@
 #import "CommonlyMacros.h"
 #import "JSONKit.h"
 #import "EnumSummary.h"
+#import "BaiduMobStat.h"
 #endif

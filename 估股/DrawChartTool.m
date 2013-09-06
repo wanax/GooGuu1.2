@@ -171,8 +171,15 @@ NSComparator cmptr = ^(id obj1, id obj2){
         yTap=(yMax-(yMin<0?yMin:0))*1.4/screenWidth;
     }
     
-    float xLowBound=xMin-1.5;
-    float xUpBound=xMax+1.5;
+    float xLowBound=0;
+    float xUpBound=0;
+    if (tag==FinancalModel) {
+        xLowBound=xMin-0.5;
+        xUpBound=xMax+0.5;
+    } else {
+        xLowBound=xMin-1.5;
+        xUpBound=xMax+1.5;
+    }
     
     double yLowBound=0.0;
     if(yMin>0){

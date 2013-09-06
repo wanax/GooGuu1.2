@@ -59,7 +59,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
+
     [self getConcernStocksCode];
     [self.table reloadData];
     if(isSearchList){

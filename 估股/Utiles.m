@@ -454,37 +454,60 @@ static NSDateFormatter *formatter;
         return nil;
 }
 
-+(NSString *)unitConversionData:(NSString *)data andUnit:(NSString *)unit{
-    
-    NSString *resultStr=@"";
-    NSString *unitStr=@"";
++(NSString *)getUnitFromData:(NSString *)data andUnit:(NSString *)unit{
 
+    NSString *unitStr=@"";
+    
     if(![Utiles isBlankString:data]&&![Utiles isBlankString:unit]){
         
         if ([unit isEqualToString:@"%"]) {
-            resultStr = data;
             unitStr = @"百分比";
         } else if ([unit isEqualToString:@"day"]) {
-            resultStr = [NSString stringWithFormat:@"%.1f",[data floatValue]];
             unitStr = @"天";
         } else {
             double unitNum = [unit doubleValue];
             double dataNum=[data doubleValue];
             double result=dataNum * unitNum;
-            if (result > 100000000) {
-                resultStr =[NSString stringWithFormat:@"%.2f",result/100000000];
+            if (fabs(result) > 100000000) {
                 unitStr = @"亿";
             } else if (result > 10000) {
-                resultStr =[NSString stringWithFormat:@"%.2f",result/10000];
                 unitStr = @"万";
             } else {
-                resultStr = [NSString stringWithFormat:@"%.2f",result];
                 unitStr = @"1.0";
             }
         }
         
     }
-    return [NSDictionary dictionaryWithObjectsAndKeys:resultStr,@"result",unitStr,@"unit", nil];
+    return unitStr;
+    
+}
+
+
++(NSString *)unitConversionData:(NSString *)data andUnit:(NSString *)unit trueUnit:(NSString *)tUnit{
+    
+    NSString *resultStr=@"";
+
+    if(![Utiles isBlankString:data]&&![Utiles isBlankString:unit]){
+        
+        if ([unit isEqualToString:@"百分比"]) {
+            resultStr = data;
+        } else if ([unit isEqualToString:@"天"]) {
+            resultStr = [NSString stringWithFormat:@"%.1f",[data floatValue]];
+        } else {
+            double unitNum = [tUnit doubleValue];
+            double dataNum=[data doubleValue];
+            double result=dataNum * unitNum;
+            if ([unit isEqualToString:@"亿"]) {
+                resultStr =[NSString stringWithFormat:@"%.2f",result/100000000];
+            } else if ([unit isEqualToString:@"万"]) {
+                resultStr =[NSString stringWithFormat:@"%.2f",result/10000];
+            } else {
+                resultStr = [NSString stringWithFormat:@"%.2f",result];
+            }
+        }
+        
+    }
+    return resultStr;
 
 }
 
@@ -504,8 +527,19 @@ static NSDateFormatter *formatter;
         return re;
 }
 
-
-
+NSComparator cmptr1 = ^(id obj1, id obj2){
+    if ([obj1[@"v"] doubleValue] > [obj2[@"v"] doubleValue]) {
+        return (NSComparisonResult)NSOrderedDescending;
+    }
+    
+    if ([obj1[@"v"] doubleValue] < [obj2[@"v"] doubleValue]) {
+        return (NSComparisonResult)NSOrderedAscending;
+    }
+    return (NSComparisonResult)NSOrderedSame;
+};
++(NSArray *)arrSort:(NSArray *)arr{
+    return [arr sortedArrayUsingComparator:cmptr1];
+}
 
 
 

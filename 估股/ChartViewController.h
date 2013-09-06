@@ -110,6 +110,7 @@
 //行业分类
 @property (nonatomic,retain) id industryClass;
 @property (nonatomic,retain) NSString *yAxisUnit;
+@property (nonatomic,retain) NSString *trueUnit;
 
 @property (nonatomic,retain) UIWebView *webView;
 @property (nonatomic,retain) UILabel *myGGpriceLabel;

@@ -55,6 +55,7 @@
 @property (nonatomic,retain) NSMutableArray *points;
 @property (nonatomic,retain) NSArray *colorArr;
 @property (nonatomic,retain) NSString *jsonForChart;
+@property (nonatomic,retain) NSString *trueUnit;
 @property (nonatomic,retain) NSString *yAxisUnit;
 
 @property (nonatomic,retain) ModelClassGrade2ViewController *modelRatioViewController;

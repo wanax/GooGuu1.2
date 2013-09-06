@@ -215,7 +215,7 @@
         }
         if(self.imageUrl){
             [cell.dailyStockImg setImageWithURLRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.imageUrl]]
-                  placeholderImage:[UIImage imageNamed:@"defaultCompanyLogo"]
+                  placeholderImage:[UIImage imageNamed:@"defaultIcon"]
                            success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image){
                                if(image){
                                    cell.dailyStockImg.image=image;
