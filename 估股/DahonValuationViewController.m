@@ -108,8 +108,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
     UIImageView *topBar=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dragChartBar"]];
     topBar.frame=CGRectMake(0,0,SCREEN_HEIGHT,40);
     [self.view addSubview:topBar];
-    //公司名称
-    [tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",comInfo[@"companyname"],comInfo[@"stockcode"],comInfo[@"marketname"]] Tag:6 frame:CGRectMake(70,0,340,40) fontSize:18.0 color:nil textColor:@"#F9F8F6" location:NSTextAlignmentCenter];
+    
     //提示信息
     [tool addLabelToView:self.view withTitle:@"*点击图标查看大行估值" Tag:6 frame:CGRectMake(335,265,140,40) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     //title
@@ -221,6 +220,13 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
         @try {
             self.chartData=resObj[@"stockHistoryData"][@"data"];
             id info=resObj[@"stockHistoryData"][@"info"];
+            
+            DrawChartTool *tool=[[DrawChartTool alloc] init];
+            tool.standIn=self;
+            //公司名称
+            [tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",info[@"companyName"],info[@"stockCode"],info[@"marketName"]] Tag:6 frame:CGRectMake(70,0,340,40) fontSize:18.0 color:nil textColor:@"#F9F8F6" location:NSTextAlignmentCenter];
+            SAFE_RELEASE(tool);
+            
             NSString *open=[formatter stringForObjectValue:info[@"open"]==nil?@"":info[@"open"]];
             NSString *close=[formatter stringForObjectValue:info[@"close"]==nil?@"":info[@"close"]];
             NSString *high=[formatter stringForObjectValue:info[@"high"]==nil?@"":info[@"high"]];

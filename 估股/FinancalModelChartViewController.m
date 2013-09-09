@@ -115,10 +115,6 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
     DrawChartTool *tool=[[DrawChartTool alloc] init];
     tool.standIn=self;
     
-    UILabel *nameLabel=[tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",[comInfo objectForKey:@"companyname"],[comInfo objectForKey:@"stockcode"],[comInfo objectForKey:@"marketname"]] Tag:11 frame:CGRectMake(65,0,110,40) fontSize:11.0 color:nil textColor:@"#3e2000" location:NSTextAlignmentCenter];
-    nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    nameLabel.numberOfLines = 0;
-    
     financalTitleLabel=[tool addLabelToView:self.view withTitle:@"" Tag:11 frame:CGRectMake(0,40,SCREEN_HEIGHT,30) fontSize:12.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     
     
@@ -227,6 +223,8 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[comInfo objectForKey:@"stockcode"],@"stockCode", nil];
     [Utiles getNetInfoWithPath:@"CompanyModel" andParams:params besidesBlock:^(id resObj){
         
+        [self addNameLabel:resObj[@"info"]];
+        
         self.jsonForChart=[resObj JSONString];
         self.jsonForChart=[self.jsonForChart stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\\\\\""];
         self.jsonForChart=[self.jsonForChart stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
@@ -249,8 +247,15 @@ static NSString * BAR_IDENTIFIER =@"bar_identifier";
         [MBProgressHUD hideHUDForView:self.hostView animated:YES];
         [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
-    
-    
+}
+
+-(void)addNameLabel:(id)comDetailInfo{
+    DrawChartTool *tool=[[DrawChartTool alloc] init];
+    tool.standIn=self;    
+    UILabel *nameLabel=[tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@\n(%@.%@)",[comDetailInfo objectForKey:@"CompanyName"],[comDetailInfo objectForKey:@"StockCode"],[comDetailInfo objectForKey:@"Market"]] Tag:11 frame:CGRectMake(65,0,110,40) fontSize:11.0 color:nil textColor:@"#3e2000" location:NSTextAlignmentCenter];
+    nameLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    nameLabel.numberOfLines = 0;
+    SAFE_RELEASE(tool);
 }
 
 

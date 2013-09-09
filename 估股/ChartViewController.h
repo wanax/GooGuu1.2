@@ -80,6 +80,7 @@
 @property BrowseSourceType sourceType;
 @property BrowseSourceType wantSavedType;
 @property (nonatomic,retain) id comInfo;
+@property (nonatomic,retain) id netComInfo;
 @property (nonatomic,retain) NSString *globalDriverId;
 @property (nonatomic,retain) NSString *valuesStr;
 @property (nonatomic,retain) NSMutableArray *changedDriverIds;
