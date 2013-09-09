@@ -575,7 +575,8 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
         
         coordinate.x=(int)(coordinate.x+0.5);
         
-        int subscript=coordinate.x-XRANGEBEGIN-([self.hisPoints count]-1<3?[self.hisPoints count]-1:3);
+        int subscript=coordinate.x-[[self.hisPoints lastObject][@"y"] integerValue];
+        
         subscript=subscript<0?0:subscript;
         subscript=subscript>=[self.forecastPoints count]-1?[self.forecastPoints count]-1:subscript;
         NSAssert(subscript<=[self.forecastPoints count]-1&&coordinate.x>=0,@"over bounds");

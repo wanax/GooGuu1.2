@@ -61,7 +61,7 @@
     self.navigationController.navigationBarHidden=YES;
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
-    NSString *comPicUrl=[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"companypicourl"]];
+    NSString *comPicUrl=[NSString stringWithFormat:@"%@",[comInfo objectForKey:@"companypicurl"]];
     if ([Utiles isNetConnected]) {
         [[SDImageCache sharedImageCache] clearDisk];
         [[SDImageCache sharedImageCache] clearMemory];

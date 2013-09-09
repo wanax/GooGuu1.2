@@ -14,6 +14,10 @@
 #import "GGFullscreenImageViewController.h"
 #import "CXPhotoBrowser.h"
 #import "DemoPhoto.h"
+#import "UIButton+BGColor.h"
+#import "AddCommentViewController.h"
+#import "XYZAppDelegate.h"
+#import "ComFieldViewController.h"
 
 
 @interface GooGuuArticleViewController ()
@@ -33,9 +37,11 @@
 @synthesize imageTitleLabel;
 @synthesize browser;
 @synthesize photoDataSource;
+@synthesize comInfo;
 
 - (void)dealloc
 {
+    SAFE_RELEASE(comInfo);
     SAFE_RELEASE(imageTitleLabel);
     SAFE_RELEASE(imageUrlList);
     SAFE_RELEASE(browser);
@@ -68,23 +74,9 @@
     transition.subtype=kCATransitionFromRight;
     [self.parentViewController.navigationController.navigationBar.layer addAnimation:transition forKey:@"animation"];
     self.parentViewController.navigationItem.rightBarButtonItem=nil;
-    //[[(UITabBarController *)(self.parentViewController.parentViewController.parentViewController) tabBar] setHidden:YES];
-
 }
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+-(void)addComponents{
     
-    self.view.backgroundColor=[UIColor whiteColor];
-    self.parentViewController.title=@"公司简报";
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
-    self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
-    self.browser.wantsFullScreenLayout = NO;
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     UILabel *titleLabel=[[UILabel alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,40)];
     [titleLabel setBackgroundColor:[Utiles colorWithHexString:@"#FDFBE4"]];
     [titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:16.0]];
@@ -92,23 +84,81 @@
     [titleLabel setText:articleTitle];
     [self.view addSubview:titleLabel];
     SAFE_RELEASE(titleLabel);
+    
+    UIButton *comeIntoComBt=[UIButton buttonWithType:UIButtonTypeCustom];
+    [comeIntoComBt setFrame:CGRectMake(0,350, 160, 35)];
+    [comeIntoComBt.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:15.0]];
+    [comeIntoComBt setBackgroundColorString:@"#9C6C1E" forState:UIControlStateNormal];
+    [comeIntoComBt setTitle:@"进入公司" forState:UIControlStateNormal];
+    [comeIntoComBt addTarget:self action:@selector(comeIntoComBtClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:comeIntoComBt];
+    
+    UIButton *addCommentBt=[UIButton buttonWithType:UIButtonTypeCustom];
+    [addCommentBt setFrame:CGRectMake(160,350, 160, 35)];
+    [addCommentBt.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:15.0]];
+    [addCommentBt setBackgroundColorString:@"#9C6C1E" forState:UIControlStateNormal];
+    [addCommentBt setTitle:@"添加评论" forState:UIControlStateNormal];
+    [addCommentBt addTarget:self action:@selector(addCommentBtClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addCommentBt];
+    
+}
+#pragma mark -
+#pragma mark Buttons Clicks
+-(void)addCommentBtClicked{
+    if ([Utiles isLogin]) {
+        AddCommentViewController *addCommentViewController=[[AddCommentViewController alloc] init];
+        addCommentViewController.type=ArticleType;
+        addCommentViewController.articleId=articleId;
+        [self presentViewController:addCommentViewController animated:YES completion:nil];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"请先登录" duration:1.5];
+    }
+}
+-(void)comeIntoComBtClicked{
+    ComFieldViewController *com=[[ComFieldViewController alloc] init];
+    com.browseType=SearchStockList;
+    com.view.frame=CGRectMake(0,20,SCREEN_WIDTH,SCREEN_HEIGHT);
+    [self presentViewController:com animated:YES completion:nil];
+}
+
+
+-(void)initWebView{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:articleId,@"articleid", nil];
     [Utiles getNetInfoWithPath:@"ArticleURL" andParams:params besidesBlock:^(id article){
-
-        articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-55)];
+        
+        articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-75)];
         articleWeb.delegate=self;
         [articleWeb loadHTMLString:[article objectForKey:@"content"] baseURL:nil];
-
+        
         [self addTapOnWebView];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.view addSubview:articleWeb];
         [articleWeb release];
         
     } failure:^(AFHTTPRequestOperation *operation,NSError *error){
-         [MBProgressHUD hideHUDForView:self.view animated:YES];
-         [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
-  
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.view.backgroundColor=[Utiles colorWithHexString:@"#9C6C1E"];
+    self.parentViewController.title=@"公司简报";
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    self.browser = [[CXPhotoBrowser alloc] initWithDataSource:self delegate:self];
+    self.browser.wantsFullScreenLayout = NO;
+    XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
+    self.comInfo=delegate.comInfo;
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self initWebView];
+    
+    [self addComponents];
+
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
     [self.view addGestureRecognizer:pan];
     [pan release];

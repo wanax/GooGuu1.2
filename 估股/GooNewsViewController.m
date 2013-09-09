@@ -361,9 +361,10 @@
         [self presentViewController:com animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }else if(indexPath.section==1){
+        XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
+        delegate.comInfo=[self.arrList objectAtIndex:indexPath.row];
         NSString *artId=[NSString stringWithFormat:@"%@",[[self.arrList objectAtIndex:indexPath.row] objectForKey:@"articleid"]];
         GooGuuArticleViewController *articleViewController=[[GooGuuArticleViewController alloc] init];
-        //articleViewController.view.frame=CGRectMake(0,0,SCREEN_WIDTH,440);
         articleViewController.articleTitle=[[arrList objectAtIndex:indexPath.row] objectForKey:@"title"];
         articleViewController.articleId=artId;
         articleViewController.title=@"研究报告";

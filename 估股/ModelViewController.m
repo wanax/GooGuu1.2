@@ -167,11 +167,8 @@
 }
 -(void)addButtons{
     [self addNewButton:@"查看大行估值" Tag:3 frame:CGRectMake(8, 15, 150, 26)];
-    
-    if(self.browseType==ValuationModelType){
-        [self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
-        [self addNewButton:@"调整模型参数" Tag:2 frame:CGRectMake(84, 78, 150, 26)];
-    }else if(self.browseType==SearchStockList){
+  
+    if(self.browseType==SearchStockList){
         if([comInfo[@"hasmodel"] boolValue]){
             [self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
             [self addNewButton:@"调整模型参数" Tag:2 frame:CGRectMake(84, 78, 150, 26)];
@@ -186,6 +183,9 @@
             [reqBt addTarget:self action:@selector(requestValution:) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:reqBt];
         }
+    }else{
+        [self addNewButton:@"查看财务数据" Tag:1 frame:CGRectMake(163, 15, 150, 26)];
+        [self addNewButton:@"调整模型参数" Tag:2 frame:CGRectMake(84, 78, 150, 26)];
     }
     
     
@@ -252,7 +252,7 @@
             
         }
     } failure:^(AFHTTPRequestOperation *operation,NSError *error){
-        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        //[Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
 }
 
@@ -369,13 +369,18 @@
         [self presentViewController:dahon animated:YES completion:nil];
     }else if(bt.tag==AttentionAction){
         
-        [self attentionAction];
+        if ([Utiles isLogin]) {
+            [self attentionAction];
+        } else {
+            [Utiles showToastView:self.view withTitle:nil andContent:@"请先登录" duration:1.5];
+        }
+    
         
     }else if(bt.tag==AddComment){
-        if ([Utiles isNetConnected]) {
+        if ([Utiles isLogin]) {
             [self addTextField];
         } else {
-            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+            [Utiles showToastView:self.view withTitle:nil andContent:@"请先登录" duration:1.5];
         }
      
     }else if(bt.tag==AddShare){
@@ -460,7 +465,7 @@
             [self.attentionBt setBackgroundImage:[UIImage imageNamed:@"addAttentionBt"] forState:UIControlStateNormal];
         }
     } failure:^(AFHTTPRequestOperation *operation,NSError *error){
-        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        //[Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }];
     
 }

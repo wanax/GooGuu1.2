@@ -193,7 +193,6 @@
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     int row=indexPath.row;
     delegate.comInfo=[self.comList objectAtIndex:row];
-    NSLog(@"%@",delegate.comInfo);
     ComFieldViewController *com=[[ComFieldViewController alloc] init];
     com.browseType=SearchStockList;
     com.view.frame=CGRectMake(0,20,SCREEN_WIDTH,SCREEN_HEIGHT);
