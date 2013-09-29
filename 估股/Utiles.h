@@ -73,7 +73,7 @@
 
 +(void)showToastView:(UIView *)view withTitle:(NSString *)title andContent:(NSString *)content duration:(float)duration;
 
-
++(void)iOS7StatusBar:(UIViewController *)vc;
 
 
 @end

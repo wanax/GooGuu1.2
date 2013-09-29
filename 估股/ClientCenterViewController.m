@@ -141,6 +141,7 @@
 {
     [super viewDidLoad];
     [self setTitle:@"个人中心"];
+    [Utiles iOS7StatusBar:self];
     
     self.view.backgroundColor=[Utiles colorWithHexString:@"#F3EFE1"];
     [self.logoutBt setBackgroundColorString:@"#C96125" forState:UIControlStateNormal];

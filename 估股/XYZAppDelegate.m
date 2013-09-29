@@ -26,6 +26,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "SettingCenterViewController.h"
 #import "AgreementViewController.h"
+#import "ProAlertView.h"
 
 
 @implementation XYZAppDelegate
@@ -60,15 +61,55 @@
     [statTracker startWithAppId:@"0737a8b0ff"];
     
 }
+- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1)
+    {
+        NSString *iTunesLink = @"itms-apps://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=703282718&mt=8";
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]]; 
+    }
+}
+-(void)checkUpdate{
+    AFHTTPClient *getAction=[[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://itunes.apple.com"]];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"703282718",@"id",nil];
+    
+    [getAction getPath:@"/lookup" parameters:params success:^(AFHTTPRequestOperation *operation,id responseObject){
+
+        NSString *version = @"";      
+        NSArray *configData = [[operation.responseString objectFromJSONString] valueForKey:@"results"];
+        
+        for (id config in configData)
+        {
+            version = [config valueForKey:@"version"];
+        }
+        //Check your version with the version in app store
+        if (![version isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"version"]])
+        {
+            ProAlertView *createUserResponseAlert = [[ProAlertView alloc] initWithTitle:@"新版本" message: @"下载新的版本" delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"下载", nil];
+            [createUserResponseAlert show];
+            [createUserResponseAlert release];  
+        }
+        
+    }failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        
+    }];
+
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self beginStatistics];
+    
     [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"stockColorSetting" andContent:[NSString stringWithFormat:@"%d",0]];
+
+    [[NSUserDefaults standardUserDefaults] setObject:@"1.0" forKey:@"version"];
+
+    [self beginStatistics];
+    
+    
     [Crashlytics startWithAPIKey:@"c59317990c405b2f42582cacbe9f4fa9abe1fefb"];
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"firstLaunch"]==nil) {
         //用户初次使用进入使用引导界面
+        [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"checkUpdate" andContent:@"0"];
         tipViewController * startView = [[tipViewController alloc]init];
         self.window.rootViewController = startView;
         [startView release];
@@ -79,6 +120,12 @@
         [agreement release];
         
     }else {
+        if([Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"checkUpdate" inUserDomain:YES]){
+            BOOL isOn=[Utiles stringToBool:[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"checkUpdate" inUserDomain:YES]];
+            if(isOn){
+                [self checkUpdate];
+            }
+        }
         
         UITabBarItem *barItem=[[UITabBarItem alloc] initWithTitle:@"最新简报" image:[UIImage imageNamed:@"googuuNewsBar"] tag:1];
         UITabBarItem *barItem2=[[UITabBarItem alloc] initWithTitle:@"我的估股" image:[UIImage imageNamed:@"myGooGuuBar"] tag:2];
@@ -89,28 +136,42 @@
         //股票关注
         MyGooguuViewController *myGooGuu=[[MyGooguuViewController alloc] init];
         myGooGuu.tabBarItem=barItem2;
-        PrettyNavigationController *myGooGuuNavController=[[PrettyNavigationController alloc] initWithRootViewController:myGooGuu];
+        UINavigationController *myGooGuuNavController=nil;
         
         
         //客户设置
         SettingCenterViewController *settingView=[[SettingCenterViewController alloc] init];
         settingView.tabBarItem=barItem4;
-        PrettyNavigationController *clientCenterNav=[[PrettyNavigationController alloc] initWithRootViewController:settingView];
+        UINavigationController *clientCenterNav=nil;
         
         
         //估股新闻
         GooNewsViewController *gooNewsViewController=[[GooNewsViewController alloc] init];
         gooNewsViewController.tabBarItem=barItem;
-        PrettyNavigationController *gooNewsNavController=[[PrettyNavigationController alloc] initWithRootViewController:gooNewsViewController];
+        UINavigationController *gooNewsNavController=nil;
         
         
         //股票列表
         UniverseViewController *universeViewController=[[UniverseViewController alloc] init];
         universeViewController.tabBarItem=barItem5;
-        PrettyNavigationController *universeNav=[[PrettyNavigationController alloc] initWithRootViewController:universeViewController];
+        UINavigationController *universeNav=nil;
         
+        if (IOS7_OR_LATER) {
+            
+            myGooGuuNavController=[[UINavigationController alloc] initWithRootViewController:myGooGuu];
+            clientCenterNav=[[UINavigationController alloc] initWithRootViewController:settingView];
+            gooNewsNavController=[[UINavigationController alloc] initWithRootViewController:gooNewsViewController];
+            universeNav=[[UINavigationController alloc] initWithRootViewController:universeViewController];
+
+            self.tabBarController = [[UITabBarController alloc] init];
+        } else {
+            myGooGuuNavController=[[PrettyNavigationController alloc] initWithRootViewController:myGooGuu];
+            clientCenterNav=[[PrettyNavigationController alloc] initWithRootViewController:settingView];
+            gooNewsNavController=[[PrettyNavigationController alloc] initWithRootViewController:gooNewsViewController];
+            universeNav=[[PrettyNavigationController alloc] initWithRootViewController:universeViewController];
+            self.tabBarController = [[PrettyTabBarViewController alloc] init];
+        }
         
-        self.tabBarController = [[PrettyTabBarViewController alloc] init];
         
         self.tabBarController.viewControllers = [NSArray arrayWithObjects:gooNewsNavController,universeNav,myGooGuuNavController, clientCenterNav ,nil];
         

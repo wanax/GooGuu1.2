@@ -74,15 +74,22 @@ static NSString * const UserCellIdentifier = @"UserCellIdentifier";
 
     if([Utiles isLogin]){
         UIButton *wanSay= [[UIButton alloc] initWithFrame:CGRectMake(280, 10.0, 40, 30.0)];
-        [wanSay setImage:[UIImage imageNamed:@"addComment"] forState:UIControlStateNormal];
+        if (IOS7_OR_LATER) {
+            [wanSay setTitle:@"添加评论" forState:UIControlStateNormal];
+            [wanSay.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:16.0]];
+            [wanSay setTitleColor:[Utiles colorWithHexString:@"#307DF9"] forState:UIControlStateNormal];
+        } else {
+            [wanSay setImage:[UIImage imageNamed:@"addComment"] forState:UIControlStateNormal];
+        }
+
         [wanSay addTarget:self action:@selector(wanSay:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *nextStepBarBtn = [[UIBarButtonItem alloc] initWithCustomView:wanSay];
-        [nextStepBarBtn setWidth:425];
+        [nextStepBarBtn setWidth:455];
       
         NSMutableArray *arr=[(ComFieldViewController *)self.parentViewController.parentViewController.parentViewController myToolBarItems];
         [arr addObject:nextStepBarBtn];
         
-        PrettyToolbar *toolBar=[(ComFieldViewController *)self.parentViewController.parentViewController.parentViewController top];
+        UIToolbar *toolBar=[(ComFieldViewController *)self.parentViewController.parentViewController.parentViewController top];
         [toolBar setItems:[NSArray arrayWithArray:arr] animated:YES];
         [wanSay release];
         
@@ -128,7 +135,7 @@ static NSString * const UserCellIdentifier = @"UserCellIdentifier";
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor redColor]];
     [self getComments];
-    self.table=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,388)];
+    self.table=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-92)];
     [self.table setBackgroundColor:[Utiles colorWithHexString:@"#EFEBD9"]];
     self.table.delegate=self;
     [self.view addSubview:self.table];

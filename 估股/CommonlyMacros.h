@@ -10,11 +10,15 @@
 
 #define NavigationBar_HEIGHT 44
 
-
+#define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+#define FRAME_WIDTH (self.view.frame.size.width)
+
+#define FRAME_HEIGHT (self.view.frame.size.height)
 
 #define SAFE_RELEASE(x) [x release];x=nil
 

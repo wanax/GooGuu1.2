@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "MHTabBarController.h"
 #import "UILabel+VerticalAlign.h"
+#import "NSDate+convenience.h"
 
 @interface CalendarViewController ()
 
@@ -68,9 +69,12 @@
     messageLabel.textColor=[UIColor whiteColor];
     [self.view addSubview:messageLabel];
     
-    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-    [self.view addGestureRecognizer:pan];
-    [pan release];
+    if(!IOS7_OR_LATER){
+        UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+        [self.view addGestureRecognizer:pan];
+        [pan release];
+    }
+    
 }
 
 -(void)panView:(UIPanGestureRecognizer *)tap{
@@ -141,7 +145,10 @@
         }
         [self.messageLabel setText:msg];
         [messageLabel alignTop];
-        self.view.center=CGPointMake(SCREEN_WIDTH/2,70);
+        if(!IOS7_OR_LATER){
+            self.view.center=CGPointMake(SCREEN_WIDTH/2,70);
+        }
+        
     }
    
     [dateFormat release];

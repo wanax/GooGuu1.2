@@ -94,10 +94,12 @@
 }
 -(void)initViewComponents{
     
-    table=[[UITableView alloc] initWithFrame:CGRectMake(0,62,SCREEN_WIDTH,320)];
+    table=[[UITableView alloc] initWithFrame:CGRectMake(0,62,SCREEN_WIDTH,SCREEN_HEIGHT-160)];
     search=[[UISearchBar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,35)];
-    [[self.search.subviews objectAtIndex:0] removeFromSuperview];
-    self.search.backgroundColor = [UIColor grayColor];
+    if(!IOS7_OR_LATER){
+        [[self.search.subviews objectAtIndex:0] removeFromSuperview];
+        self.search.backgroundColor = [UIColor grayColor];
+    }
     [self.search setPlaceholder:@"输入股票代码/名称"];
     search.delegate=self;
     

@@ -111,7 +111,7 @@
         [indicator release];
     }
     
-   	customTableView=[[UITableView alloc] initWithFrame:CGRectMake(0,30,SCREEN_WIDTH,312)];
+   	customTableView=[[UITableView alloc] initWithFrame:CGRectMake(0,30,SCREEN_WIDTH,SCREEN_HEIGHT-168)];
     [customTableView setBackgroundColor:[Utiles colorWithHexString:[Utiles getConfigureInfoFrom:@"colorconfigure" andKey:@"NormalCellColor" inUserDomain:NO]]];
     customTableView.dataSource=self;
     customTableView.delegate=self;

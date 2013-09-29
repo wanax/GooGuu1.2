@@ -79,6 +79,7 @@
     
     if(![Utiles isLogin]){
         ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
+        loginViewController.view.frame=CGRectMake(0,20,320,480);
         loginViewController.sourceType=MyGooGuuBar;
         [self presentViewController:loginViewController animated:YES completion:nil];
     }
@@ -89,10 +90,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Utiles iOS7StatusBar:self];
     [self setTitle:@"我的估股"];
     
     GooGuuContainerViewController *content=[[GooGuuContainerViewController alloc] init];
-    content.view.frame=CGRectMake(0,-21,SCREEN_WIDTH,SCREEN_HEIGHT);
+    if (IOS7_OR_LATER) {
+        content.view.frame=CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+    } else {
+        content.view.frame=CGRectMake(0,-21,SCREEN_WIDTH,SCREEN_HEIGHT);
+    }
+    
     [self addChildViewController:content];
     [self.view addSubview:content.view];
     

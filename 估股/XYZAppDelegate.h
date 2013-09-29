@@ -22,7 +22,7 @@
 @property (nonatomic,retain) TSPopoverController *popoverController;
 @property (nonatomic,retain) UIScrollView *scrollView;
 @property (strong, nonatomic) UIWindow *window;
-@property(nonatomic,retain)  PrettyTabBarViewController *tabBarController;
+@property(nonatomic,retain)  UITabBarController *tabBarController;
 
 @property (retain,nonatomic) UIPageControl * pageControl;
 @property (nonatomic,strong) id comInfo;

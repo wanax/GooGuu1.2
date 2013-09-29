@@ -50,7 +50,7 @@
 @property (nonatomic, readonly, retain) CQMFloatingFrameView *frameView;
 @property (nonatomic, readonly, retain) UIView *contentView;
 @property (nonatomic, readonly, retain) CQMFloatingContentOverlayView *contentOverlayView;
-@property (nonatomic, readonly, retain) PrettyNavigationController *navigationController;
+@property (nonatomic, readonly, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) UIImageView *shadowView;
 
 - (void)layoutFrameView;

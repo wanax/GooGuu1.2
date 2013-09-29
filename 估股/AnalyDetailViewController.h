@@ -16,7 +16,7 @@
 @interface AnalyDetailViewController : UIViewController
 
 @property (nonatomic,retain) NSString *articleId;
-@property (nonatomic,retain) PrettyToolbar *top;
+@property (nonatomic,retain) UIToolbar *top;
 @property (nonatomic,retain) NSMutableArray *myToolBarItems;
 
 @property (nonatomic,retain) AnalyDetailContainerViewController *container;

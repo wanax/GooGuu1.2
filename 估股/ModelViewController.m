@@ -71,7 +71,7 @@
     }
 }
 -(void)initTextFeild{
-    inputField=[[UITextField alloc] initWithFrame:CGRectMake(0,135,SCREEN_WIDTH,30)];
+    inputField=[[UITextField alloc] initWithFrame:CGRectMake(0,140,SCREEN_WIDTH,30)];
     inputField.borderStyle = UITextBorderStyleRoundedRect;
     inputField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     inputField.returnKeyType=UIReturnKeySend;
@@ -190,19 +190,34 @@
     
     
     if(isAttention){
-        attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 345, 106, 45) img:@"deleteAttentionBt"];
+        if (IOS7_OR_LATER) {
+            attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 445, 160, 30) img:@"deleteAttentionBt" title:@"取消关注"];
+        } else {
+            attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 357, 160, 30) img:@"deleteAttentionBt" title:@"取消关注"];
+        }
+        
     }else{
-        attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 345, 106, 45) img:@"addAttentionBt"];
+        if (IOS7_OR_LATER) {
+            attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 445, 160, 30) img:@"addAttentionBt" title:@"添加关注"];
+        } else {
+            attentionBt=[self addActionButtonTag:AttentionAction frame:CGRectMake(0, 357, 160, 30) img:@"addAttentionBt" title:@"添加关注"];
+        }
+        
     }
-    [self addActionButtonTag:AddComment frame:CGRectMake(106, 345, 106, 45) img:@"addCommentBt"];
-    [self addActionButtonTag:AddShare frame:CGRectMake(212, 345, 108, 45) img:@"addShareBt"];
+    if (IOS7_OR_LATER) {
+        [self addActionButtonTag:AddComment frame:CGRectMake(160, 445, 160, 30) img:@"addCommentBt" title:@"添加评论"];
+    } else {
+        [self addActionButtonTag:AddComment frame:CGRectMake(160, 357, 160, 30) img:@"addCommentBt" title:@"添加评论"];
+    }
+    
 }
 
--(UIButton *)addActionButtonTag:(NSInteger)tag frame:(CGRect)rect img:(NSString *)img{
-    UIButton *bt1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+-(UIButton *)addActionButtonTag:(NSInteger)tag frame:(CGRect)rect img:(NSString *)img title:(NSString *)title{
+    UIButton *bt1 = [[UIButton alloc] init];
     bt1.frame = rect;
     [bt1 setBackgroundImage:[UIImage imageNamed:img] forState:UIControlStateNormal];
     bt1.tag = tag;
+    bt1.titleLabel.font=[UIFont fontWithName:@"Heiti SC" size:14.0f];
     [bt1 addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bt1];
     return bt1;

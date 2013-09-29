@@ -43,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Utiles iOS7StatusBar:self];
 	self.customTable=[[UITableView alloc] initWithFrame:CGRectMake(0,44,SCREEN_WIDTH,SCREEN_HEIGHT) style:UITableViewStyleGrouped];
     self.customTable.delegate=self;
     self.customTable.dataSource=self;
@@ -52,8 +53,14 @@
 
 -(void)addToolBar{
     
-    [self.view setBackgroundColor:[UIColor grayColor]];
-    PrettyToolbar *top=[[PrettyToolbar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,44)];
+    [self.view setBackgroundColor:[Utiles colorWithHexString:@"#E2E2E3"]];
+    UIToolbar *top=nil;
+    if (IOS7_OR_LATER) {
+        top=[[UIToolbar alloc] initWithFrame:CGRectMake(0,20,SCREEN_WIDTH,44)];
+    } else {
+        top=[[PrettyToolbar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,44)];
+    }
+    
     UIBarButtonItem *back=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
     NSMutableArray *myToolBarItems=[[NSMutableArray alloc] init];
     [myToolBarItems addObject:back];

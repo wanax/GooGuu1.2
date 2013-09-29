@@ -55,6 +55,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Utiles iOS7StatusBar:self];
     [self setTitle:@"功能设置"];
     [self initCommonents];
 
@@ -63,7 +64,7 @@
 #pragma mark General Methods
 
 -(void)initCommonents{
-    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,390) style:UITableViewStyleGrouped];
+    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-90) style:UITableViewStyleGrouped];
     self.customTabel.delegate=self;
     self.customTabel.dataSource=self;
     [self.view addSubview:self.customTabel];
@@ -101,7 +102,7 @@
     if(section==0){
         return 2;
     }else if(section==1){
-        return 3;
+        return 2;
     }else if(section==2){
         return 1;
     }else if(section==3){
@@ -177,6 +178,7 @@
             } else {
                 cell.textLabel.text=@"                               登录";
             }
+            cell.detailTextLabel.text=@"";
         }
         
         return cell;
@@ -210,24 +212,6 @@
             return cell;
             
         }else if(row==1){
-            
-            static NSString *LabelSwitchCellIdentifier = @"LabelSwitchCellIdentifier";
-            
-            LabelSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:
-                                     LabelSwitchCellIdentifier];
-            if (cell == nil) {
-                NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"LabelSwitchCell" owner:self options:nil];
-                cell = [array objectAtIndex:0];
-            }
-            BOOL isOn=[Utiles stringToBool:[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"wifiImg" inUserDomain:YES]];
-            cell.titleLabel.text = @"仅在wifi下加载图片";
-            cell.titleLabel.font=[UIFont fontWithName:@"Heiti SC" size:16.0f];
-            [cell.controlSwitch setOn:isOn animated:YES];
-            [cell.controlSwitch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
-            cell.controlSwitch.tag=1;
-            return cell;
-            
-        }else if(row==2){
             
             static NSString *LabelSwitchCellIdentifier = @"LabelSwitchCellIdentifier";
             

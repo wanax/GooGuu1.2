@@ -552,5 +552,17 @@ NSComparator cmptr1 = ^(id obj1, id obj2){
     }
 }
 
++(void)iOS7StatusBar:(UIViewController *)vc{
+   
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+        if ( IOS7_OR_LATER )
+        {
+            vc.edgesForExtendedLayout = UIRectEdgeNone;
+            vc.extendedLayoutIncludesOpaqueBars = NO;
+            vc.modalPresentationCapturesStatusBarAppearance = NO;
+        }
+    #endif  // #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+}
+
 
 @end

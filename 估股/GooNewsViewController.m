@@ -89,7 +89,7 @@
 
 - (void)viewDidLoad
 {
-    
+    [Utiles iOS7StatusBar:self];
     [super viewDidLoad];
     [self addHelpBt];
     
@@ -107,7 +107,7 @@
 
 -(void)addTable{
     
-    customTableView=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,370)];
+    customTableView=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-110)];
     [self.customTableView setBackgroundColor:[Utiles colorWithHexString:[Utiles getConfigureInfoFrom:@"colorconfigure" andKey:@"NormalCellColor" inUserDomain:NO]]];
     customTableView.dataSource=self;
     customTableView.delegate=self;

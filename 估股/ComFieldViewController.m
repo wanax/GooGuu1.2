@@ -73,10 +73,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [Utiles iOS7StatusBar:self];
     ContainerViewController *content=[[ContainerViewController alloc] init];
     content.browseType=self.browseType;
-    content.view.frame=CGRectMake(0,24,self.view.frame.size.width,self.view.frame.size.height);
+    if (IOS7_OR_LATER) {
+        content.view.frame=CGRectMake(0,64,FRAME_WIDTH,FRAME_HEIGHT);
+    } else {
+        content.view.frame=CGRectMake(0,24,FRAME_WIDTH,FRAME_HEIGHT);
+    }
+    
     [self.view addSubview:content.view];
     [self addChildViewController:content];
     [self addToolBar];
@@ -87,15 +92,23 @@
 
 -(void)addToolBar{
     
-    [self.view setBackgroundColor:[UIColor grayColor]];
-    top=[[PrettyToolbar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,44)];
+    [self.view setBackgroundColor:[Utiles colorWithHexString:@"#D6D6D4"]];
+    
     UILabel *companyNameLabel=[[UILabel alloc] initWithFrame:CGRectMake(60, 0, 200, 40)];
-    [companyNameLabel setBackgroundColor:[Utiles colorWithHexString:@"#E27A24"]];
+    [companyNameLabel setBackgroundColor:[UIColor clearColor]];
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     id comInfo=delegate.comInfo;
     [companyNameLabel setText:[comInfo objectForKey:@"companyname"]];
     [companyNameLabel setTextAlignment:NSTextAlignmentCenter];
-    [companyNameLabel setTextColor:[UIColor whiteColor]];
+    
+    if (IOS7_OR_LATER) {
+        top=[[UIToolbar alloc] initWithFrame:CGRectMake(0,20,SCREEN_WIDTH,44)];
+        [companyNameLabel setTextColor:[Utiles colorWithHexString:@"#2E71FA"]];
+    } else {
+        top=[[PrettyToolbar alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,44)];
+        [companyNameLabel setTextColor:[UIColor whiteColor]];
+    }
+
     [top addSubview:companyNameLabel];
     SAFE_RELEASE(companyNameLabel);
     UIBarButtonItem *back=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];

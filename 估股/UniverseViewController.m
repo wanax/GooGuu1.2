@@ -32,20 +32,19 @@
 {
 	[super viewDidLoad];
     self.title=@"估值模型";
+    [Utiles iOS7StatusBar:self];
     // Do any additional setup after loading the view.
     StockContainerViewController *content=[[StockContainerViewController alloc] init];
-    content.view.frame=CGRectMake(0,-20,SCREEN_WIDTH,SCREEN_HEIGHT);
+    if (IOS7_OR_LATER) {
+        content.view.frame=CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+    } else {
+        content.view.frame=CGRectMake(0,-22,SCREEN_WIDTH,SCREEN_HEIGHT);
+    }
+    
     
     [self.view addSubview:content.view];
     [self addChildViewController:content];
     
-    /*self.theSearchBar=[[UISearchBar alloc] initWithFrame:CGRectMake(0,0,320,40)];
-    
-    [[self.theSearchBar.subviews objectAtIndex:0] removeFromSuperview];
-    self.theSearchBar.backgroundColor = [UIColor grayColor];
-    
-    self.theSearchBar.delegate=self;
-    [self.view addSubview:self.theSearchBar];*/
     [content release];
 }
 

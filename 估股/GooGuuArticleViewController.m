@@ -86,20 +86,26 @@
     SAFE_RELEASE(titleLabel);
     
     UIButton *comeIntoComBt=[UIButton buttonWithType:UIButtonTypeCustom];
-    [comeIntoComBt setFrame:CGRectMake(0,350, 160, 35)];
+    
     [comeIntoComBt.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:15.0]];
-    [comeIntoComBt setBackgroundColorString:@"#9C6C1E" forState:UIControlStateNormal];
-    [comeIntoComBt setTitle:@"进入公司" forState:UIControlStateNormal];
+    [comeIntoComBt setBackgroundImage:[UIImage imageNamed:@"enterCompanyBt"] forState:UIControlStateNormal];
+    //[comeIntoComBt setTitle:@"进入公司" forState:UIControlStateNormal];
     [comeIntoComBt addTarget:self action:@selector(comeIntoComBtClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:comeIntoComBt];
     
     UIButton *addCommentBt=[UIButton buttonWithType:UIButtonTypeCustom];
-    [addCommentBt setFrame:CGRectMake(160,350, 160, 35)];
     [addCommentBt.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:15.0]];
-    [addCommentBt setBackgroundColorString:@"#9C6C1E" forState:UIControlStateNormal];
-    [addCommentBt setTitle:@"添加评论" forState:UIControlStateNormal];
+    [addCommentBt setBackgroundImage:[UIImage imageNamed:@"addCommentBt"] forState:UIControlStateNormal];
+    //[addCommentBt setTitle:@"添加评论" forState:UIControlStateNormal];
     [addCommentBt addTarget:self action:@selector(addCommentBtClicked) forControlEvents:UIControlEventTouchUpInside];
+    if (IOS7_OR_LATER) {
+        [comeIntoComBt setFrame:CGRectMake(0,444, 160, 30)];
+        [addCommentBt setFrame:CGRectMake(160,444, 160, 30)];
+    } else {
+        [comeIntoComBt setFrame:CGRectMake(0,356, 160, 30)];
+        [addCommentBt setFrame:CGRectMake(160,356, 160, 30)];
+    }
     [self.view addSubview:addCommentBt];
+    [self.view addSubview:comeIntoComBt];
     
 }
 #pragma mark -
@@ -126,7 +132,7 @@
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:articleId,@"articleid", nil];
     [Utiles getNetInfoWithPath:@"ArticleURL" andParams:params besidesBlock:^(id article){
         
-        articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-75)];
+        articleWeb=[[UIWebView alloc] initWithFrame:CGRectMake(0,40,self.view.bounds.size.width, self.view.bounds.size.height-70)];
         articleWeb.delegate=self;
         [articleWeb loadHTMLString:[article objectForKey:@"content"] baseURL:nil];
         

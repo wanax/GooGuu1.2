@@ -29,7 +29,12 @@
     [super viewDidLoad];
     self.title=@"免责声明";
     [self.view setBackgroundColor:[Utiles colorWithHexString:@"#EAE6D0"]];
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 5, 300, 400)];
+    UIScrollView *scrollView=nil;
+    if (IOS7_OR_LATER) {
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(15, -80, SCREEN_WIDTH, SCREEN_HEIGHT+100)];
+    } else {
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(15, -20, SCREEN_WIDTH, SCREEN_HEIGHT+20)];
+    }
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(0,0,300,960);
     NSString *path = [[NSBundle mainBundle] pathForResource:@"announce" ofType:@"txt"];
