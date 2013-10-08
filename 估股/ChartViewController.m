@@ -253,7 +253,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     if (IOS7_OR_LATER) {
         iOS7H0=20;
         iOS7H1=25;
-        iOS7H2=67;
+        iOS7H2=72;
     } else {
         iOS7H0=0;
         iOS7H1=5;
@@ -265,46 +265,55 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     DrawChartTool *tool=[[DrawChartTool alloc] init];
     tool.standIn=self;
     
-    [tool addButtonToView:self.view withTitle:@"主营收入" Tag:MainIncome frame:CGRectMake(77,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainIncomeBt" highBackGroundImg:@"selectedMainIncome"];
+    [tool addButtonToView:self.view withTitle:@"主营收入" Tag:MainIncome frame:CGRectMake(SCREEN_HEIGHT-403,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainIncomeBt" highBackGroundImg:@"selectedMainIncome"];
     
-    [tool addButtonToView:self.view withTitle:@"运营费用" Tag:OperaFee frame:CGRectMake(177,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainFeeBt" highBackGroundImg:@"selectedMainfee"];
+    [tool addButtonToView:self.view withTitle:@"运营费用" Tag:OperaFee frame:CGRectMake(SCREEN_HEIGHT-303,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainFeeBt" highBackGroundImg:@"selectedMainfee"];
     
-    [tool addButtonToView:self.view withTitle:@"运营资本" Tag:OperaCap frame:CGRectMake(277,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainFeeBt" highBackGroundImg:@"selectedMainfee"];
+    [tool addButtonToView:self.view withTitle:@"运营资本" Tag:OperaCap frame:CGRectMake(SCREEN_HEIGHT-203,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"mainFeeBt" highBackGroundImg:@"selectedMainfee"];
     
-    self.discountBt=[tool addButtonToView:self.view withTitle:@"折现率" Tag:DiscountRate frame:CGRectMake(377,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"discountBt" highBackGroundImg:@"selectedDiscount"];
+    self.discountBt=[tool addButtonToView:self.view withTitle:@"折现率" Tag:DiscountRate frame:CGRectMake(SCREEN_HEIGHT-103,iOS7H1,100,31) andFun:@selector(selectIndustry:forEvent:) withType:UIButtonTypeRoundedRect andColor:@"#FFFEFE" textColor:@"#000000" normalBackGroundImg:@"discountBt" highBackGroundImg:@"selectedDiscount"];
     [self.discountBt setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
     
     [tool addButtonToView:self.view withTitle:@"返回" Tag:BackToSuperView frame:CGRectMake(10,iOS7H1,50,32) andFun:@selector(chartAction:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"backBt" highBackGroundImg:nil];
     
-    saveBt=[tool addButtonToView:self.view withTitle:@"保存" Tag:SaveData frame:CGRectMake(418,iOS7H2,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#d0d1d2" textColor:@"#FFFEFE" normalBackGroundImg:@"saveBt" highBackGroundImg:nil];
+    saveBt=[tool addButtonToView:self.view withTitle:@"保存" Tag:SaveData frame:CGRectMake(SCREEN_HEIGHT-62,iOS7H2,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#d0d1d2" textColor:@"#FFFEFE" normalBackGroundImg:@"saveBt" highBackGroundImg:nil];
     
-    self.linkBt=[tool addButtonToView:self.view withTitle:@"点动" Tag:DragChartType frame:CGRectMake(300,iOS7H2,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
+    self.linkBt=[tool addButtonToView:self.view withTitle:@"点动" Tag:DragChartType frame:CGRectMake(SCREEN_HEIGHT-180,iOS7H2,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
     
-    self.resetBt=[tool addButtonToView:self.view withTitle:@"复位" Tag:ResetChart frame:CGRectMake(359,iOS7H2,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
+    self.resetBt=[tool addButtonToView:self.view withTitle:@"复位" Tag:ResetChart frame:CGRectMake(SCREEN_HEIGHT-121,iOS7H2,54,26) andFun:@selector(chartAction:) withType:UIButtonTypeRoundedRect andColor:@"#2bc0a7" textColor:@"#FFFEFE" normalBackGroundImg:@"resetBt" highBackGroundImg:nil];
+    
+    int iOSHeightStatusBar;
+    if (IOS7_OR_LATER) {
+        iOSHeightStatusBar=20;
+    } else {
+        iOSHeightStatusBar=0;
+    }
     
     //公司名称label
     CGSize labelsize1 = [tool getLabelSizeFromString:netComInfo[@"CompanyName"] font:@"Heiti SC" fontSize:14.0];
     //公司股票行业label
     CGSize labelsize2 = [tool getLabelSizeFromString:[NSString stringWithFormat:@"(%@.%@)",netComInfo[@"StockCode"],netComInfo[@"Market"]] font:@"Heiti SC" fontSize:11.0];
-    float maxWidthLenght=MAX(labelsize1.width,labelsize2.width);
+//    float maxWidthLenght=MAX(labelsize1.width,labelsize2.width);
     
-    [tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@",netComInfo[@"CompanyName"]] Tag:0 frame:CGRectMake(labelsize1.width==maxWidthLenght?30:30+(maxWidthLenght-labelsize1.width)/2,50,labelsize1.width,labelsize1.height) fontSize:14.0 color:@"#F2EFE1" textColor:@"#63573d" location:NSTextAlignmentLeft];
+    UILabel *comNameLabel=[tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"%@",netComInfo[@"CompanyName"]] Tag:0 frame:CGRectMake(0,40+iOSHeightStatusBar,SCREEN_HEIGHT-320,35) fontSize:14.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
+    comNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    comNameLabel.numberOfLines = 0;
     
-    [tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"(%@.%@)",netComInfo[@"StockCode"],netComInfo[@"Market"]] Tag:0 frame:CGRectMake(labelsize2.width==maxWidthLenght?30:30+(maxWidthLenght-labelsize2.width)/2,53+labelsize2.height,labelsize2.width,labelsize2.height) fontSize:11.0 color:@"#F2EFE1" textColor:@"#63573d" location:NSTextAlignmentLeft];
+    [tool addLabelToView:self.view withTitle:[NSString stringWithFormat:@"(%@.%@)",netComInfo[@"StockCode"],netComInfo[@"Market"]] Tag:0 frame:CGRectMake(0,75+iOSHeightStatusBar,SCREEN_HEIGHT-320,15) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setPositiveFormat:@"###0.##"];
     NSString *ggPrice=[NSString stringWithFormat:@"%@",[numberFormatter stringFromNumber:@([netComInfo[@"GooguuValuation"] floatValue])]];
     
-    CGFloat companyNameLabelLenght=maxWidthLenght+10;
+    CGFloat companyNameLabelLenght=SCREEN_HEIGHT-320;
     //估值label
     CGSize defaultGGpriceLabelSize=[tool getLabelSizeFromString:@"估股估值:HK$" font:@"Heiti SC" fontSize:10.0];
     //估值数值label
     NSString *defaultGprice=[NSString stringWithFormat:@"%@",[numberFormatter stringFromNumber:@([netComInfo[@"GooguuValuation"] floatValue])]];
     CGSize defaultPriceLabelSize=[tool getLabelSizeFromString:defaultGprice font:@"Heiti SC" fontSize:10.0];
-    [tool addLabelToView:self.view withTitle:@"估股估值:HK$" Tag:11 frame:CGRectMake(companyNameLabelLenght+40,43+(40+labelsize1.height)/2-defaultGGpriceLabelSize.height,defaultGGpriceLabelSize.width,defaultGGpriceLabelSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#817a6b" location:NSTextAlignmentLeft];
+    [tool addLabelToView:self.view withTitle:@"估股估值:HK$" Tag:11 frame:CGRectMake(companyNameLabelLenght+40,43+(40+labelsize1.height)/2-defaultGGpriceLabelSize.height+iOSHeightStatusBar,defaultGGpriceLabelSize.width,defaultGGpriceLabelSize.height) fontSize:10.0 color:nil textColor:@"#817a6b" location:NSTextAlignmentLeft];
     
-    [tool addLabelToView:self.view withTitle:defaultGprice Tag:11 frame:CGRectMake(companyNameLabelLenght+defaultGGpriceLabelSize.width+40,43+(40+labelsize1.height)/2-defaultGGpriceLabelSize.height+defaultGGpriceLabelSize.height-defaultPriceLabelSize.height,defaultPriceLabelSize.width,defaultPriceLabelSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#e18e14" location:NSTextAlignmentLeft];
+    [tool addLabelToView:self.view withTitle:defaultGprice Tag:11 frame:CGRectMake(companyNameLabelLenght+defaultGGpriceLabelSize.width+40,43+(40+labelsize1.height)/2-defaultGGpriceLabelSize.height+defaultGGpriceLabelSize.height-defaultPriceLabelSize.height+iOSHeightStatusBar,defaultPriceLabelSize.width,defaultPriceLabelSize.height) fontSize:10.0 color:nil textColor:@"#e18e14" location:NSTextAlignmentLeft];
     
     //我的估值label
     CGSize myGGpriceLabelSize=[tool getLabelSizeFromString:@"我的估值:HK$" font:@"Heiti SC" fontSize:10.0];
@@ -313,8 +322,8 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
     priceLabelSize.width=priceLabelSize.width+25;
     //CGFloat priceLabelTap=300-myGGpriceLabelSize.width-priceLabelSize.width-5;
     
-    myGGpriceLabel=[tool addLabelToView:self.view withTitle:@"我的估值:HK$" Tag:11 frame:CGRectMake(companyNameLabelLenght+40,74,myGGpriceLabelSize.width+3,myGGpriceLabelSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#817a6b" location:NSTextAlignmentLeft];
-    priceLabel=[tool addLabelToView:self.view withTitle:@"" Tag:11 frame:CGRectMake(companyNameLabelLenght+40+myGGpriceLabelSize.width,74+myGGpriceLabelSize.height-priceLabelSize.height,priceLabelSize.width,priceLabelSize.height) fontSize:13.0 color:@"#F2EFE1" textColor:@"#e18e14" location:NSTextAlignmentLeft];
+    myGGpriceLabel=[tool addLabelToView:self.view withTitle:@"我的估值:HK$" Tag:11 frame:CGRectMake(companyNameLabelLenght+40,74+iOSHeightStatusBar,myGGpriceLabelSize.width+3,myGGpriceLabelSize.height) fontSize:10.0 color:nil textColor:@"#817a6b" location:NSTextAlignmentLeft];
+    priceLabel=[tool addLabelToView:self.view withTitle:@"" Tag:11 frame:CGRectMake(companyNameLabelLenght+40+myGGpriceLabelSize.width,74+myGGpriceLabelSize.height-priceLabelSize.height+iOSHeightStatusBar,priceLabelSize.width+10,priceLabelSize.height) fontSize:13.0 color:nil textColor:@"#e18e14" location:NSTextAlignmentLeft];
     if(self.sourceType!=MySavedType){
         [myGGpriceLabel setHidden:YES];
         [priceLabel setHidden:YES];
@@ -322,16 +331,17 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
  
     //市场价label
     CGSize markPriceLabelSize=[tool getLabelSizeFromString:@"市场价:HK$" font:@"Heiti SC" fontSize:10.0];
-    [tool addLabelToView:self.view withTitle:@"市场价:HK$" Tag:11 frame:CGRectMake(companyNameLabelLenght+40,45,markPriceLabelSize.width,markPriceLabelSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#817a6b" location:NSTextAlignmentLeft];
+    [tool addLabelToView:self.view withTitle:@"市场价:HK$" Tag:11 frame:CGRectMake(companyNameLabelLenght+40,45+iOSHeightStatusBar,markPriceLabelSize.width,markPriceLabelSize.height) fontSize:10.0 color:nil textColor:@"#817a6b" location:NSTextAlignmentLeft];
     
     //市场价数值label
     CGSize markPriceSize=[tool getLabelSizeFromString:[NSString stringWithFormat:@"%@",[numberFormatter stringFromNumber:@([netComInfo[@"MarketPrice"] floatValue])]] font:@"Heiti SC" fontSize:10.0];
-    [tool addLabelToView:self.view withTitle:[numberFormatter stringFromNumber:@([netComInfo[@"MarketPrice"] floatValue])] Tag:11 frame:CGRectMake(companyNameLabelLenght+40+markPriceLabelSize.width,45,markPriceSize.width,markPriceSize.height) fontSize:10.0 color:@"#F2EFE1" textColor:@"#817a6b" location:NSTextAlignmentLeft];
+    [tool addLabelToView:self.view withTitle:[numberFormatter stringFromNumber:@([netComInfo[@"MarketPrice"] floatValue])] Tag:11 frame:CGRectMake(companyNameLabelLenght+40+markPriceLabelSize.width,45+iOSHeightStatusBar,markPriceSize.width,markPriceSize.height) fontSize:10.0 color:nil textColor:@"#817a6b" location:NSTextAlignmentLeft];
     
     [self addScatterChart];
     if ([Utiles isNetConnected]) {
         [self.discountBt setEnabled:YES];
-    }    
+    }
+    
     SAFE_RELEASE(topBar);
     SAFE_RELEASE(tool);
     SAFE_RELEASE(numberFormatter);
@@ -354,11 +364,11 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
                 [bt setBackgroundImage:[UIImage imageNamed:@"savedBt"] forState:UIControlStateNormal];
                 [bt setEnabled:NO];
                 _isSaved=YES;
-                [Utiles ToastNotification:resObj[@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                [Utiles showToastView:self.view withTitle:nil andContent:resObj[@"msg"] duration:1.5];
             }else if([resObj[@"status"] isEqual:@"2"]){
-                [Utiles ToastNotification:resObj[@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                [Utiles showToastView:self.view withTitle:nil andContent:resObj[@"msg"] duration:1.5];
             }else{
-                [Utiles ToastNotification:@"保存失败" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+                [Utiles showToastView:self.view withTitle:nil andContent:@"保存失败" duration:1.5];
             }
         } failure:^(AFHTTPRequestOperation *operation,NSError *error){
             [Utiles showToastView:self.view withTitle:nil andContent:@"用户未登录" duration:1.5];
@@ -410,8 +420,17 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
                                                     animated:YES];
     }else if(sender.tag==DiscountRate){
         NSString *values=[Utiles getObjectDataFromJsFun:self.webView funName:@"getValues" byData:nil shouldTrans:NO];
-        rateViewController=[[DiscountRateViewController alloc] init];
-        rateViewController.view.frame=CGRectMake(0,40,480,280);
+        if (SCREEN_HEIGHT>500) {
+            rateViewController=[[DiscountRateViewController alloc] initWithNibName:@"DiscountRateView5" bundle:nil];
+            rateViewController.view.frame=CGRectMake(0,60,SCREEN_HEIGHT,SCREEN_WIDTH-60);
+        } else {
+            rateViewController=[[DiscountRateViewController alloc] initWithNibName:@"DiscountRateView" bundle:nil];
+            if (IOS7_OR_LATER) {
+                rateViewController.view.frame=CGRectMake(0,60,SCREEN_HEIGHT,SCREEN_WIDTH-60);
+            } else {
+                rateViewController.view.frame=CGRectMake(0,40,SCREEN_HEIGHT,SCREEN_WIDTH-60);
+            }
+        }   
         rateViewController.jsonData=self.jsonForChart;
         rateViewController.valuesStr=values;
         rateViewController.dragChartChangedDriverIds=self.changedDriverIds;
@@ -811,7 +830,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
             CPTTextStyle *theLabelTextStyle;
             
             CPTMutableTextStyle * newStyle = [axis.labelTextStyle mutableCopy];
-            newStyle.fontSize=12.0;
+            newStyle.fontSize=10.0;
             newStyle.fontName=@"Heiti SC";
             //newStyle.color=[CPTColor colorWithComponentRed:129/255.0 green:122/255.0 blue:107/255.0 alpha:1.0];
             positiveStyle  = newStyle;
@@ -825,7 +844,7 @@ static NSString * COLUMNAR_DATALINE_IDENTIFIER =@"columnar_dataline_identifier";
             CPTAxisLabel * newLabel     = [[CPTAxisLabel alloc] initWithContentLayer:newLabelLayer];
             newLabel.tickLocation       = tickLocation.decimalValue;
             newLabel.offset             =  3;
-            newLabel.rotation     = 5.5;
+            newLabel.rotation     = 0;
             [newLabels addObject:newLabel];
         }
         

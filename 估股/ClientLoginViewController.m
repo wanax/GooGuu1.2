@@ -99,6 +99,12 @@
     image2.frame=CGRectMake(0,0,20,20);
     userPwdField.leftView=image2;
     userPwdField.leftViewMode = UITextFieldViewModeUnlessEditing;
+    
+    autoCheckImg.userInteractionEnabled=YES;
+    UITapGestureRecognizer *rememberTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(autoBtClicked:)];
+    [autoCheckImg addGestureRecognizer:rememberTap];
+    SAFE_RELEASE(rememberTap);
+    
 
 }
 

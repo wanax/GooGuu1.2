@@ -33,7 +33,7 @@
 #define kLightBorderColor    [UIColor colorWithWhite:1.00f alpha:0.10f]
 #define kStartHighlightColor [UIColor colorWithWhite:1.00f alpha:0.40f]
 #define kEndHighlightColor   [UIColor colorWithWhite:1.00f alpha:0.05f]
-#define kDefaultCornerRadius 10.0f
+#define kDefaultCornerRadius 6.0f
 
 
 @implementation CQMFloatingFrameView {

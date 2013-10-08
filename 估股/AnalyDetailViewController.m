@@ -74,7 +74,7 @@
     id comInfo=delegate.comInfo;
     [companyNameLabel setText:[comInfo objectForKey:@"companyname"]];
     [companyNameLabel setTextAlignment:NSTextAlignmentCenter];
-    [companyNameLabel setTextColor:[UIColor whiteColor]];
+    [companyNameLabel setTextColor:[Utiles colorWithHexString:@"#2E71FA"]];
     [top addSubview:companyNameLabel];
     SAFE_RELEASE(companyNameLabel);
     [self.view addSubview:top];

@@ -78,8 +78,13 @@
 - (void)viewDidAppear:(BOOL)animated{
     
     if(![Utiles isLogin]){
-        ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
-        loginViewController.view.frame=CGRectMake(0,20,320,480);
+        ClientLoginViewController *loginViewController=nil;
+        if (SCREEN_HEIGHT>500) {
+           loginViewController = [[ClientLoginViewController alloc] initWithNibName:@"ClientLoginView5" bundle:nil];
+        } else {
+            loginViewController = [[ClientLoginViewController alloc] initWithNibName:@"ClientLoginView" bundle:nil]; 
+        }
+
         loginViewController.sourceType=MyGooGuuBar;
         [self presentViewController:loginViewController animated:YES completion:nil];
     }

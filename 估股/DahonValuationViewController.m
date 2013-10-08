@@ -114,8 +114,6 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
     
     [self.view addSubview:topBar];
     
-    //提示信息
-    [tool addLabelToView:self.view withTitle:@"*点击图标查看大行估值" Tag:6 frame:CGRectMake(SCREEN_HEIGHT-145,SCREEN_WIDTH-38,140,40) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     //title
     if (IOS7_OR_LATER) {
         titleLabel=[tool addLabelToView:self.view withTitle:@"" Tag:6 frame:CGRectMake(0,60,SCREEN_HEIGHT,30) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
@@ -127,15 +125,25 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
         [tool addButtonToView:self.view withTitle:@"刷新" Tag:6 frame:CGRectMake(SCREEN_HEIGHT-64,5,54,30) andFun:@selector(reflash:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"reflashBt" highBackGroundImg:nil];
     }
     
+    int iOS7H0,iOS7H1;
+    if (IOS7_OR_LATER) {
+        iOS7H0=28;
+        iOS7H1=38;
+    } else {
+        iOS7H0=45;
+        iOS7H1=55;
+    }
     
+    //提示信息
+    [tool addLabelToView:self.view withTitle:@"*点击图标查看大行估值" Tag:6 frame:CGRectMake(SCREEN_HEIGHT-145,SCREEN_WIDTH-iOS7H1,140,40) fontSize:11.0 color:nil textColor:@"#63573d" location:NSTextAlignmentCenter];
     
-    oneMonth=[tool addButtonToView:self.view withTitle:@"一个月" Tag:OneMonth frame:CGRectMake(SCREEN_HEIGHT-335,SCREEN_WIDTH-28,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
+    oneMonth=[tool addButtonToView:self.view withTitle:@"一个月" Tag:OneMonth frame:CGRectMake(SCREEN_HEIGHT-335,SCREEN_WIDTH-iOS7H0,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
     [oneMonth.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:10.0]];
-    threeMonth=[tool addButtonToView:self.view withTitle:@"三个月" Tag:ThreeMonth frame:CGRectMake(SCREEN_HEIGHT-285,SCREEN_WIDTH-28,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
+    threeMonth=[tool addButtonToView:self.view withTitle:@"三个月" Tag:ThreeMonth frame:CGRectMake(SCREEN_HEIGHT-285,SCREEN_WIDTH-iOS7H0,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
     [threeMonth.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:10.0]];
-    sixMonth=[tool addButtonToView:self.view withTitle:@"六个月" Tag:SixMonth frame:CGRectMake(SCREEN_HEIGHT-235,SCREEN_WIDTH-28,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
+    sixMonth=[tool addButtonToView:self.view withTitle:@"六个月" Tag:SixMonth frame:CGRectMake(SCREEN_HEIGHT-235,SCREEN_WIDTH-iOS7H0,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#e97a31" normalBackGroundImg:nil highBackGroundImg:nil];
     [sixMonth.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:10.0]];
-    oneYear=[tool addButtonToView:self.view withTitle:@"一年" Tag:OneYear frame:CGRectMake(SCREEN_HEIGHT-185,SCREEN_WIDTH-28,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"monthChoosenBt" highBackGroundImg:nil];
+    oneYear=[tool addButtonToView:self.view withTitle:@"一年" Tag:OneYear frame:CGRectMake(SCREEN_HEIGHT-185,SCREEN_WIDTH-iOS7H0,40,22) andFun:@selector(changeDateInter:) withType:UIButtonTypeCustom andColor:nil textColor:@"#FFFEFE" normalBackGroundImg:@"monthChoosenBt" highBackGroundImg:nil];
     [oneYear.titleLabel setFont:[UIFont fontWithName:@"Heiti SC" size:10.0]];
     lastMarkBt=oneYear;
     [oneMonth setEnabled:NO];
@@ -509,7 +517,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
                 CPTTextStyle *theLabelTextStyle;
                 
                 CPTMutableTextStyle * newStyle = [axis.labelTextStyle mutableCopy];
-                newStyle.fontSize=11.0;
+                newStyle.fontSize=10.0;
                 newStyle.fontName=@"Heiti SC";
                 newStyle.color=[CPTColor colorWithComponentRed:153/255.0 green:129/255.0 blue:64/255.0 alpha:0.8];
                 positiveStyle  = newStyle;
@@ -535,7 +543,7 @@ static NSString * HISTORY_DATALINE_IDENTIFIER =@"history_dataline_identifier";
                 CPTAxisLabel * newLabel     = [[CPTAxisLabel alloc] initWithContentLayer:newLabelLayer];
                 newLabel.tickLocation       = tickLocation.decimalValue;
                 newLabel.offset             =  0;
-                //newLabel.rotation     = labelOffset;
+                newLabel.rotation     = 0;
                 [newLabels addObject:newLabel];
             }
             

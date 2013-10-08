@@ -64,7 +64,7 @@
 #pragma mark General Methods
 
 -(void)initCommonents{
-    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-90) style:UITableViewStyleGrouped];
+    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-110) style:UITableViewStyleGrouped];
     self.customTabel.delegate=self;
     self.customTabel.dataSource=self;
     [self.view addSubview:self.customTabel];
@@ -90,6 +90,16 @@
 
 #pragma mark -
 #pragma mark Table Data Source Methods
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 25;//section头部高度
+}
+//section底部间距
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
+}
+
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 45.0;
 }
@@ -106,7 +116,7 @@
     }else if(section==2){
         return 1;
     }else if(section==3){
-        return 4;
+        return 5;
     }
     return 0;
 }
@@ -135,7 +145,7 @@
     
     // Create label with section title
     UILabel *label = [[[UILabel alloc] init] autorelease];
-    label.frame = CGRectMake(20, 6, 300, 30);
+    label.frame = CGRectMake(10, 3, 300, 20);
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor blackColor];
     label.shadowColor = [UIColor whiteColor];
@@ -270,16 +280,20 @@
             cell.detailTextLabel.text=@"";
             return cell;
         }else if(row==1){
+            cell.textLabel.text = @"应用打分";
+            cell.detailTextLabel.text=@"请多多支持";
+            return cell;
+        }else if(row==2){
             
             cell.textLabel.text = @"帮助说明";
             cell.detailTextLabel.text=@"";
             return cell;
-        }else if(row==2){
+        }else if(row==3){
 
             cell.textLabel.text = @"意见反馈";
             cell.detailTextLabel.text=@"用户意见反馈";
             return cell;
-        }else if(row==3){
+        }else if(row==4){
             
             cell.textLabel.text = @"关于我们";
             cell.detailTextLabel.text=@"关于我们，版权信息";            
@@ -320,7 +334,12 @@
                     [self logout];
                     [self.customTabel reloadData];
                 } else {
-                    ClientLoginViewController *loginViewController = [[ClientLoginViewController alloc] init];
+                    ClientLoginViewController *loginViewController=nil;
+                    if (SCREEN_HEIGHT>500) {
+                        loginViewController = [[ClientLoginViewController alloc] initWithNibName:@"ClientLoginView5" bundle:nil];
+                    } else {
+                        loginViewController = [[ClientLoginViewController alloc] initWithNibName:@"ClientLoginView" bundle:nil];
+                    }
                     loginViewController.sourceType=SettingBar;
                     [self presentViewController:loginViewController animated:YES completion:nil];
                 }
@@ -342,11 +361,16 @@
     }else if(section==3){
         if(row==0){
             [self pushViewController:@"DisclaimersViewController"];
-        }else if(row==1){
-            [self pushViewController:@"HelpViewController"];
-        }else if(row==3){
-            [self pushViewController:@"AboutUsAndCopyrightViewController"];
+        }else if (row==1){
+            
+            NSString *str = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%d",703282718];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            
         }else if(row==2){
+            [self pushViewController:@"HelpViewController"];
+        }else if(row==4){
+            [self pushViewController:@"AboutUsAndCopyrightViewController"];
+        }else if(row==3){
             if ([Utiles isNetConnected]) {
                 [self pushViewController:@"FeedBackViewController"];
             } else {

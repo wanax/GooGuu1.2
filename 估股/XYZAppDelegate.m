@@ -27,6 +27,7 @@
 #import "SettingCenterViewController.h"
 #import "AgreementViewController.h"
 #import "ProAlertView.h"
+#import "PonyDebugger.h"
 
 
 @implementation XYZAppDelegate
@@ -49,6 +50,18 @@
     [pageControl release];
     [window release];
     [super dealloc];
+}
+
+-(void)setPonyDebugger{
+    PDDebugger *debugger = [PDDebugger defaultInstance];
+    [debugger enableNetworkTrafficDebugging];
+    [debugger forwardAllNetworkTraffic];
+    
+    [debugger enableViewHierarchyDebugging];
+    [debugger setDisplayedViewAttributeKeyPaths:@[@"frame", @"hidden", @"alpha", @"opaque"]];
+    
+    [debugger enableRemoteLogging];
+    [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
 }
 
 -(void)beginStatistics{
@@ -98,9 +111,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    //[self setPonyDebugger];
+    
     [Utiles setConfigureInfoTo:@"userconfigure" forKey:@"stockColorSetting" andContent:[NSString stringWithFormat:@"%d",0]];
 
-    [[NSUserDefaults standardUserDefaults] setObject:@"1.0" forKey:@"version"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"1.0.1" forKey:@"version"];
 
     [self beginStatistics];
     

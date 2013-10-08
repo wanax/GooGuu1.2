@@ -98,11 +98,11 @@
     //[addCommentBt setTitle:@"添加评论" forState:UIControlStateNormal];
     [addCommentBt addTarget:self action:@selector(addCommentBtClicked) forControlEvents:UIControlEventTouchUpInside];
     if (IOS7_OR_LATER) {
-        [comeIntoComBt setFrame:CGRectMake(0,444, 160, 30)];
-        [addCommentBt setFrame:CGRectMake(160,444, 160, 30)];
+        [comeIntoComBt setFrame:CGRectMake(0,SCREEN_HEIGHT-123, 160, 30)];
+        [addCommentBt setFrame:CGRectMake(160,SCREEN_HEIGHT-123, 160, 30)];
     } else {
-        [comeIntoComBt setFrame:CGRectMake(0,356, 160, 30)];
-        [addCommentBt setFrame:CGRectMake(160,356, 160, 30)];
+        [comeIntoComBt setFrame:CGRectMake(0,SCREEN_HEIGHT-123, 160, 30)];
+        [addCommentBt setFrame:CGRectMake(160,SCREEN_HEIGHT-123, 160, 30)];
     }
     [self.view addSubview:addCommentBt];
     [self.view addSubview:comeIntoComBt];
@@ -150,7 +150,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [Utiles iOS7StatusBar:self];
     self.view.backgroundColor=[Utiles colorWithHexString:@"#9C6C1E"];
     self.parentViewController.title=@"公司简报";
     [[SDImageCache sharedImageCache] clearDisk];
