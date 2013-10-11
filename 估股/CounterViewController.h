@@ -11,8 +11,12 @@
 
 @interface CounterViewController : UIViewController<UITextFieldDelegate,BetaFactorVCDelegate>{
     NSInteger selectedTextFieldTag;
+    CGPoint standard;
 }
 
+@property FinancalToolsType toolType;
+
 @property (nonatomic,retain) NSDictionary *params;
+@property (nonatomic,retain) NSArray *floatParams;
 
 @end

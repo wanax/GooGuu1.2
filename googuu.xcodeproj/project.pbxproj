@@ -313,6 +313,7 @@
 		AE7D97C81805388700234417 /* WACC.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7D97BD1805388700234417 /* WACC.png */; };
 		AE7D97CB180541F800234417 /* CounterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7D97CA180541F800234417 /* CounterViewController.m */; };
 		AE934A9C17DEFDD9002AF556 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AE934A9B17DEFDD9002AF556 /* icon.png */; };
+		AEC678491807F15E00C578B2 /* FinanceToolsGrade2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC678481807F15E00C578B2 /* FinanceToolsGrade2ViewController.m */; };
 		AEEF33DB17F90F0600894E90 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AEEF33DA17F90F0600894E90 /* Icon@2x.png */; };
 		AEEF33DD17F9153700894E90 /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEF33DC17F9153700894E90 /* libBaiduMobStat.a */; };
 		AEF2EF9B17BB13A800B7B9A2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2EF9A17BB13A800B7B9A2 /* Crashlytics.framework */; };
@@ -1203,6 +1204,8 @@
 		AE7D97C9180541F800234417 /* CounterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CounterViewController.h; sourceTree = "<group>"; };
 		AE7D97CA180541F800234417 /* CounterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CounterViewController.m; sourceTree = "<group>"; };
 		AE934A9B17DEFDD9002AF556 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../icon.png; sourceTree = "<group>"; };
+		AEC678471807F15E00C578B2 /* FinanceToolsGrade2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinanceToolsGrade2ViewController.h; sourceTree = "<group>"; };
+		AEC678481807F15E00C578B2 /* FinanceToolsGrade2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinanceToolsGrade2ViewController.m; sourceTree = "<group>"; };
 		AEEF33DA17F90F0600894E90 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		AEEF33DC17F9153700894E90 /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
 		AEF2EF9A17BB13A800B7B9A2 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -2065,6 +2068,8 @@
 			children = (
 				AE2E93E2179D0A610049B28E /* FinanceToolsViewController.h */,
 				AE2E93E3179D0A610049B28E /* FinanceToolsViewController.m */,
+				AEC678471807F15E00C578B2 /* FinanceToolsGrade2ViewController.h */,
+				AEC678481807F15E00C578B2 /* FinanceToolsGrade2ViewController.m */,
 				AE7D97C9180541F800234417 /* CounterViewController.h */,
 				AE7D97CA180541F800234417 /* CounterViewController.m */,
 				AE4ADA431806519C0007047D /* BetaFactorCountViewController.h */,
@@ -3270,6 +3275,7 @@
 				AE5608D717BE02AB0064EA91 /* Indicator2View.m in Sources */,
 				AE5608DA17BE05580064EA91 /* StockSearchListViewController.m in Sources */,
 				AEFF338118078CCF003C4D78 /* GzipCompressor.m in Sources */,
+				AEC678491807F15E00C578B2 /* FinanceToolsGrade2ViewController.m in Sources */,
 				AE58FD0A17C345C500D23DCE /* Toast+UIView.m in Sources */,
 				AE4B4FCD17C4674E00180A93 /* RTLabel.m in Sources */,
 				AEF6412A17CEE45500E69F41 /* IndicatorSearchView.m in Sources */,

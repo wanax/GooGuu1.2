@@ -10,6 +10,26 @@
 
 @interface EnumSummary : NSObject
 
+typedef enum{
+    
+    BateFactor=0,//bate系数
+    Discountrate=1,//折现率
+    DiscountCashFlow=2,//现金流折现
+    FreeCashFlow=3,//自由现金流
+    StartUpComValue=4,//初创公司估值
+    InvestBeforeValu=41,//投前估值
+    InvestAfterValu=42,//投后估值
+    MultRoundsOfFinance=43,//多轮融资计算
+    PEReturnOnInvest=5,//PE投资回报
+    FundsTimeValue=6,//资金的时间价值
+    InvestIncome=7,//投资收益
+    AStockTransFees=8,//A股交易手续费
+    HKStockTransFees=9,//港股交易手续费
+    ExcelShortcuts=10//Excel快捷键
+    
+    
+} FinancalToolsType;
+
 //评论类型，此页面三种评论公用
 typedef enum {
     
