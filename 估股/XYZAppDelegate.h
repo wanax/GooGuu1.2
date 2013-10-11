@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TSPopoverController.h"
+#import "BPush.h"
 
 @class ConcernedViewController;
 @class Company;
@@ -17,6 +18,10 @@
     IBOutlet UIWindow *window;
     NSString *_stockCode;
 }
+
+@property NSString *appId;
+@property NSString *channelId;
+@property NSString *userId;
 
 @property BOOL isReachable;
 @property (nonatomic,retain) TSPopoverController *popoverController;

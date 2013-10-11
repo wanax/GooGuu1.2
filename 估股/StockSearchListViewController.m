@@ -92,7 +92,7 @@
 -(void)getcomListByKey:(NSString *)key{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:key,@"q", nil];
-    [Utiles postNetInfoWithPath:@"Query" andParams:params besidesBlock:^(id resObj){
+    [Utiles postNetInfoWithPath:@"QueryComList" andParams:params besidesBlock:^(id resObj){
         
         self.comList=resObj;
         [self.searchTable reloadData];
@@ -106,7 +106,7 @@
 -(void)requestValution:(UIButton *)bt{
     NSString *stockCode=[[self.comList objectAtIndex:bt.tag-1] objectForKey:@"stockcode"];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:stockCode,@"stockcode", nil];
-    [Utiles postNetInfoWithPath:@"Request" andParams:params besidesBlock:^(id resObj){       
+    [Utiles postNetInfoWithPath:@"RequestValuation" andParams:params besidesBlock:^(id resObj){       
         if(resObj){
             if([[resObj objectForKey:@"status"] boolValue]){
                 [bt setBackgroundImage:[UIImage imageNamed:@"hasDoneRequestedBt"] forState:UIControlStateNormal];

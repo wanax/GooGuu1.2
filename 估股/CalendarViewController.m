@@ -21,13 +21,9 @@
 
 @synthesize eventArr=_eventArr;
 @synthesize dateDic=_dateDic;
-@synthesize dateIndicator;
-@synthesize messageLabel;
 
 - (void)dealloc
 {
-    SAFE_RELEASE(messageLabel);
-    SAFE_RELEASE(dateIndicator);
     SAFE_RELEASE(_dateDic);
     SAFE_RELEASE(_eventArr);
     [super dealloc];
@@ -46,28 +42,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.view.backgroundColor=[Utiles colorWithHexString:@"#EFEFEF"];
+    self.view.backgroundColor=[Utiles colorWithHexString:@"#FFFFFE"];
     VRGCalendarView *calendar = [[VRGCalendarView alloc] init];
     calendar.delegate=self;
     [self.view addSubview:calendar];
     calendar.userInteractionEnabled=YES;
     self.view.userInteractionEnabled=YES;
-    
-    dateIndicator=[[UILabel alloc] initWithFrame:CGRectMake(0,292,SCREEN_WIDTH,30)];
-    dateIndicator.backgroundColor=[Utiles colorWithHexString:@"#7B140E"];
-    dateIndicator.numberOfLines = 0;
-    dateIndicator.font=[UIFont fontWithName:@"Heiti SC" size:13.0f];
-    dateIndicator.textColor=[UIColor whiteColor];
-
-    [self.view addSubview:dateIndicator];
-    
-    
-    messageLabel=[[UILabel alloc] initWithFrame:CGRectMake(0,322,SCREEN_WIDTH,120)];
-    messageLabel.backgroundColor=[Utiles colorWithHexString:@"#892D24"];
-    messageLabel.numberOfLines =5;
-    messageLabel.font=[UIFont fontWithName:@"Heiti SC" size:13.0f];
-    messageLabel.textColor=[UIColor whiteColor];
-    [self.view addSubview:messageLabel];
     
     if(!IOS7_OR_LATER){
         UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
@@ -97,36 +77,34 @@
 #pragma mark Calendar Delegate Methods
 
 -(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month targetHeight:(float)targetHeight animated:(BOOL)animated {
-    if (month==[[NSDate date] month]){
-        id dateNow=[NSDate date];
-        
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [Utiles getUserToken], @"token",
-                                [NSString stringWithFormat:@"%d",[dateNow year]],@"year",[NSString stringWithFormat:@"0%d",[dateNow month]],@"month",@"googuu",@"from",
-                                nil];
-        [Utiles postNetInfoWithPath:@"UserStockCalendar" andParams:params besidesBlock:^(id resObj){
-            if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
-                NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-                NSMutableArray *dates=[[NSMutableArray alloc] init];
-                self.eventArr=[resObj objectForKey:@"data"];
-                for(id obj in self.eventArr){
-                    [dates addObject:[f numberFromString:[obj objectForKey:@"day"]]];
-                }
-                [calendarView markDates:dates];
-                self.dateDic=[[NSMutableDictionary alloc] init];
-                for(id key in self.eventArr){
-                    [self.dateDic setObject:[key objectForKey:@"data"] forKey:[key objectForKey:@"day"]];
-                }
-                SAFE_RELEASE(dates);
-                SAFE_RELEASE(f);
-            }else{
-                [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+    id dateNow=[NSDate date];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [Utiles getUserToken], @"token",
+                            [NSString stringWithFormat:@"%d",[dateNow year]],@"year",[NSString stringWithFormat:@"0%d",[dateNow month]],@"month",@"googuu",@"from",
+                            nil];
+    [Utiles postNetInfoWithPath:@"UserStockCalendar" andParams:params besidesBlock:^(id resObj){
+        if(![[resObj objectForKey:@"status"] isEqualToString:@"0"]){
+            NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+            NSMutableArray *dates=[[NSMutableArray alloc] init];
+            self.eventArr=[resObj objectForKey:@"data"];
+            for(id obj in self.eventArr){
+                [dates addObject:[f numberFromString:[obj objectForKey:@"day"]]];
             }
-          
-        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
-            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
-        }];
-    }
+            [calendarView markDates:dates];
+            self.dateDic=[[NSMutableDictionary alloc] init];
+            for(id key in self.eventArr){
+                [self.dateDic setObject:[key objectForKey:@"data"] forKey:[key objectForKey:@"day"]];
+            }
+            SAFE_RELEASE(dates);
+            SAFE_RELEASE(f);
+        }else{
+            [Utiles ToastNotification:[resObj objectForKey:@"msg"] andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+        }
+      
+    } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }];
 }
 
 -(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date {
@@ -136,24 +114,30 @@
     NSString *currentDateStr = [dateFormat stringFromDate:date];
     [dateFormat setDateFormat:@"YYYY/MM/dd"];
     NSString *pointerDate=[NSString stringWithFormat:@"%@相关信息",[dateFormat stringFromDate:date]];
-    dateIndicator.text=pointerDate;
-    [self.messageLabel setText:@""];
     if ([[self.dateDic allKeys] containsObject:currentDateStr]){
         NSString *msg=[[NSString alloc] init];
         for(id obj in [self.dateDic objectForKey:currentDateStr]){
             msg=[msg stringByAppendingFormat:@"%@:%@\n",[obj objectForKey:@"companyname"],[obj objectForKey:@"desc"]];
         }
-        [self.messageLabel setText:msg];
-        [messageLabel alignTop];
-        if(!IOS7_OR_LATER){
-            self.view.center=CGPointMake(SCREEN_WIDTH/2,70);
-        }
+        [Utiles showToastView:self.view withTitle:pointerDate andContent:msg duration:2.0];
         
     }
    
     [dateFormat release];
     
 }
+
+-(NSUInteger)supportedInterfaceOrientations{
+    
+    //NSLog(@"concern supportedInterfaceOrientations");
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (BOOL)shouldAutorotate{
+    
+    return NO;
+}
+
 
 
 - (void)didReceiveMemoryWarning

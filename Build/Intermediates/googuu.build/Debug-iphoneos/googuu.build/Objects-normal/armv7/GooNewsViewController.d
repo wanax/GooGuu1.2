@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/GooNewsViewController.m \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/GooNewsViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/EGORefreshTableHeaderView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CustomTableView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/GooNewsCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/RTLabel.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/JavaScriptCore/WebKitAvailability.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/AFNetworking/UIImageView+AFNetworking.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/AFNetworking/AFImageRequestOperation.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/GooGuuArticleViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXPhotoBrowser.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXPhoto.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXPhotoProtocol.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXPhotoLoadingView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXPhotoLoadingViewProtocol.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXBrowserNavBarView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CXPhotoBrowser/CXBrowserToolBarView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/DemoPhoto.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/MHTabBarController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ArticleCommentViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/DailyStockCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/SVPullToRefresh/SVPullToRefresh.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/SVPullToRefresh/UIScrollView+SVPullToRefresh.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/SVPullToRefresh/UIScrollView+SVInfiniteScrolling.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ComFieldViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/HelpViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/Reachability.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/Toast/Toast+UIView.h

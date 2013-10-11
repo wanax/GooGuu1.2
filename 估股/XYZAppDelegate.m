@@ -28,6 +28,8 @@
 #import "AgreementViewController.h"
 #import "ProAlertView.h"
 #import "PonyDebugger.h"
+#import "FinanceToolsViewController.h"
+#import "BPush.h"
 
 
 @implementation XYZAppDelegate
@@ -68,12 +70,11 @@
     
     BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
     statTracker.enableExceptionLog = YES;
-    //statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
-    //statTracker.logSendInterval=1;
     statTracker.logSendWifiOnly = YES;
     [statTracker startWithAppId:@"0737a8b0ff"];
     
 }
+
 - (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1)
     {
@@ -107,9 +108,64 @@
     }];
 
 }
+-(void)beginPush:(UIApplication *)application{
+    
+    [BPush setupChannel:[Utiles getConfigureInfoFrom:@"BPushConfig" andKey:nil inUserDomain:NO]]; // 必须
+    
+    [BPush setDelegate:self]; // 必须。参数对象必须实现onMethod: response:方法，本示例中为self
+    
+    // [BPush setAccessToken:@"3.ad0c16fa2c6aa378f450f54adb08039.2592000.1367133742.282335-602025"];  // 可选。api key绑定时不需要，也可在其它时机调用
+    
+    [application registerForRemoteNotificationTypes:
+     UIRemoteNotificationTypeAlert
+     | UIRemoteNotificationTypeBadge
+     | UIRemoteNotificationTypeSound];
+}
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    
+    [BPush registerDeviceToken:deviceToken]; // 必须
+    
+    [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
+}
+- (void) onMethod:(NSString*)method response:(NSDictionary*)data {
+    NSLog(@"On method:%@", method);
+    NSLog(@"data:%@", [data description]);
+    NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
+    if ([BPushRequestMethod_Bind isEqualToString:method]) {
+        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
+        NSString *userid = [res valueForKey:BPushRequestUserIdKey];
+        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
+        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Receive Notify: %@", [userInfo JSONString]);
+    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    if (application.applicationState == UIApplicationStateActive) {
+        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Did receive a Remote Notification"
+                                                            message:[NSString stringWithFormat:@"The application received this remote notification while it was running:\n%@", alert]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+    [application setApplicationIconBadgeNumber:0];
+    
+    [BPush handleNotification:userInfo];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self.window setBackgroundColor:[Utiles colorWithHexString:@"#DCDCD6"]];
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
     
     //[self setPonyDebugger];
     
@@ -144,7 +200,7 @@
         
         UITabBarItem *barItem=[[UITabBarItem alloc] initWithTitle:@"最新简报" image:[UIImage imageNamed:@"googuuNewsBar"] tag:1];
         UITabBarItem *barItem2=[[UITabBarItem alloc] initWithTitle:@"我的估股" image:[UIImage imageNamed:@"myGooGuuBar"] tag:2];
-        UITabBarItem *barItem3=[[UITabBarItem alloc] initWithTitle:@"金融工具" image:[UIImage imageNamed:@"hammer.png"] tag:3];
+        UITabBarItem *barItem3=[[UITabBarItem alloc] initWithTitle:@"金融工具" image:[UIImage imageNamed:@"myGooGuuBar"] tag:3];
         UITabBarItem *barItem4=[[UITabBarItem alloc] initWithTitle:@"功能设置" image:[UIImage imageNamed:@"moreAboutBar"] tag:4];
         UITabBarItem *barItem5=[[UITabBarItem alloc] initWithTitle:@"估值模型" image:[UIImage imageNamed:@"companyListBar"] tag:5];
         
@@ -158,6 +214,11 @@
         SettingCenterViewController *settingView=[[SettingCenterViewController alloc] init];
         settingView.tabBarItem=barItem4;
         UINavigationController *clientCenterNav=nil;
+        
+        //金融工具
+        FinanceToolsViewController *toolsViewController=[[FinanceToolsViewController alloc] init];
+        toolsViewController.tabBarItem=barItem3;
+        UINavigationController *toolsNav=nil;
         
         
         //估股新闻
@@ -177,18 +238,19 @@
             clientCenterNav=[[UINavigationController alloc] initWithRootViewController:settingView];
             gooNewsNavController=[[UINavigationController alloc] initWithRootViewController:gooNewsViewController];
             universeNav=[[UINavigationController alloc] initWithRootViewController:universeViewController];
-
+            toolsNav=[[UINavigationController alloc] initWithRootViewController:toolsViewController];
             self.tabBarController = [[UITabBarController alloc] init];
         } else {
             myGooGuuNavController=[[PrettyNavigationController alloc] initWithRootViewController:myGooGuu];
             clientCenterNav=[[PrettyNavigationController alloc] initWithRootViewController:settingView];
             gooNewsNavController=[[PrettyNavigationController alloc] initWithRootViewController:gooNewsViewController];
             universeNav=[[PrettyNavigationController alloc] initWithRootViewController:universeViewController];
+            toolsNav=[[PrettyNavigationController alloc] initWithRootViewController:toolsViewController];
             self.tabBarController = [[PrettyTabBarViewController alloc] init];
         }
         
         
-        self.tabBarController.viewControllers = [NSArray arrayWithObjects:gooNewsNavController,universeNav,myGooGuuNavController, clientCenterNav ,nil];
+        self.tabBarController.viewControllers = [NSArray arrayWithObjects:gooNewsNavController,universeNav,toolsNav, myGooGuuNavController, clientCenterNav ,nil];
         
         self.window.backgroundColor=[UIColor clearColor];
         self.window.rootViewController = self.tabBarController;
@@ -204,7 +266,9 @@
         SAFE_RELEASE(settingView);
         SAFE_RELEASE(gooNewsNavController);
         SAFE_RELEASE(universeViewController);
+        SAFE_RELEASE(toolsViewController);
         
+        SAFE_RELEASE(toolsNav);
         SAFE_RELEASE(myGooGuuNavController);
         SAFE_RELEASE(clientCenterNav);
         SAFE_RELEASE(gooNewsNavController);
@@ -236,7 +300,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginKeeping:) name:@"LoginKeeping" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelLoginKeeping:) name:@"LogOut" object:nil];
     
-    [self.window makeKeyAndVisible];
+    [self beginPush:application];
     
     return YES;
 }

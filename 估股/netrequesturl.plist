@@ -2,9 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Request</key>
+	<key>BetaFactorCount</key>
+	<string>/m/beta</string>
+	<key>RequestValuation</key>
 	<string>/m/request</string>
-	<key>Query</key>
+	<key>QueryComList</key>
 	<string>/m/query</string>
 	<key>FeedBack</key>
 	<string>/m/feedback</string>

@@ -23,8 +23,6 @@
 
 @property (nonatomic,retain) NSMutableArray *eventArr;
 @property (nonatomic,retain) NSMutableDictionary *dateDic;
-@property (nonatomic,retain) UILabel *dateIndicator;
-@property (nonatomic,retain) UILabel *messageLabel;
 
 
 @end

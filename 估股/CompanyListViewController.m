@@ -204,7 +204,7 @@
     
     CGPoint change=[tap translationInView:self.view];
     if(fabs(change.x)>FINGERCHANGEDISTANCE-1){
-        if([self.comType isEqualToString:@"港交所"]){
+        if([self.comType isEqualToString:@"港股"]){
             if(change.x<-FINGERCHANGEDISTANCE){
                 [(MHTabBarController *)self.parentViewController setSelectedIndex:1 animated:YES];
             }

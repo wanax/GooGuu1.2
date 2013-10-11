@@ -13,6 +13,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface FinanceToolsViewController : UIViewController
+@interface FinanceToolsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,retain) UITableView *customTabel;
+
 
 @end

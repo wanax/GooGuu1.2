@@ -1,0 +1,5 @@
+dependencies: \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Utiles.m \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/GCDiscreetNotificationView/GCDiscreetNotificationView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/Reachability.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/Toast/Toast+UIView.h

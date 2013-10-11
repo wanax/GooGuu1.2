@@ -52,12 +52,12 @@
     szListViewController = [[CompanyListViewController alloc] init];
     shListViewController = [[CompanyListViewController alloc] init];
 
-    hkListViewController.comType=@"港交所";
+    hkListViewController.comType=@"港股";
     usListViewController.comType=@"美股";
     szListViewController.comType=@"深市";
     shListViewController.comType=@"沪市";
     
-    hkListViewController.title=@"港交所";
+    hkListViewController.title=@"港股";
     usListViewController.title=@"美股";
     szListViewController.title=@"深市";
     shListViewController.title=@"沪市";

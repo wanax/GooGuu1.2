@@ -1,0 +1,24 @@
+dependencies: \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/GuestCommentViewController.m \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/GuestCommentViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/EGORefreshTableHeaderView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/NSDictionary+MutableDeepCopy.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/AFNetworking/UIImageView+AFNetworking.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/AFNetworking/AFImageRequestOperation.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/MHTabBarController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CustomTableView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ComFieldViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/AddCommentViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyKit.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyNavigationBar.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyTabBar.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettyTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettyCustomViewTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettyGridTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettySegmentedControlTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyShadowPlainTableview.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyDrawing.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyToolbar.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ComfieldTabelDataSource.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserCell+ConfigureForComment.h

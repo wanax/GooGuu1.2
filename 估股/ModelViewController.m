@@ -152,7 +152,7 @@
 -(void)requestValution:(UIButton *)bt{
     NSString *stockCode=[comInfo objectForKey:@"stockcode"];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:stockCode,@"stockcode", nil];
-    [Utiles postNetInfoWithPath:@"Request" andParams:params besidesBlock:^(id resObj){
+    [Utiles postNetInfoWithPath:@"RequestValuation" andParams:params besidesBlock:^(id resObj){
         if(resObj){
             if([[resObj objectForKey:@"status"] boolValue]){
                 [bt setBackgroundImage:[UIImage imageNamed:@"hasDoneRequestedBt"] forState:UIControlStateNormal];

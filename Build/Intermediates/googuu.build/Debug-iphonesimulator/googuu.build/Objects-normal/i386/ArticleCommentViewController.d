@@ -1,0 +1,21 @@
+dependencies: \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ArticleCommentViewController.m \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ArticleCommentViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/EGORefreshTableHeaderView.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ArticleCommentModel.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/MHTabBarController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/AFNetworking/UIImageView+AFNetworking.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/AFNetworking/AFImageRequestOperation.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/AddCommentViewController.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyKit.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyNavigationBar.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyTabBar.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettyTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettyCustomViewTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettyGridTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/Cells/PrettySegmentedControlTableViewCell.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyShadowPlainTableview.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyDrawing.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/PrettyKit/PrettyToolbar.h \
+  /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/AnalyDetailViewController.h
