@@ -16,6 +16,11 @@
 
 @implementation CounterViewController
 
+#define PARAM(x) [self getParam:x]
+#define PPARAM(x) ([self getParam:x]/100)
+#define StringFromFloat(f) [formatter stringFromNumber:[NSNumber numberWithFloat:f]]
+#define SetText(t,g) [self setText:t tag:g]
+
 -(void)gotBeta:(NSString *)betaFactor{
     [(UITextField*)[self.view viewWithTag:100] setText:betaFactor];
 }
@@ -137,52 +142,116 @@
 
 -(void)calTool{
     NSNumberFormatter *formatter=[[[NSNumberFormatter alloc] init] autorelease];
-    if (self.toolType==BateFactor) {
-        float f200=1-[self getParam:1]/100;
-        float f201=[self getParam:0]/(1+(1-[self getParam:2]/100)*[self getParam:1]/100/f200);
+    if (self.toolType==BetaFactor) {
+        float f200=1-PPARAM(1);
+        float f201=PARAM(0)/(1+(1-PPARAM(2))*PPARAM(1)/f200);
         [formatter setNumberStyle:NSNumberFormatterPercentStyle];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f200]] tag:200];
+        [self setText:StringFromFloat(f200) tag:200];
         [formatter setPositiveFormat:@"###0.##"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f201]] tag:201];
+        [self setText:StringFromFloat(f201) tag:201];
     }else if (self.toolType==Discountrate){
-        float f200=([self getParam:0]*[self getParam:2]+[self getParam:3]+[self getParam:4]+[self getParam:1])/100;
-        float f201=1-[self getParam:7]/100;
-        float f202=f200*f201+(1-[self getParam:5]/100)*[self getParam:6]*[self getParam:7]/10000;
+        float f200=(PARAM(0)*PARAM(2)+PARAM(3)+PARAM(4)+PARAM(1))/100;
+        float f201=1-PPARAM(7);
+        float f202=f200*f201+(1-PPARAM(5))*PARAM(6)*PARAM(7)/10000;
         [formatter setNumberStyle:NSNumberFormatterPercentStyle];
         [formatter setPositiveFormat:@"##.##"];
         [formatter setPositiveSuffix:@"%"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f200*100]] tag:200];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f201*100]] tag:201];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f202*100]] tag:202];
+        [self setText:StringFromFloat(f200*100) tag:200];
+        [self setText:StringFromFloat(f201*100) tag:201];
+        [self setText:StringFromFloat(f202*100) tag:202];
     }else if (self.toolType==DiscountCashFlow){
-        float f200=(([self getParam:2]/100*[self getParam:0]+[self getParam:0])/(([self getParam:1]-[self getParam:2])/100))/(1+[self getParam:1]/100)+[self getParam:0]/(1+[self getParam:1]/100);
-        float f201=(f200-[self getParam:3]+[self getParam:4])/[self getParam:5];
+        float f200=((PPARAM(2)*PARAM(0)+PARAM(0))/((PARAM(1)-PARAM(2))/100))/(1+PPARAM(1))+PARAM(0)/(1+PPARAM(1));
+        float f201=(f200-PARAM(3)+PARAM(4))/PARAM(5);
         [formatter setPositiveFormat:@"####.##"];
         [formatter setPositiveSuffix:@"万元"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f200]] tag:200];
+        [self setText:StringFromFloat(f200) tag:200];
         [formatter setPositiveSuffix:@"元"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f201]] tag:201];
+        [self setText:StringFromFloat(f201) tag:201];
     }else if (self.toolType==FreeCashFlow){
-        float f200=[self getParam:0]*(1-[self getParam:1]/100)+[self getParam:2]+[self getParam:3]-[self getParam:4];
+        float f200=PARAM(0)*(1-PPARAM(1))+PARAM(2)+PARAM(3)-PARAM(4);
         [formatter setPositiveSuffix:@"万元"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f200]] tag:200];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==InvestBeforeValu){
+        float f200=PARAM(0)+PARAM(1);
+        [formatter setPositiveSuffix:@"万元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==InvestAfterValu){
+        float f200=PARAM(0)/PPARAM(1);
+        [formatter setPositiveSuffix:@"万元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==MultRoundsOfFinance){
+        float f100=PARAM(0);
+        float f101=PARAM(1);
+        float f102=PARAM(2);
+        float f103=PARAM(3);
+        float f104=PARAM(4);
+        float f105=PARAM(5);
+        float f1=f100/(f100+f103);
+        float f2=f101/(f101+f104);
+        float f3=f102/(f102+f105);
+        float f200=1-(1-f1)*(1-f2)*(1-f3);
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"%"];
+        [self setText:StringFromFloat(f200*100) tag:200];
     }else if (self.toolType==PEReturnOnInvest){
-        float f200=[self getParam:0]/([self getParam:1]/100)-[self getParam:0];
-        float f202=[self getParam:0]/([self getParam:1]/100);
-        float f203=[self getParam:5]*[self getParam:7]*0.75*[self getParam:1]/100-[self getParam:0];
-        float f204=f203-[self getParam:6];
-        float f205=(f203-[self getParam:6])/[self getParam:0];
-        float f206=powf(f205,(1/([self getParam:4]-[self getParam:2])))-1;
+        float f200=PARAM(0)/PPARAM(1)-PARAM(0);
+        float f202=PARAM(0)/PPARAM(1);
+        float f203=PARAM(5)*PARAM(7)*0.75*PARAM(1)/100-PARAM(0);
+        float f204=f203-PARAM(6);
+        float f205=(f203-PARAM(6))/PARAM(0);
+        float f206=powf(f205,(1/(PARAM(4)-PARAM(2))))-1;
         [formatter setPositiveFormat:@"####.##"];
         [formatter setPositiveSuffix:@"万元"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f200]] tag:200];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f202]] tag:202];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f203]] tag:203];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f204]] tag:204];
+        [self setText:StringFromFloat(f200) tag:200];
+        [self setText:StringFromFloat(f202) tag:202];
+        [self setText:StringFromFloat(f203) tag:203];
+        [self setText:StringFromFloat(f204) tag:204];
         [formatter setPositiveSuffix:@"倍"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f205]] tag:205];
+        [self setText:StringFromFloat(f205) tag:205];
         [formatter setPositiveSuffix:@"%"];
-        [self setText:[formatter stringFromNumber:[NSNumber numberWithFloat:f206]] tag:206];
+        [self setText:StringFromFloat(f206) tag:206];
+    }else if(self.toolType==FundsFutureValue){
+        float f200=PARAM(0)*powf((1+PPARAM(1)/PARAM(3)),(PARAM(2)*2));
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==FundsPresentValue){
+        float f200=PARAM(0)/(powf(1+PPARAM(1)/PARAM(3),(PARAM(2)*PARAM(3))));
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==OrdinaryAnnuityFutureValue){
+        float f200=PARAM(0)*(powf((1+(PPARAM(1)/PARAM(3))),(PARAM(2)*PARAM(3)))-1)/(PPARAM(1)/PARAM(3));
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==OrdinaryAnnuityPresentValue){
+        float f200=PARAM(0)*((1-powf((1+PPARAM(1)/PARAM(3)),(PARAM(2)*PARAM(3)*(-1))))/(PPARAM(1)/PARAM(3)));
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==SusAnnuityPresentValue){
+        float f200=(PARAM(0)*PARAM(2))/(powf(1+PPARAM(1)/PARAM(2),PARAM(2))-1);
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"元"];
+        [self setText:StringFromFloat(f200) tag:200];
+    }else if(self.toolType==InvestIncomeCal){
+        float f200=365*(PARAM(2)-PARAM(0))/PARAM(0)/PARAM(1);
+        float f201=(PARAM(2)-PARAM(0))/PARAM(0);
+        [formatter setPositiveFormat:@"####.##"];
+        [formatter setPositiveSuffix:@"%"];
+        [self setText:StringFromFloat(f200*100) tag:200];
+        [self setText:StringFromFloat(f201*100) tag:201];
+    }else if(self.toolType==FinProductExpIncomeCal){
+        
+    }else if(self.toolType==SHAStockInvestProAndLoss){
+        
+    }else if(self.toolType==SZAStockInvestProAndLoss){
+        
+    }else if(self.toolType==SHAStockPreserSellPrice){
+        
+    }else if(self.toolType==SZAStockPreserSellPrice){
+        
     }
     
 }

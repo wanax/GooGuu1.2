@@ -12,7 +12,7 @@
 
 typedef enum{
     
-    BateFactor=0,//bate系数
+    BetaFactor=0,//beta系数
     Discountrate=1,//折现率
     DiscountCashFlow=2,//现金流折现
     FreeCashFlow=3,//自由现金流
@@ -22,12 +22,25 @@ typedef enum{
     MultRoundsOfFinance=43,//多轮融资计算
     PEReturnOnInvest=5,//PE投资回报
     FundsTimeValue=6,//资金的时间价值
+    FundsFutureValue=61,//资金的未来价值
+    FundsPresentValue=62,//资金的现值
+    OrdinaryAnnuityFutureValue=63,//普通年金的未来价值
+    OrdinaryAnnuityPresentValue=64,//普通年金的现值
+    SusAnnuityPresentValue=65,//永续年金的现值
     InvestIncome=7,//投资收益
+    InvestIncomeCal=71,//投资收益计算
+    FinProductExpIncomeCal=72,//理财产品预期收益计算
     AStockTransFees=8,//A股交易手续费
+    SHAStockInvestProAndLoss=81,//沪市A股投资损益
+    SZAStockInvestProAndLoss=82,//深市A股投资损益
+    SHAStockPreserSellPrice=83,//沪市A股保本卖出价
+    SZAStockPreserSellPrice=84,//深市A股保本卖出价
     HKStockTransFees=9,//港股交易手续费
+    HSBC=91,//汇丰银行
+    BOC=92,//中银香港
+    SC=93,//渣打银行
     ExcelShortcuts=10//Excel快捷键
-    
-    
+  
 } FinancalToolsType;
 
 //评论类型，此页面三种评论公用
