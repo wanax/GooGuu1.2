@@ -8,6 +8,7 @@
 
 #import "FinanceToolsGrade2ViewController.h"
 #import "CounterViewController.h"
+#import "CounterBankViewController.h"
 
 @interface FinanceToolsGrade2ViewController ()
 
@@ -79,15 +80,25 @@
 #pragma Table Delegate Methods
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-    CounterViewController *counter=[[[CounterViewController alloc] init] autorelease];
-    counter.params=[self.paramArr objectAtIndex:indexPath.row];
-    counter.toolType=[[self.types objectAtIndex:indexPath.row] integerValue];
-    counter.title=[[[tableView  cellForRowAtIndexPath:indexPath] textLabel] text];
-    counter.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:counter animated:YES];
-    [self.customTabel deselectRowAtIndexPath:indexPath animated:YES];
-
+    
+    NSInteger type=[[self.types objectAtIndex:indexPath.row] integerValue];
+    if(type==HSBC||type==BOC||type==SC){
+        CounterBankViewController *counter=[[[CounterBankViewController alloc] init] autorelease];
+        counter.params=[self.paramArr objectAtIndex:indexPath.row];
+        counter.toolType=type;
+        counter.title=[[[tableView  cellForRowAtIndexPath:indexPath] textLabel] text];
+        counter.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:counter animated:YES];
+        [self.customTabel deselectRowAtIndexPath:indexPath animated:YES];
+    }else{
+        CounterViewController *counter=[[[CounterViewController alloc] init] autorelease];
+        counter.params=[self.paramArr objectAtIndex:indexPath.row];
+        counter.toolType=type;
+        counter.title=[[[tableView  cellForRowAtIndexPath:indexPath] textLabel] text];
+        counter.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:counter animated:YES];
+        [self.customTabel deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 -(BOOL)shouldAutorotate{

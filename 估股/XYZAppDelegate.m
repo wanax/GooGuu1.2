@@ -30,6 +30,7 @@
 #import "PonyDebugger.h"
 #import "FinanceToolsViewController.h"
 #import "BPush.h"
+#import "FinPicKeyWordListViewController.h"
 
 
 @implementation XYZAppDelegate
@@ -135,11 +136,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     NSLog(@"data:%@", [data description]);
     NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
     if ([BPushRequestMethod_Bind isEqualToString:method]) {
-        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
+        /*NSString *appid = [res valueForKey:BPushRequestAppIdKey];
         NSString *userid = [res valueForKey:BPushRequestUserIdKey];
         NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
         NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];*/
         
     }
 }
@@ -200,20 +201,19 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
         
         UITabBarItem *barItem=[[UITabBarItem alloc] initWithTitle:@"最新简报" image:[UIImage imageNamed:@"googuuNewsBar"] tag:1];
         UITabBarItem *barItem2=[[UITabBarItem alloc] initWithTitle:@"我的估股" image:[UIImage imageNamed:@"myGooGuuBar"] tag:2];
-        UITabBarItem *barItem3=[[UITabBarItem alloc] initWithTitle:@"金融工具" image:[UIImage imageNamed:@"myGooGuuBar"] tag:3];
-        UITabBarItem *barItem4=[[UITabBarItem alloc] initWithTitle:@"功能设置" image:[UIImage imageNamed:@"moreAboutBar"] tag:4];
+        UITabBarItem *barItem3=[[UITabBarItem alloc] initWithTitle:@"金融工具" image:[UIImage imageNamed:@"finToolBar"] tag:3];
+        UITabBarItem *barItem4=[[UITabBarItem alloc] initWithTitle:@"金融图汇" image:[UIImage imageNamed:@"graphExchangeBar"] tag:4];
         UITabBarItem *barItem5=[[UITabBarItem alloc] initWithTitle:@"估值模型" image:[UIImage imageNamed:@"companyListBar"] tag:5];
         
         //股票关注
         MyGooguuViewController *myGooGuu=[[MyGooguuViewController alloc] init];
         myGooGuu.tabBarItem=barItem2;
         UINavigationController *myGooGuuNavController=nil;
-        
-        
-        //客户设置
-        SettingCenterViewController *settingView=[[SettingCenterViewController alloc] init];
-        settingView.tabBarItem=barItem4;
-        UINavigationController *clientCenterNav=nil;
+    
+        //金融图汇
+        FinPicKeyWordListViewController *picView=[[FinPicKeyWordListViewController alloc] init];
+        picView.tabBarItem=barItem4;
+        UINavigationController *picKeyWordNav=nil;
         
         //金融工具
         FinanceToolsViewController *toolsViewController=[[FinanceToolsViewController alloc] init];
@@ -235,22 +235,22 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
         if (IOS7_OR_LATER) {
             
             myGooGuuNavController=[[UINavigationController alloc] initWithRootViewController:myGooGuu];
-            clientCenterNav=[[UINavigationController alloc] initWithRootViewController:settingView];
             gooNewsNavController=[[UINavigationController alloc] initWithRootViewController:gooNewsViewController];
             universeNav=[[UINavigationController alloc] initWithRootViewController:universeViewController];
             toolsNav=[[UINavigationController alloc] initWithRootViewController:toolsViewController];
+            picKeyWordNav=[[UINavigationController alloc] initWithRootViewController:picView];
             self.tabBarController = [[UITabBarController alloc] init];
         } else {
             myGooGuuNavController=[[PrettyNavigationController alloc] initWithRootViewController:myGooGuu];
-            clientCenterNav=[[PrettyNavigationController alloc] initWithRootViewController:settingView];
             gooNewsNavController=[[PrettyNavigationController alloc] initWithRootViewController:gooNewsViewController];
             universeNav=[[PrettyNavigationController alloc] initWithRootViewController:universeViewController];
             toolsNav=[[PrettyNavigationController alloc] initWithRootViewController:toolsViewController];
+            picKeyWordNav=[[PrettyNavigationController alloc] initWithRootViewController:picView];
             self.tabBarController = [[PrettyTabBarViewController alloc] init];
         }
         
         
-        self.tabBarController.viewControllers = [NSArray arrayWithObjects:gooNewsNavController,universeNav,toolsNav, myGooGuuNavController, clientCenterNav ,nil];
+        self.tabBarController.viewControllers = [NSArray arrayWithObjects:gooNewsNavController,universeNav,toolsNav,picKeyWordNav, myGooGuuNavController,nil];
         
         self.window.backgroundColor=[UIColor clearColor];
         self.window.rootViewController = self.tabBarController;
@@ -263,14 +263,13 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
         SAFE_RELEASE(barItem5);
         
         SAFE_RELEASE(myGooGuu);
-        SAFE_RELEASE(settingView);
+        SAFE_RELEASE(picView);
         SAFE_RELEASE(gooNewsNavController);
         SAFE_RELEASE(universeViewController);
         SAFE_RELEASE(toolsViewController);
         
         SAFE_RELEASE(toolsNav);
         SAFE_RELEASE(myGooGuuNavController);
-        SAFE_RELEASE(clientCenterNav);
         SAFE_RELEASE(gooNewsNavController);
         SAFE_RELEASE(universeNav);
         

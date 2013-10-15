@@ -43,6 +43,13 @@ typedef enum{
   
 } FinancalToolsType;
 
+typedef enum{
+    
+    UserRegister,
+    UserResetPwd
+    
+} UserActionType;
+
 //评论类型，此页面三种评论公用
 typedef enum {
     

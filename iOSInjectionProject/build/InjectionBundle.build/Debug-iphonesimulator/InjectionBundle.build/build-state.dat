@@ -255,9 +255,9 @@ t1381289528
 s227
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.m
-c000000005257A7A9000000000000035C
-t1381476265
-s860
+c00000000525CA4CE000000000000036B
+t1381803214
+s875
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/InjectionBundle-Info.plist
 c000000005254CE3800000000000003CB
@@ -270,11 +270,11 @@ t1378448917
 s508
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle
-t1381476273
+t1381803218
 s136
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM
-t1381459402
+t1381732508
 s102
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/Info.plist
@@ -282,17 +282,22 @@ t1381289538
 s715
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle
-t1381476273
-s33764
+t1381803218
+s22212
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o
-t1381476272
-s94368
+t1381803218
+s68124
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/InjectionBundle.LinkFileList
 c000000005254CE4200000000000000C7
 t1381289538
 s199
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/AddCell.h
+c00000000521F68AA000000000000019F
+t1377790122
+s415
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/AgreementViewController.h
 c000000005226F5E400000000000001B8
@@ -339,9 +344,19 @@ c000000005225591D000000000000042E
 t1378179357
 s1070
 
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ClientLoginViewController.h
+c000000005226E17F000000000000047A
+t1378279807
+s1146
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ComFieldViewController.h
+c0000000052451E2C00000000000003D8
+t1380261420
+s984
+
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CommonlyMacros.h
-c00000000524530E00000000000000A41
-t1380266208
+c000000005258B5AE0000000000000A41
+t1381545390
 s2625
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Company.h
@@ -354,15 +369,35 @@ c00000000521F68AA000000000000053B
 t1377790122
 s1339
 
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ConcernedViewController.m
+c00000000525B5D200000000000003ADB
+t1381719328
+s15067
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CounterBankViewController.h
+c00000000525B88F900000000000001E1
+t1381730553
+s481
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CounterBankViewController.m
+c00000000525CA4BA00000000000038B5
+t1381803194
+s14517
+
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CounterViewController.h
-c000000005257A10100000000000001E4
-t1381474561
-s484
+c000000005257B1C100000000000001FA
+t1381478849
+s506
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CounterViewController.m
-c000000005257A7AA0000000000002192
-t1381476266
-s8594
+c000000005258F0300000000000003C53
+t1381560368
+s15443
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CustomCell.h
+c00000000521F68AA000000000000042C
+t1377790122
+s1068
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/DBLite.h
 c00000000521F68AA00000000000003F3
@@ -370,9 +405,9 @@ t1377790122
 s1011
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/EnumSummary.h
-c000000005257A1AC00000000000008FE
-t1381474732
-s2302
+c000000005258AC800000000000000C21
+t1381543040
+s3105
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/FinanceToolsViewController.h
 c0000000052551F2300000000000001C8
@@ -383,6 +418,16 @@ N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Go
 c00000000522950290000000000000465
 t1378439209
 s1125
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Indicator2View.h
+c00000000521F68AA00000000000000C3
+t1377790122
+s195
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/IndicatorView.h
+c00000000521F68AA0000000000000109
+t1377790122
+s265
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ModelClassGrade2ViewController.h
 c00000000521F68AA00000000000002C6
@@ -739,6 +784,11 @@ c00000000521F68AA0000000000000724
 t1377790122
 s1828
 
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/CustomTableView.h
+c00000000521F68AA0000000000000169
+t1377790122
+s361
+
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/EGORefreshTableHeaderView.h
 c00000000521F68AA000000000000096F
 t1377790122
@@ -823,6 +873,11 @@ N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Un
 c00000000521F68AA0000000000000187
 t1377790122
 s391
+
+N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserCell.h
+c000000005227E53A00000000000002E6
+t1378346298
+s742
 
 N/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Utiles.h
 c0000000052451F3B0000000000000ADE
@@ -950,8 +1005,8 @@ t1344940873
 s113312
 
 N/var/folders/2l/70p8mcj94kqds4th5mfxj5900000gp/C/com.apple.DeveloperTools/5.0-5A1413/Xcode/SharedPrecompiledHeaders/InjectionBundle-Prefix-boynhfpghmyszhgorbfbndtiladh/InjectionBundle-Prefix.pch.pch
-t1381476271
-s5483264
+t1381716086
+s5485216
 
 N/var/folders/2l/70p8mcj94kqds4th5mfxj5900000gp/C/com.apple.DeveloperTools/5.0-5A1413/Xcode/SharedPrecompiledHeaders/InjectionBundle-Prefix-bryqiznmzjkdqcepkfqhcrhjnifk/InjectionBundle-Prefix.pch.pch
 t1381389073
@@ -963,11 +1018,11 @@ s5472968
 
 CCheck dependencies
 r0
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependenciese42e9e2edf07b841^9220102fdf07b841^---0#1#1#--18"Check dependencies36"0224A2F0-0DFD-4D29-B531-B26759292DCC-
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependencies4d86b751dc0cb841^734bfb51dc0cb841^---0#1#1#--18"Check dependencies36"15CBC7AE-95D7-4AB7-A14E-9F1E0C1CFCCB-
 
 CCompileC build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s403169072.070187
-e403169073.004438
+s403496017.990514
+e403496018.100027
 r1
 xCompileC
 xbuild/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o
@@ -980,27 +1035,25 @@ d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInject
 d/Applications/Injection Plugin.app/Contents/Resources/BundleInjection.h
 d/Applications/Injection Plugin.app/Contents/Resources/BundleInterface.h
 d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.h
-d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CounterViewController.m
-d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/CounterViewController.h
-d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/BetaFactorCountViewController.h
-d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/ChoseBetaFactorViewController.h
+d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserRegisterViewController.m
+d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserRegisterViewController.h
 d/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/Plugs/IQKeyBoardManager/IQKeyBoardManager.h
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection114"Compile /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.m202"CompileC build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o BundleContents.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilerca341230df07b841^96220131df07b841^---0#0#1#-19%DVTDocumentLocation2@122"file://localhost/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.m0000000000000000^7425"CompileC build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o BundleContents.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wmissing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=6.1 -iquote /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-generated-files.hmap -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-own-target-headers.hmap -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-all-target-headers.hmap -iquote /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-project-headers.hmap -iquote.. -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/include -I.. -I../Build -I../googuu.xcworkspace -I../iOSInjectionProject -I../Pods -I../Test -I../估股 -I../googuu.xcworkspace/xcuserdata -I../Pods/BuildHeaders -I../Pods/Headers -I../Pods/PonyDebugger -I../Pods/SocketRocket -I../估股/icon -I../估股/Images -I../估股/NibFile -I../估股/Plugs -I../估股/PNG30x30-black -I../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad -I../Pods/BuildHeaders/PonyDebugger -I../Pods/BuildHeaders/SocketRocket -I../Pods/Headers/PonyDebugger -I../Pods/Headers/SocketRocket -I../Pods/PonyDebugger/ObjC -I../Pods/SocketRocket/SocketRocket -I../估股/Images/FinToolsIcon -I../估股/NibFile/iPad -I../估股/Plugs/ActivityView -I../估股/Plugs/AFNetworking -I../估股/Plugs/ASIHttpRequest -I../估股/Plugs/Classes -I../估股/Plugs/CorePlotHeaders -I../估股/Plugs/CXPhotoBrowser -I../估股/Plugs/GCDiscreetNotificationView -I../估股/Plugs/IQKeyBoardManager -I../估股/Plugs/JavaScriptCore -I../估股/Plugs/JSONKit-master -I../估股/Plugs/opensource -I../估股/Plugs/PrettyKit -I../估股/Plugs/SDWebImage -I../估股/Plugs/SVPullToRefresh -I../估股/Plugs/Toast -I../估股/Plugs/TouchJSON -I../估股/Plugs/TSPopover -I../估股/Plugs/Vurig\ Calendar -I../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad/xcdebugger -I../Pods/PonyDebugger/ObjC/DerivedSources -I../Pods/PonyDebugger/ObjC/PonyDebugger -I../估股/Plugs/ActivityView/SVProgressHUD.bundle -I../估股/Plugs/ASIHttpRequest/ASIWebPageRequest -I../估股/Plugs/ASIHttpRequest/External -I../估股/Plugs/PrettyKit/Cells -I../估股/Plugs/TouchJSON/Experimental -I../估股/Plugs/TouchJSON/Extensions -I../估股/Plugs/TouchJSON/JSON -I../估股/Plugs/ASIHttpRequest/External/Reachability -I/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/include/libxml2 -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/DerivedSources/i386 -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/DerivedSources -F/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator -F.. -F../Build -F../googuu.xcworkspace -F../iOSInjectionProject -F../Pods -F../Test -F../估股 -F../googuu.xcworkspace/xcuserdata -F../Pods/BuildHeaders -F../Pods/Headers -F../Pods/PonyDebugger -F../Pods/SocketRocket -F../估股/icon -F../估股/Images -F../估股/NibFile -F../估股/Plugs -F../估股/PNG30x30-black -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad -F../Pods/BuildHeaders/PonyDebugger -F../Pods/BuildHeaders/SocketRocket -F../Pods/Headers/PonyDebugger -F../Pods/Headers/SocketRocket -F../Pods/PonyDebugger/ObjC -F../Pods/SocketRocket/SocketRocket -F../估股/Images/FinToolsIcon -F../估股/NibFile/iPad -F../估股/Plugs/ActivityView -F../估股/Plugs/AFNetworking -F../估股/Plugs/ASIHttpRequest -F../估股/Plugs/Classes -F../估股/Plugs/CorePlotHeaders -F../估股/Plugs/CXPhotoBrowser -F../估股/Plugs/GCDiscreetNotificationView -F../估股/Plugs/IQKeyBoardManager -F../估股/Plugs/JavaScriptCore -F../估股/Plugs/JSONKit-master -F../估股/Plugs/opensource -F../估股/Plugs/PrettyKit -F../估股/Plugs/SDWebImage -F../估股/Plugs/SVPullToRefresh -F../估股/Plugs/Toast -F../估股/Plugs/TouchJSON -F../估股/Plugs/TSPopover -F../估股/Plugs/Vurig\ Calendar -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad/xcdebugger -F../Pods/PonyDebugger/ObjC/DerivedSources -F../Pods/PonyDebugger/ObjC/PonyDebugger -F../估股/Plugs/ActivityView/SVProgressHUD.bundle -F../估股/Plugs/ASIHttpRequest/ASIWebPageRequest -F../估股/Plugs/ASIHttpRequest/External -F../估股/Plugs/PrettyKit/Cells -F../估股/Plugs/TouchJSON/Experimental -F../估股/Plugs/TouchJSON/Extensions -F../估股/Plugs/TouchJSON/JSON -F../估股/Plugs/ASIHttpRequest/External/Reachability -include /var/folders/2l/70p8mcj94kqds4th5mfxj5900000gp/C/com.apple.DeveloperTools/5.0-5A1413/Xcode/SharedPrecompiledHeaders/InjectionBundle-Prefix-boynhfpghmyszhgorbfbndtiladh/InjectionBundle-Prefix.pch -MMD -MT dependencies -MF /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.d --serialize-diagnostics /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.dia -c /Users/xcode/wanax/oc/GooGuu-f5fb026336"1DA5846D-2947-4D9E-B98E-8CBD4260F1F3-
-b72725178-A084-4DCA-B2F5-A855D1740D3A
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection114"Compile /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.m202"CompileC build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o BundleContents.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilerddd3fd51dc0cb841^1b9b1952dc0cb841^---0#0#1#-19%DVTDocumentLocation2@122"file://localhost/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/BundleContents.m0000000000000000^7425"CompileC build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.o BundleContents.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wmissing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=6.1 -iquote /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-generated-files.hmap -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-own-target-headers.hmap -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-all-target-headers.hmap -iquote /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/InjectionBundle-project-headers.hmap -iquote.. -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/include -I.. -I../Build -I../googuu.xcworkspace -I../iOSInjectionProject -I../Pods -I../Test -I../估股 -I../googuu.xcworkspace/xcuserdata -I../Pods/BuildHeaders -I../Pods/Headers -I../Pods/PonyDebugger -I../Pods/SocketRocket -I../估股/icon -I../估股/Images -I../估股/NibFile -I../估股/Plugs -I../估股/PNG30x30-black -I../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad -I../Pods/BuildHeaders/PonyDebugger -I../Pods/BuildHeaders/SocketRocket -I../Pods/Headers/PonyDebugger -I../Pods/Headers/SocketRocket -I../Pods/PonyDebugger/ObjC -I../Pods/SocketRocket/SocketRocket -I../估股/Images/FinToolsIcon -I../估股/NibFile/iPad -I../估股/Plugs/ActivityView -I../估股/Plugs/AFNetworking -I../估股/Plugs/ASIHttpRequest -I../估股/Plugs/Classes -I../估股/Plugs/CorePlotHeaders -I../估股/Plugs/CXPhotoBrowser -I../估股/Plugs/GCDiscreetNotificationView -I../估股/Plugs/IQKeyBoardManager -I../估股/Plugs/JavaScriptCore -I../估股/Plugs/JSONKit-master -I../估股/Plugs/opensource -I../估股/Plugs/PrettyKit -I../估股/Plugs/SDWebImage -I../估股/Plugs/SVPullToRefresh -I../估股/Plugs/Toast -I../估股/Plugs/TouchJSON -I../估股/Plugs/TSPopover -I../估股/Plugs/Vurig\ Calendar -I../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad/xcdebugger -I../Pods/PonyDebugger/ObjC/DerivedSources -I../Pods/PonyDebugger/ObjC/PonyDebugger -I../估股/Plugs/ActivityView/SVProgressHUD.bundle -I../估股/Plugs/ASIHttpRequest/ASIWebPageRequest -I../估股/Plugs/ASIHttpRequest/External -I../估股/Plugs/PrettyKit/Cells -I../估股/Plugs/TouchJSON/Experimental -I../估股/Plugs/TouchJSON/Extensions -I../估股/Plugs/TouchJSON/JSON -I../估股/Plugs/ASIHttpRequest/External/Reachability -I/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/include/libxml2 -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/DerivedSources/i386 -I/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/DerivedSources -F/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator -F.. -F../Build -F../googuu.xcworkspace -F../iOSInjectionProject -F../Pods -F../Test -F../估股 -F../googuu.xcworkspace/xcuserdata -F../Pods/BuildHeaders -F../Pods/Headers -F../Pods/PonyDebugger -F../Pods/SocketRocket -F../估股/icon -F../估股/Images -F../估股/NibFile -F../估股/Plugs -F../估股/PNG30x30-black -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad -F../Pods/BuildHeaders/PonyDebugger -F../Pods/BuildHeaders/SocketRocket -F../Pods/Headers/PonyDebugger -F../Pods/Headers/SocketRocket -F../Pods/PonyDebugger/ObjC -F../Pods/SocketRocket/SocketRocket -F../估股/Images/FinToolsIcon -F../估股/NibFile/iPad -F../估股/Plugs/ActivityView -F../估股/Plugs/AFNetworking -F../估股/Plugs/ASIHttpRequest -F../估股/Plugs/Classes -F../估股/Plugs/CorePlotHeaders -F../估股/Plugs/CXPhotoBrowser -F../估股/Plugs/GCDiscreetNotificationView -F../估股/Plugs/IQKeyBoardManager -F../估股/Plugs/JavaScriptCore -F../估股/Plugs/JSONKit-master -F../估股/Plugs/opensource -F../估股/Plugs/PrettyKit -F../估股/Plugs/SDWebImage -F../估股/Plugs/SVPullToRefresh -F../估股/Plugs/Toast -F../估股/Plugs/TouchJSON -F../估股/Plugs/TSPopover -F../估股/Plugs/Vurig\ Calendar -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad/xcdebugger -F../Pods/PonyDebugger/ObjC/DerivedSources -F../Pods/PonyDebugger/ObjC/PonyDebugger -F../估股/Plugs/ActivityView/SVProgressHUD.bundle -F../估股/Plugs/ASIHttpRequest/ASIWebPageRequest -F../估股/Plugs/ASIHttpRequest/External -F../估股/Plugs/PrettyKit/Cells -F../估股/Plugs/TouchJSON/Experimental -F../估股/Plugs/TouchJSON/Extensions -F../估股/Plugs/TouchJSON/JSON -F../估股/Plugs/ASIHttpRequest/External/Reachability -include /var/folders/2l/70p8mcj94kqds4th5mfxj5900000gp/C/com.apple.DeveloperTools/5.0-5A1413/Xcode/SharedPrecompiledHeaders/InjectionBundle-Prefix-boynhfpghmyszhgorbfbndtiladh/InjectionBundle-Prefix.pch -MMD -MT dependencies -MF /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.d --serialize-diagnostics /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/BundleContents.dia -c /Users/xcode/wanax/oc/GooGuu-f5fb026336"5FCBAF51-5A85-48BD-8059-E742AA07D81E-
+b07C91102-AB7D-4A56-A881-2E74C5A40F2B
 
 CGenerateDSYMFile /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle
-s403169073.404648
-e403169073.592388
+s403496018.216161
+e403496018.287819
 r1
 xGenerateDSYMFile
 x/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM
 x/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection154"Generate /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM139"GenerateDSYMFile build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle19a96731df07b841^11a79731df07b841^---0#0#1#-19%DVTDocumentLocation2@162"file://localhost/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM/0000000000000000^889"GenerateDSYMFile build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle    cd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle -o /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM36"72F398B6-FA1D-4FCE-9A97-B8FD74833C34-
-b72725178-A084-4DCA-B2F5-A855D1740D3A
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection154"Generate /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM139"GenerateDSYMFile build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle90673752dc0cb841^d5ae4952dc0cb841^---0#0#1#-19%DVTDocumentLocation2@162"file://localhost/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM/0000000000000000^889"GenerateDSYMFile build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle    cd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle -o /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle.dSYM36"982AEB48-7B1B-40C3-A01E-ACB2F762EE83-
+b07C91102-AB7D-4A56-A881-2E74C5A40F2B
 
 CLd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle normal i386
-s403169073.059354
-e403169073.396175
+s403496018.110259
+e403496018.207357
 r1
 xLd
 x/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle
@@ -1017,6 +1070,8 @@ d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/D
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libobjc.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libSystem.dylib
 d/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.0/lib/darwin/libclang_rt.ios.a
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_override.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcache_sim.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcommonCrypto_sim.dylib
@@ -1038,8 +1093,6 @@ d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/D
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_configuration.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_asl.dylib
 d/usr/lib/libSystem.B.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
-d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation
 d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/host/libdyld.dylib
 d/usr/lib/system/libcache.dylib
 d/usr/lib/system/libcommonCrypto.dylib
@@ -1061,8 +1114,8 @@ d/usr/lib/system/libsystem_notify.dylib
 d/usr/lib/system/libsystem_sandbox.dylib
 d/usr/lib/system/libunc.dylib
 d/usr/lib/system/libunwind.dylib
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection161"Link /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle81"Ld build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle normal i3863c500f31df07b841^1e6c6531df07b841^---0#0#1#--3389"Ld build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle normal i386    cd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject    setenv IPHONEOS_DEPLOYMENT_TARGET 6.1    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -arch i386 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -L/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator -F/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator -F.. -F../Build -F../googuu.xcworkspace -F../iOSInjectionProject -F../Pods -F../Test -F../估股 -F../googuu.xcworkspace/xcuserdata -F../Pods/BuildHeaders -F../Pods/Headers -F../Pods/PonyDebugger -F../Pods/SocketRocket -F../估股/icon -F../估股/Images -F../估股/NibFile -F../估股/Plugs -F../估股/PNG30x30-black -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad -F../Pods/BuildHeaders/PonyDebugger -F../Pods/BuildHeaders/SocketRocket -F../Pods/Headers/PonyDebugger -F../Pods/Headers/SocketRocket -F../Pods/PonyDebugger/ObjC -F../Pods/SocketRocket/SocketRocket -F../估股/Images/FinToolsIcon -F../估股/NibFile/iPad -F../估股/Plugs/ActivityView -F../估股/Plugs/AFNetworking -F../估股/Plugs/ASIHttpRequest -F../估股/Plugs/Classes -F../估股/Plugs/CorePlotHeaders -F../估股/Plugs/CXPhotoBrowser -F../估股/Plugs/GCDiscreetNotificationView -F../估股/Plugs/IQKeyBoardManager -F../估股/Plugs/JavaScriptCore -F../估股/Plugs/JSONKit-master -F../估股/Plugs/opensource -F../估股/Plugs/PrettyKit -F../估股/Plugs/SDWebImage -F../估股/Plugs/SVPullToRefresh -F../估股/Plugs/Toast -F../估股/Plugs/TouchJSON -F../估股/Plugs/TSPopover -F../估股/Plugs/Vurig\ Calendar -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad/xcdebugger -F../Pods/PonyDebugger/ObjC/DerivedSources -F../Pods/PonyDebugger/ObjC/PonyDebugger -F../估股/Plugs/ActivityView/SVProgressHUD.bundle -F../估股/Plugs/ASIHttpRequest/ASIWebPageRequest -F../估股/Plugs/ASIHttpRequest/External -F../估股/Plugs/PrettyKit/Cells -F../估股/Plugs/TouchJSON/Experimental -F../估股/Plugs/TouchJSON/Extensions -F../估股/Plugs/TouchJSON/JSON -F../估股/Plugs/ASIHttpRequest/External/Reachability -filelist /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/InjectionBundle.LinkFileList -Xlinker -objc_abi_version -Xlinker 2 -undefined dynamic_lookup -fobjc-link-runtime -Xlinker -no_implicit_dylibs -mios-simulator-version-min=6.1 -framework UIKit -framework QuartzCore -framework OpenGLES -framework Foundation -framework CoreGraphics -Xlinker -dependency_info -Xlinker /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/InjectionBundle_dependency_info.dat -o /Users/xcode/wanax/oc36"65F98B99-78A4-4511-BC72-AF4186B011A5-
-b72725178-A084-4DCA-B2F5-A855D1740D3A
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection161"Link /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle81"Ld build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle normal i38658541c52dc0cb841^8c153552dc0cb841^---0#0#1#--3389"Ld build/Debug-iphonesimulator/InjectionBundle.bundle/InjectionBundle normal i386    cd /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject    setenv IPHONEOS_DEPLOYMENT_TARGET 6.1    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -arch i386 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -L/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator -F/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator -F.. -F../Build -F../googuu.xcworkspace -F../iOSInjectionProject -F../Pods -F../Test -F../估股 -F../googuu.xcworkspace/xcuserdata -F../Pods/BuildHeaders -F../Pods/Headers -F../Pods/PonyDebugger -F../Pods/SocketRocket -F../估股/icon -F../估股/Images -F../估股/NibFile -F../估股/Plugs -F../估股/PNG30x30-black -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad -F../Pods/BuildHeaders/PonyDebugger -F../Pods/BuildHeaders/SocketRocket -F../Pods/Headers/PonyDebugger -F../Pods/Headers/SocketRocket -F../Pods/PonyDebugger/ObjC -F../Pods/SocketRocket/SocketRocket -F../估股/Images/FinToolsIcon -F../估股/NibFile/iPad -F../估股/Plugs/ActivityView -F../估股/Plugs/AFNetworking -F../估股/Plugs/ASIHttpRequest -F../估股/Plugs/Classes -F../估股/Plugs/CorePlotHeaders -F../估股/Plugs/CXPhotoBrowser -F../估股/Plugs/GCDiscreetNotificationView -F../估股/Plugs/IQKeyBoardManager -F../估股/Plugs/JavaScriptCore -F../估股/Plugs/JSONKit-master -F../估股/Plugs/opensource -F../估股/Plugs/PrettyKit -F../估股/Plugs/SDWebImage -F../估股/Plugs/SVPullToRefresh -F../估股/Plugs/Toast -F../估股/Plugs/TouchJSON -F../估股/Plugs/TSPopover -F../估股/Plugs/Vurig\ Calendar -F../googuu.xcworkspace/xcuserdata/xcode.xcuserdatad/xcdebugger -F../Pods/PonyDebugger/ObjC/DerivedSources -F../Pods/PonyDebugger/ObjC/PonyDebugger -F../估股/Plugs/ActivityView/SVProgressHUD.bundle -F../估股/Plugs/ASIHttpRequest/ASIWebPageRequest -F../估股/Plugs/ASIHttpRequest/External -F../估股/Plugs/PrettyKit/Cells -F../估股/Plugs/TouchJSON/Experimental -F../估股/Plugs/TouchJSON/Extensions -F../估股/Plugs/TouchJSON/JSON -F../估股/Plugs/ASIHttpRequest/External/Reachability -filelist /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/InjectionBundle.LinkFileList -Xlinker -objc_abi_version -Xlinker 2 -undefined dynamic_lookup -fobjc-link-runtime -Xlinker -no_implicit_dylibs -mios-simulator-version-min=6.1 -framework UIKit -framework QuartzCore -framework OpenGLES -framework Foundation -framework CoreGraphics -Xlinker -dependency_info -Xlinker /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/InjectionBundle.build/Debug-iphonesimulator/InjectionBundle.build/Objects-normal/i386/InjectionBundle_dependency_info.dat -o /Users/xcode/wanax/oc36"AA546511-A40D-4E0B-90B6-39C6AC9C1342-
+b07C91102-AB7D-4A56-A881-2E74C5A40F2B
 
 CProcessInfoPlistFile /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/build/Debug-iphonesimulator/InjectionBundle.bundle/Info.plist /Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/iOSInjectionProject/InjectionBundle-Info.plist
 s402982338.939164

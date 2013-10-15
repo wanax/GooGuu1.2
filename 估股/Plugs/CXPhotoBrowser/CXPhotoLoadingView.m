@@ -56,7 +56,7 @@
 {
     [self.indicator stopAnimating];
     
-    [reloadButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12.]];
+    [reloadButton.titleLabel setFont:[UIFont boldSystemFontOfSize:12.0]];
     [reloadButton setTitle:NSLocalizedString(@"Reload",@"Reload") forState:UIControlStateNormal];
     [reloadButton setFrame:CGRectMake(20, 10, 100, 30)];
     [reloadButton setCenter:self.center];

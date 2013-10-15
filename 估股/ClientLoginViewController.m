@@ -18,6 +18,7 @@
 #import "GooGuuContainerViewController.h"
 #import "MHTabBarController.h"
 #import "ConcernedViewController.h"
+#import "UserRegisterViewController.h"
 
 
 @interface ClientLoginViewController ()
@@ -143,7 +144,9 @@
 }
 
 -(IBAction)freeRegBtClicked:(id)sender{
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.googuu.net/pages/user/newRegister.htm"]]; 
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.googuu.net/pages/user/newRegister.htm"]];
+    UserRegisterViewController *regVC=[[[UserRegisterViewController alloc] init] autorelease];
+    [self presentViewController:regVC animated:YES completion:nil];
 }
 
 -(IBAction)findPwdBtClicked:(id)sender{

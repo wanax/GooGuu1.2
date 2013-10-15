@@ -2,6 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UserFindPwd</key>
+	<string>/m/findpassword</string>
+	<key>UserEditPwd</key>
+	<string>/m/editpassword</string>
+	<key>UserRegVaildCode</key>
+	<string>/m/vaildcode</string>
+	<key>UserRegister</key>
+	<string>/m/register</string>
+	<key>FchartKeyWord</key>
+	<string>/m/fchart/keyword</string>
+	<key>Fchart</key>
+	<string>/m/fchart</string>
 	<key>BetaFactorCount</key>
 	<string>/m/beta</string>
 	<key>RequestValuation</key>

@@ -18,6 +18,7 @@
 #import "HelpViewController.h"
 #import "DisclaimersViewController.h"
 #import "ClientCenterViewController.h"
+#import "UserRegisterViewController.h"
 
 @interface SettingCenterViewController ()
 
@@ -64,7 +65,7 @@
 #pragma mark General Methods
 
 -(void)initCommonents{
-    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-110) style:UITableViewStyleGrouped];
+    self.customTabel=[[UITableView alloc] initWithFrame:CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-64) style:UITableViewStyleGrouped];
     self.customTabel.delegate=self;
     self.customTabel.dataSource=self;
     [self.view addSubview:self.customTabel];
@@ -110,7 +111,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if(section==0){
-        return 2;
+        if ([Utiles isLogin]) {
+            return 3;
+        } else {
+            return 2;
+        }
     }else if(section==1){
         return 2;
     }else if(section==2){
@@ -188,6 +193,10 @@
             } else {
                 cell.textLabel.text=@"                               登录";
             }
+            cell.detailTextLabel.text=@"";
+        } else if(row==2){
+            cell.textLabel.textAlignment=NSTextAlignmentCenter;
+            cell.textLabel.text=@"                           密码重置";
             cell.detailTextLabel.text=@"";
         }
         
@@ -329,7 +338,7 @@
                 }else{
                     [Utiles ToastNotification:@"您尚未登录" andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
                 }
-            } else {
+            } else if(row==1){
                 if ([Utiles isLogin]) {
                     [self logout];
                     [self.customTabel reloadData];
@@ -343,6 +352,10 @@
                     loginViewController.sourceType=SettingBar;
                     [self presentViewController:loginViewController animated:YES completion:nil];
                 }
+            }else if(row==2){
+                UserRegisterViewController *regVC=[[[UserRegisterViewController alloc] init] autorelease];
+                regVC.actionType=UserResetPwd;
+                //[self.navigationController push]
             }
         } else {
             [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];

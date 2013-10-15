@@ -18,6 +18,7 @@
 #import "PrettyNavigationController.h"
 #import "IndicatorView.h"
 #import "Indicator2View.h"
+#import "SettingCenterViewController.h"
 
 
 @interface ConcernedViewController ()
@@ -67,7 +68,7 @@
     
     [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     [self getComList];
-
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -77,7 +78,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     _showToast=NO;
     nibsRegistered=NO;
     nibsRegistered2=NO;
@@ -91,7 +92,7 @@
     } else {
         [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
     }
-
+    
     UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
     [self.view addGestureRecognizer:pan];
     [pan release];
@@ -119,7 +120,7 @@
 }
 
 -(void)addTableHeader{
-
+    
     if(_refreshHeaderView == nil)
     {
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.customTableView.bounds.size.height, self.view.frame.size.width, self.customTableView.bounds.size.height)];
@@ -130,7 +131,7 @@
         [view release];
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-  
+    
 }
 
 -(void)tapAction:(UITapGestureRecognizer *)tap{
@@ -159,7 +160,7 @@
 }
 
 -(void)getComList{
-   
+    
     if([Utiles isLogin]){
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [Utiles getUserToken], @"token",@"googuu",@"from",
@@ -184,7 +185,7 @@
             [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
         }];
     }
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -203,9 +204,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-   return [self.comInfoList count];
-
+    
+    return [self.comInfoList count];
+    
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell  forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -213,7 +214,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     //股票栏目
     static NSString *CustomCellIdentifier = @"CustomCellIdentifier";
     
@@ -233,7 +234,7 @@
         NSUInteger row = [indexPath row];
         id comInfo=[self.comInfoList objectAtIndex:row];
         cell.name=[comInfo objectForKey:@"companyname"];
-   
+        
         NSNumber *gPriceStr=[comInfo objectForKey:@"googuuprice"];
         float g=[gPriceStr floatValue];
         cell.gPrice=[NSString stringWithFormat:@"%.2f",g];
@@ -253,7 +254,7 @@
             cell.percentLabel.backgroundColor=[UIColor whiteColor];
         }else if(outLook<0){
             cell.percentLabel.backgroundColor=[Utiles colorWithHexString:fallColor];
-        }  
+        }
     }
     @catch (NSException *exception) {
         NSLog(@"%@",exception);
@@ -262,7 +263,7 @@
     
     UILongPressGestureRecognizer *longP=[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longAction:andCellIndex:)];
     [cell addGestureRecognizer:longP];
-   
+    
     SAFE_RELEASE(longP);
     return cell;
     
@@ -270,19 +271,27 @@
 
 
 -(void)longAction:(UILongPressGestureRecognizer *)press andCellIndex:(NSIndexPath *)indexPath{
-
+    
     [customTableView setEditing:YES animated:YES];
     isEditing=YES;
-
+    
     UIBarButtonItem *cancelEdit=[[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelAction)];
     [self.parentViewController.parentViewController.parentViewController.navigationItem setRightBarButtonItem:cancelEdit animated:NO];
     SAFE_RELEASE(cancelEdit);
-
+    
     
 }
 -(void)cancelAction{
     [customTableView setEditing:NO animated:YES];
-    [self.parentViewController.parentViewController.parentViewController.navigationItem setRightBarButtonItem:nil animated:NO];
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain
+                                                                     target:self action:@selector(setting:)];
+    [self.parentViewController.parentViewController.parentViewController.navigationItem setRightBarButtonItem:settingButton animated:YES];
+}
+-(void)setting:(id)sender{
+    SettingCenterViewController *set=[[[SettingCenterViewController alloc] init] autorelease];
+    set.title=@"功能设置";
+    set.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:set animated:YES];
 }
 
 #pragma mark -
@@ -290,12 +299,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (browseType==MyConcernedType) {
-        return @"  取消关注  ";
+        return @"取消关注";
     } else {
-        return @"  删除模型  ";
+        return @"删除";
     }
     
 }
+
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -330,19 +340,19 @@
 
 //单元格返回的编辑风格，包括删除 添加 和 默认  和不可编辑三种风格
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{   
+{
     return UITableViewCellEditingStyleDelete;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     return 40.0;
-
+    
 }
 #pragma mark Table Delegate Methods
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-
+    
+    
     XYZAppDelegate *delegate=[[UIApplication sharedApplication] delegate];
     int row=indexPath.row;
     @try {
@@ -357,8 +367,8 @@
     @catch (NSException *exception) {
         NSLog(@"%@",exception);
     }
-
- 
+    
+    
 }
 
 
@@ -398,7 +408,7 @@
     
 }
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-
+    
     return _reloading; // should return if data source model is reloading
     
 }
@@ -415,7 +425,7 @@
 }
 
 - (BOOL)shouldAutorotate{
-
+    
     return NO;
 }
 

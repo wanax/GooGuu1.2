@@ -21,10 +21,6 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="120" translatesAutoresizingMaskIntoConstraints="NO" id="14">
                         <rect key="frame" x="0.0" y="7" width="120" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="120" id="615"/>
-                            <constraint firstAttribute="height" constant="20" id="633"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -33,8 +29,7 @@
                         <rect key="frame" x="5" y="27" width="110" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="110" id="604"/>
-                            <constraint firstAttribute="height" constant="12" id="622"/>
+                            <constraint firstAttribute="height" constant="12" id="AJP-ji-Vc1"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="9"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -44,8 +39,7 @@
                         <rect key="frame" x="176" y="7" width="50" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="234"/>
-                            <constraint firstAttribute="height" constant="27" id="634"/>
+                            <constraint firstAttribute="width" constant="50" id="Gpy-G5-1sW"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -54,10 +48,6 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32">
                         <rect key="frame" x="118" y="10" width="50" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="543"/>
-                            <constraint firstAttribute="width" constant="50" id="551"/>
-                        </constraints>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,29 +56,37 @@
                         <rect key="frame" x="234" y="6" width="60" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="528"/>
+                            <constraint firstAttribute="width" constant="60" id="Wgf-H8-FyI"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="13"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="32" firstAttribute="top" secondItem="8Nw-L0-M6e" secondAttribute="top" constant="10" id="1LY-Lp-DFX"/>
+                    <constraint firstAttribute="bottom" secondItem="608" secondAttribute="bottom" constant="-1" id="1d6-uT-tRn"/>
+                    <constraint firstItem="25" firstAttribute="top" secondItem="14" secondAttribute="top" id="2cy-tk-mGA"/>
+                    <constraint firstAttribute="trailing" secondItem="608" secondAttribute="trailing" id="2mE-BF-IXf"/>
+                    <constraint firstItem="25" firstAttribute="centerY" secondItem="32" secondAttribute="centerY" id="66i-BS-IBa"/>
+                    <constraint firstItem="25" firstAttribute="leading" secondItem="32" secondAttribute="trailing" constant="8" symbolic="YES" id="Fbh-Fa-eC6"/>
+                    <constraint firstItem="608" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="IiD-LJ-PhO"/>
+                    <constraint firstItem="360" firstAttribute="centerY" secondItem="608" secondAttribute="centerY" id="MZ8-rC-du0"/>
+                    <constraint firstItem="25" firstAttribute="leading" secondItem="14" secondAttribute="trailing" constant="56" id="OL1-2f-qnC"/>
+                    <constraint firstAttribute="bottom" secondItem="17" secondAttribute="bottom" id="TN3-zM-SDA"/>
+                    <constraint firstItem="17" firstAttribute="leading" secondItem="8Nw-L0-M6e" secondAttribute="leading" constant="5" id="UzS-OW-wck"/>
+                    <constraint firstItem="25" firstAttribute="baseline" secondItem="360" secondAttribute="baseline" id="aqW-rk-ugw"/>
+                    <constraint firstItem="608" firstAttribute="top" secondItem="8Nw-L0-M6e" secondAttribute="top" id="bEW-4y-304"/>
+                    <constraint firstItem="32" firstAttribute="leading" secondItem="17" secondAttribute="trailing" constant="3" id="hjo-hy-ldH"/>
+                    <constraint firstItem="360" firstAttribute="top" secondItem="8Nw-L0-M6e" secondAttribute="top" constant="6" id="iio-dj-gjG"/>
+                    <constraint firstItem="17" firstAttribute="centerX" secondItem="14" secondAttribute="centerX" id="jXT-MY-nAL"/>
+                    <constraint firstItem="17" firstAttribute="top" secondItem="14" secondAttribute="bottom" id="jbC-UT-oNt"/>
+                    <constraint firstAttribute="trailing" secondItem="360" secondAttribute="trailing" constant="26" id="qjv-Sf-vpA"/>
+                    <constraint firstItem="14" firstAttribute="leading" secondItem="8Nw-L0-M6e" secondAttribute="leading" id="vgm-dU-uN7"/>
+                    <constraint firstItem="360" firstAttribute="leading" secondItem="25" secondAttribute="trailing" constant="8" symbolic="YES" id="wFz-0M-wDz"/>
+                    <constraint firstItem="25" firstAttribute="centerY" secondItem="360" secondAttribute="centerY" id="xW6-Ur-4zv"/>
+                </constraints>
             </tableViewCellContentView>
-            <constraints>
-                <constraint firstItem="360" firstAttribute="leading" secondItem="25" secondAttribute="trailing" constant="8" symbolic="YES" id="1Xk-T2-V3E"/>
-                <constraint firstItem="14" firstAttribute="top" secondItem="25" secondAttribute="top" id="1dd-Kk-Kj3"/>
-                <constraint firstItem="608" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="2S4-bx-JSX"/>
-                <constraint firstItem="608" firstAttribute="top" secondItem="2" secondAttribute="top" id="4uI-qB-Gxw"/>
-                <constraint firstItem="360" firstAttribute="centerY" secondItem="608" secondAttribute="centerY" id="8aY-hh-JNO"/>
-                <constraint firstItem="360" firstAttribute="baseline" secondItem="25" secondAttribute="baseline" id="Jnp-wK-LbZ"/>
-                <constraint firstItem="25" firstAttribute="leading" secondItem="32" secondAttribute="trailing" constant="8" symbolic="YES" id="QxB-Qm-yMU"/>
-                <constraint firstItem="14" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="UZk-mB-1ib"/>
-                <constraint firstAttribute="trailing" secondItem="360" secondAttribute="trailing" constant="26" id="cwE-DA-BXl"/>
-                <constraint firstItem="17" firstAttribute="centerX" secondItem="14" secondAttribute="centerX" id="fBS-E0-Qjf"/>
-                <constraint firstItem="25" firstAttribute="centerY" secondItem="32" secondAttribute="centerY" id="hoe-Xq-mBI"/>
-                <constraint firstItem="360" firstAttribute="centerY" secondItem="25" secondAttribute="centerY" id="mXR-zv-nsU"/>
-                <constraint firstAttribute="bottom" secondItem="17" secondAttribute="bottom" constant="1" id="u5f-Wb-b2j"/>
-            </constraints>
             <connections>
                 <outlet property="belongLabel" destination="17" id="91"/>
                 <outlet property="gPriceLabel" destination="25" id="90"/>

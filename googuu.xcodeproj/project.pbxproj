@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		39949653A0024F2A8FB6EFDC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0C39D954CDD4EAFADCC3A69 /* libPods.a */; };
+		AE02E842180B7CAE004FCF87 /* FinPicKeyWordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE02E841180B7CAE004FCF87 /* FinPicKeyWordListViewController.m */; };
 		AE03FCD817C5A86000AA90B3 /* dragChartBar.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03FCD717C5A86000AA90B3 /* dragChartBar.png */; };
 		AE03FCDB17C5BA9500AA90B3 /* resetBt.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03FCD917C5BA9400AA90B3 /* resetBt.png */; };
 		AE03FCDC17C5BA9500AA90B3 /* saveBt.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03FCDA17C5BA9400AA90B3 /* saveBt.png */; };
@@ -250,6 +251,7 @@
 		AE368F3E179F85B4000AF7BD /* AnalyDetailContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE368F3D179F85B3000AF7BD /* AnalyDetailContainerViewController.m */; };
 		AE3ADC5717CC8BDD0015445A /* monthChoosenBt.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3ADC5517CC8BDD0015445A /* monthChoosenBt.png */; };
 		AE3ADC5817CC8BDD0015445A /* reflashBt.png in Resources */ = {isa = PBXBuildFile; fileRef = AE3ADC5617CC8BDD0015445A /* reflashBt.png */; };
+		AE431B47180B9EAF00D3C831 /* CounterBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE431B46180B9EAF00D3C831 /* CounterBankViewController.m */; };
 		AE45CA0217CF5157004387A1 /* grayDotLine.png in Resources */ = {isa = PBXBuildFile; fileRef = AE45CA0117CF5157004387A1 /* grayDotLine.png */; };
 		AE45CA0F17CF5677004387A1 /* companyListBar.png in Resources */ = {isa = PBXBuildFile; fileRef = AE45CA0B17CF5677004387A1 /* companyListBar.png */; };
 		AE45CA1117CF5677004387A1 /* moreAboutBar.png in Resources */ = {isa = PBXBuildFile; fileRef = AE45CA0D17CF5677004387A1 /* moreAboutBar.png */; };
@@ -261,6 +263,8 @@
 		AE4B4FC617C4607100180A93 /* fallArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AE4B4FC417C4607100180A93 /* fallArrow.png */; };
 		AE4B4FC717C4607100180A93 /* riseArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AE4B4FC517C4607100180A93 /* riseArrow.png */; };
 		AE4B4FCD17C4674E00180A93 /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4B4FCC17C4674E00180A93 /* RTLabel.m */; };
+		AE4BA2E6180BF3720020EC7D /* finToolBar.png in Resources */ = {isa = PBXBuildFile; fileRef = AE4BA2E4180BF3720020EC7D /* finToolBar.png */; };
+		AE4BA2E7180BF3720020EC7D /* graphExchangeBar.png in Resources */ = {isa = PBXBuildFile; fileRef = AE4BA2E5180BF3720020EC7D /* graphExchangeBar.png */; };
 		AE4CF0D717AA32780060640E /* CQMFloatingContentOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CF0CE17AA32780060640E /* CQMFloatingContentOverlayView.m */; };
 		AE4CF0D817AA32780060640E /* CQMFloatingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CF0D017AA32780060640E /* CQMFloatingController.m */; };
 		AE4CF0D917AA32780060640E /* CQMFloatingFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE4CF0D217AA32780060640E /* CQMFloatingFrameView.m */; };
@@ -300,6 +304,8 @@
 		AE75B91017A211B30046901F /* userconfigure.plist in Resources */ = {isa = PBXBuildFile; fileRef = AE75B90F17A211B30046901F /* userconfigure.plist */; };
 		AE77440617F7C4C5003643EA /* DiscountRateView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = AE77440517F7C4C5003643EA /* DiscountRateView5.xib */; };
 		AE77440A17F7D247003643EA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AE77440917F7D247003643EA /* Default.png */; };
+		AE7A44AE18094766009912D7 /* FinanPicCollectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7A44AD18094766009912D7 /* FinanPicCollectCell.m */; };
+		AE7A44B1180947CF009912D7 /* FinancePicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7A44B0180947CF009912D7 /* FinancePicViewController.m */; };
 		AE7D97BE1805388700234417 /* ASTOCK.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7D97B31805388700234417 /* ASTOCK.png */; };
 		AE7D97BF1805388700234417 /* BETA.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7D97B41805388700234417 /* BETA.png */; };
 		AE7D97C01805388700234417 /* CASHCOUNT.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7D97B51805388700234417 /* CASHCOUNT.png */; };
@@ -314,6 +320,7 @@
 		AE7D97CB180541F800234417 /* CounterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7D97CA180541F800234417 /* CounterViewController.m */; };
 		AE934A9C17DEFDD9002AF556 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AE934A9B17DEFDD9002AF556 /* icon.png */; };
 		AEC678491807F15E00C578B2 /* FinanceToolsGrade2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEC678481807F15E00C578B2 /* FinanceToolsGrade2ViewController.m */; };
+		AEDBB85E180CD89A0040B48E /* UserRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEDBB85D180CD89A0040B48E /* UserRegisterViewController.m */; };
 		AEEF33DB17F90F0600894E90 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AEEF33DA17F90F0600894E90 /* Icon@2x.png */; };
 		AEEF33DD17F9153700894E90 /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEEF33DC17F9153700894E90 /* libBaiduMobStat.a */; };
 		AEF2EF9B17BB13A800B7B9A2 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2EF9A17BB13A800B7B9A2 /* Crashlytics.framework */; };
@@ -358,6 +365,8 @@
 
 /* Begin PBXFileReference section */
 		46B94172B51941CD82B02D2E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		AE02E840180B7CAE004FCF87 /* FinPicKeyWordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinPicKeyWordListViewController.h; sourceTree = "<group>"; };
+		AE02E841180B7CAE004FCF87 /* FinPicKeyWordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinPicKeyWordListViewController.m; sourceTree = "<group>"; };
 		AE0395FC17D97A3100533CE0 /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobStat.h; sourceTree = "<group>"; };
 		AE03FCD717C5A86000AA90B3 /* dragChartBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragChartBar.png; sourceTree = "<group>"; };
 		AE03FCD917C5BA9400AA90B3 /* resetBt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resetBt.png; sourceTree = "<group>"; };
@@ -832,6 +841,8 @@
 		AE368F3D179F85B3000AF7BD /* AnalyDetailContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyDetailContainerViewController.m; sourceTree = "<group>"; };
 		AE3ADC5517CC8BDD0015445A /* monthChoosenBt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monthChoosenBt.png; sourceTree = "<group>"; };
 		AE3ADC5617CC8BDD0015445A /* reflashBt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reflashBt.png; sourceTree = "<group>"; };
+		AE431B45180B9EAF00D3C831 /* CounterBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CounterBankViewController.h; sourceTree = "<group>"; };
+		AE431B46180B9EAF00D3C831 /* CounterBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CounterBankViewController.m; sourceTree = "<group>"; };
 		AE45CA0117CF5157004387A1 /* grayDotLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayDotLine.png; sourceTree = "<group>"; };
 		AE45CA0B17CF5677004387A1 /* companyListBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = companyListBar.png; sourceTree = "<group>"; };
 		AE45CA0D17CF5677004387A1 /* moreAboutBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moreAboutBar.png; sourceTree = "<group>"; };
@@ -847,6 +858,8 @@
 		AE4B4FC517C4607100180A93 /* riseArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = riseArrow.png; sourceTree = "<group>"; };
 		AE4B4FCB17C4674E00180A93 /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		AE4B4FCC17C4674E00180A93 /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
+		AE4BA2E4180BF3720020EC7D /* finToolBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finToolBar.png; sourceTree = "<group>"; };
+		AE4BA2E5180BF3720020EC7D /* graphExchangeBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphExchangeBar.png; sourceTree = "<group>"; };
 		AE4CF0CD17AA32780060640E /* CQMFloatingContentOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CQMFloatingContentOverlayView.h; sourceTree = "<group>"; };
 		AE4CF0CE17AA32780060640E /* CQMFloatingContentOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CQMFloatingContentOverlayView.m; sourceTree = "<group>"; };
 		AE4CF0CF17AA32780060640E /* CQMFloatingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CQMFloatingController.h; sourceTree = "<group>"; };
@@ -1190,6 +1203,10 @@
 		AE75BABA17A220750046901F /* userconfigure.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = userconfigure.plist; sourceTree = "<group>"; };
 		AE77440517F7C4C5003643EA /* DiscountRateView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscountRateView5.xib; sourceTree = "<group>"; };
 		AE77440917F7D247003643EA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		AE7A44AC18094766009912D7 /* FinanPicCollectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinanPicCollectCell.h; sourceTree = "<group>"; };
+		AE7A44AD18094766009912D7 /* FinanPicCollectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinanPicCollectCell.m; sourceTree = "<group>"; };
+		AE7A44AF180947CF009912D7 /* FinancePicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinancePicViewController.h; sourceTree = "<group>"; };
+		AE7A44B0180947CF009912D7 /* FinancePicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinancePicViewController.m; sourceTree = "<group>"; };
 		AE7D97B31805388700234417 /* ASTOCK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ASTOCK.png; sourceTree = "<group>"; };
 		AE7D97B41805388700234417 /* BETA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BETA.png; sourceTree = "<group>"; };
 		AE7D97B51805388700234417 /* CASHCOUNT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CASHCOUNT.png; sourceTree = "<group>"; };
@@ -1206,6 +1223,8 @@
 		AE934A9B17DEFDD9002AF556 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../icon.png; sourceTree = "<group>"; };
 		AEC678471807F15E00C578B2 /* FinanceToolsGrade2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinanceToolsGrade2ViewController.h; sourceTree = "<group>"; };
 		AEC678481807F15E00C578B2 /* FinanceToolsGrade2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinanceToolsGrade2ViewController.m; sourceTree = "<group>"; };
+		AEDBB85C180CD89A0040B48E /* UserRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRegisterViewController.h; sourceTree = "<group>"; };
+		AEDBB85D180CD89A0040B48E /* UserRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRegisterViewController.m; sourceTree = "<group>"; };
 		AEEF33DA17F90F0600894E90 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		AEEF33DC17F9153700894E90 /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
 		AEF2EF9A17BB13A800B7B9A2 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -1672,6 +1691,7 @@
 				AE2E93C4179D09D40049B28E /* Welcome */,
 				AE2E93C3179D09C90049B28E /* Splash */,
 				AE2E93C2179D09C40049B28E /* News */,
+				AE7A446F18092C80009912D7 /* FinancialPic */,
 				AE2E93C1179D09B10049B28E /* FinancialTools */,
 				AE2E93C0179D09A60049B28E /* ClientCenter */,
 				AE2E93BF179D099D0049B28E /* DataModel */,
@@ -2008,6 +2028,8 @@
 		AE2E9399179D09600049B28E /* BarIcon */ = {
 			isa = PBXGroup;
 			children = (
+				AE4BA2E4180BF3720020EC7D /* finToolBar.png */,
+				AE4BA2E5180BF3720020EC7D /* graphExchangeBar.png */,
 				AE2E458D17D6E36C00BB8CE0 /* googuuNewsBar.png */,
 				AE45CA0B17CF5677004387A1 /* companyListBar.png */,
 				AE45CA0D17CF5677004387A1 /* moreAboutBar.png */,
@@ -2050,6 +2072,7 @@
 		AE2E93C0179D09A60049B28E /* ClientCenter */ = {
 			isa = PBXGroup;
 			children = (
+				AEF66F9B180CCD260067C4BC /* UserReg */,
 				AEF62F5817D56E2900E3CABD /* UserSetting */,
 				AE2E93DA179D0A590049B28E /* ClientCenterViewController.h */,
 				AE2E93DB179D0A590049B28E /* ClientCenterViewController.m */,
@@ -2072,6 +2095,8 @@
 				AEC678481807F15E00C578B2 /* FinanceToolsGrade2ViewController.m */,
 				AE7D97C9180541F800234417 /* CounterViewController.h */,
 				AE7D97CA180541F800234417 /* CounterViewController.m */,
+				AE431B45180B9EAF00D3C831 /* CounterBankViewController.h */,
+				AE431B46180B9EAF00D3C831 /* CounterBankViewController.m */,
 				AE4ADA431806519C0007047D /* BetaFactorCountViewController.h */,
 				AE4ADA441806519C0007047D /* BetaFactorCountViewController.m */,
 				AE616E1F18067EF500681D93 /* ChoseBetaFactorViewController.h */,
@@ -2798,6 +2823,19 @@
 			path = "Vurig Calendar";
 			sourceTree = "<group>";
 		};
+		AE7A446F18092C80009912D7 /* FinancialPic */ = {
+			isa = PBXGroup;
+			children = (
+				AE7A44AC18094766009912D7 /* FinanPicCollectCell.h */,
+				AE7A44AD18094766009912D7 /* FinanPicCollectCell.m */,
+				AE7A44AF180947CF009912D7 /* FinancePicViewController.h */,
+				AE7A44B0180947CF009912D7 /* FinancePicViewController.m */,
+				AE02E840180B7CAE004FCF87 /* FinPicKeyWordListViewController.h */,
+				AE02E841180B7CAE004FCF87 /* FinPicKeyWordListViewController.m */,
+			);
+			name = FinancialPic;
+			sourceTree = "<group>";
+		};
 		AE7D97B21805387700234417 /* FinToolsIcon */ = {
 			isa = PBXGroup;
 			children = (
@@ -2848,6 +2886,15 @@
 				AEF6413817CEF08300E69F41 /* valuationModelBackBt.png */,
 			);
 			name = SearchListImg;
+			sourceTree = "<group>";
+		};
+		AEF66F9B180CCD260067C4BC /* UserReg */ = {
+			isa = PBXGroup;
+			children = (
+				AEDBB85C180CD89A0040B48E /* UserRegisterViewController.h */,
+				AEDBB85D180CD89A0040B48E /* UserRegisterViewController.m */,
+			);
+			name = UserReg;
 			sourceTree = "<group>";
 		};
 		AEF80DE117CD8C2A0010E3AA /* DiscountImg */ = {
@@ -2981,6 +3028,7 @@
 				AE7D97C21805388700234417 /* EXCEL.png in Resources */,
 				AE2E9391179D09490049B28E /* shadowDown.png in Resources */,
 				AE77440617F7C4C5003643EA /* DiscountRateView5.xib in Resources */,
+				AE4BA2E6180BF3720020EC7D /* finToolBar.png in Resources */,
 				AE2E9392179D09490049B28E /* shadowUp.png in Resources */,
 				AE2E9394179D09490049B28E /* whiteArrow.png in Resources */,
 				AE2E9395179D09490049B28E /* whiteArrow@2x.png in Resources */,
@@ -3069,6 +3117,7 @@
 				AE272A2917D4637B00405295 /* topDone.png in Resources */,
 				AE272A2A17D4637B00405295 /* topDone@2x.png in Resources */,
 				AE272B1017D4780A00405295 /* checkUpdateBt.png in Resources */,
+				AE4BA2E7180BF3720020EC7D /* graphExchangeBar.png in Resources */,
 				AE272B1117D4780A00405295 /* companyLogo.png in Resources */,
 				AE272B1817D47C2300405295 /* addConcernBtt.png in Resources */,
 				AE272B1917D47C2300405295 /* cancelConcernBtt.png in Resources */,
@@ -3165,6 +3214,7 @@
 			files = (
 				AE11E63F17B4902500FE0190 /* DahonValuationViewController.m in Sources */,
 				AE2E9455179D15540049B28E /* CompanyListViewController.m in Sources */,
+				AEDBB85E180CD89A0040B48E /* UserRegisterViewController.m in Sources */,
 				AE2E9457179D15540049B28E /* StockContainerViewController.m in Sources */,
 				AE2E9459179D15540049B28E /* UniverseViewController.m in Sources */,
 				AE2E945B179D15540049B28E /* NSDictionary+MutableDeepCopy.m in Sources */,
@@ -3263,6 +3313,7 @@
 				AE4CF0DB17AA32780060640E /* CQMPathUtilities.m in Sources */,
 				AE4CF0E017AA3CC20060640E /* ModelClassViewController.m in Sources */,
 				AE4CF0E417AA3DF30060640E /* FinancalModelChartViewController.m in Sources */,
+				AE7A44B1180947CF009912D7 /* FinancePicViewController.m in Sources */,
 				AE4CF0E717AA419A0060640E /* DrawChartTool.m in Sources */,
 				AE51B8D917AB528000A09D1E /* ModelClassGrade2ViewController.m in Sources */,
 				AE315CFD17AF5A040061FAD1 /* IndicatorView.m in Sources */,
@@ -3288,6 +3339,7 @@
 				AE1E7CE317D437AF00A13D63 /* ASIHTTPRequest.m in Sources */,
 				AE1E7CE417D437AF00A13D63 /* ASIInputStream.m in Sources */,
 				AE1E7CE517D437AF00A13D63 /* ASINetworkQueue.m in Sources */,
+				AE7A44AE18094766009912D7 /* FinanPicCollectCell.m in Sources */,
 				AE1E7D2C17D43B0100A13D63 /* SVProgressHUD.m in Sources */,
 				AE272B3817D4831B00405295 /* MKAnnotationView+WebCache.m in Sources */,
 				AE272B3917D4831B00405295 /* NSData+GIF.m in Sources */,
@@ -3324,6 +3376,7 @@
 				AE13BE2817D87132005A313B /* CFilteringJSONSerializer.m in Sources */,
 				AE13BE2917D87132005A313B /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				AE13BE2A17D87132005A313B /* CJSONSerialization.m in Sources */,
+				AE02E842180B7CAE004FCF87 /* FinPicKeyWordListViewController.m in Sources */,
 				AE13BE2B17D87132005A313B /* CJSONSerializedData.m in Sources */,
 				AE7D97CB180541F800234417 /* CounterViewController.m in Sources */,
 				AE13BE2C17D87132005A313B /* CDataScanner_Extensions.m in Sources */,
@@ -3332,6 +3385,7 @@
 				AE13BE2F17D87132005A313B /* CJSONScanner.m in Sources */,
 				AE13BE3017D87132005A313B /* CJSONSerializer.m in Sources */,
 				AE044D4C17DEDC6700C7B70E /* ProAlertView.m in Sources */,
+				AE431B47180B9EAF00D3C831 /* CounterBankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

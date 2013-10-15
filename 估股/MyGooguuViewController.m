@@ -11,6 +11,7 @@
 #import "ClientLoginViewController.h"
 #import "MHTabBarController.h"
 #import "GooGuuContainerViewController.h"
+#import "SettingCenterViewController.h"
 
 @interface MyGooguuViewController ()
 
@@ -98,6 +99,10 @@
     [Utiles iOS7StatusBar:self];
     [self setTitle:@"我的估股"];
     
+    UIBarButtonItem *settingButton = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain
+                                                                     target:self action:@selector(setting:)];
+    self.navigationItem.rightBarButtonItem = settingButton;
+    
     GooGuuContainerViewController *content=[[GooGuuContainerViewController alloc] init];
     if (IOS7_OR_LATER) {
         content.view.frame=CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -110,6 +115,13 @@
     
     SAFE_RELEASE(content);
     
+}
+
+-(void)setting:(id)sender{
+    SettingCenterViewController *set=[[[SettingCenterViewController alloc] init] autorelease];
+    set.title=@"功能设置";
+    set.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:set animated:YES];
 }
 
 
