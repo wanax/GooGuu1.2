@@ -9,6 +9,7 @@
 #import "UserRegisterViewController.h"
 #import "IQKeyBoardManager.h"
 
+
 @interface UserRegisterViewController ()
 
 @end
@@ -78,16 +79,20 @@ typedef enum{
     }
     
     if (self.actionType!=UserResetPwd) {
-        UIButton *getCheckCodeBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [getCheckCodeBt setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [getCheckCodeBt setFrame:CGRectMake(10,170,80,30)];
-        [getCheckCodeBt addTarget:self action:@selector(getCheckCode:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:getCheckCodeBt];
+        self.getCheckCodeBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [self.getCheckCodeBt setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [self.getCheckCodeBt setFrame:CGRectMake(10,170,80,30)];
+        [self.getCheckCodeBt addTarget:self action:@selector(getCheckCode:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.getCheckCodeBt];
         if (self.actionType==UserRegister) {
-            [self addTextField:@"输入验证码" frame:CGRectMake(130,170,110,30) tag:CheckCode type:UIKeyboardTypeDecimalPad isSecure:NO];
+            [self addTextField:@"输入验证码" frame:CGRectMake(100,170,130,30) tag:CheckCode type:UIKeyboardTypeDecimalPad isSecure:NO];
         } else if(self.actionType==UserFindPwd){
-            [self addTextField:@"输入验证码" frame:CGRectMake(130,170,110,30) tag:CheckCode-1 type:UIKeyboardTypeDecimalPad isSecure:NO];
+            [self addTextField:@"输入验证码" frame:CGRectMake(100,170,130,30) tag:CheckCode-1 type:UIKeyboardTypeDecimalPad isSecure:NO];
         }
+        self.timer = [[KKProgressTimer alloc] initWithFrame:CGRectMake(240,167,35,35)];
+        self.timer.delegate=self;
+        self.timer.tag=500;
+        [self.view addSubview:self.timer];
     }
     
     UIButton *regBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -123,16 +128,28 @@ typedef enum{
 
 -(void)getCheckCode:(UIButton *)bt{
     
-    [bt setEnabled:NO];
-    [MBProgressHUD showHUDAddedTo:self.view withTitle:@"" animated:YES];
-    [bt setTitle:@"请稍后" forState:UIControlStateDisabled];
     NSString *phoneNum=[(UITextField *)[self.view viewWithTag:PhoneNum] text];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"mobile", nil];
-    [Utiles getNetInfoWithPath:@"UserRegVaildCode" andParams:params besidesBlock:^(id obj) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [Utiles showToastView:self.view withTitle:nil andContent:@"网络错误" duration:1.0];
-    }];
+    NSString * regex        = @"^1[3|4|5|8][0-9]\\d{4,8}$";
+    NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch            = [pred evaluateWithObject:phoneNum];
+    if(isMatch){
+        [bt setEnabled:NO];
+        __block CGFloat i1 = 0;
+        [self.timer startWithBlock:^CGFloat {
+            return i1++ / 30;
+        }];
+        
+        [bt setTitle:@"请稍后" forState:UIControlStateDisabled];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"mobile", nil];
+        [Utiles getNetInfoWithPath:@"UserRegVaildCode" andParams:params besidesBlock:^(id obj) {
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络错误" duration:1.0];
+        }];
+    }else{
+        [Utiles showToastView:self.view withTitle:nil andContent:@"请填写正确手机号码" duration:1.0];
+    }
+    
     
 }
 
@@ -192,6 +209,8 @@ typedef enum{
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if([[obj objectForKey:@"status"] integerValue]!=1){
                 [Utiles showToastView:self.view withTitle:nil andContent:[obj objectForKey:@"msg"] duration:2.0];
+            }else{
+                [self userLoginUserName:phoneNum pwd:passWord];
             }
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -202,6 +221,17 @@ typedef enum{
     }
     
     
+}
+
+#pragma mark KKProgressTimerDelegate Method
+- (void)didUpdateProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+    if (percentage >= 1) {
+        [progressTimer stop];
+    }
+}
+
+- (void)didStopProgressTimer:(KKProgressTimer *)progressTimer percentage:(CGFloat)percentage {
+    [self.getCheckCodeBt setEnabled:YES];
 }
 
 #pragma mark -
@@ -265,6 +295,46 @@ typedef enum{
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     selectedTextFieldTag = textField.tag;
+}
+
+-(void)userLoginUserName:(NSString *)userName pwd:(NSString *)pwd{
+    if ([Utiles isNetConnected]) {
+
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[userName lowercaseString],@"username",[Utiles md5:pwd],@"password",@"googuu",@"from", nil];
+        
+        [Utiles getNetInfoWithPath:@"Login" andParams:params besidesBlock:^(id info){
+            if([[info objectForKey:@"status"] isEqualToString:@"1"]){
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginKeeping" object:nil];
+                [[NSUserDefaults standardUserDefaults] setObject:[info objectForKey:@"token"] forKey:@"UserToken"];
+                
+                NSDictionary *userInfo=[NSDictionary dictionaryWithObjectsAndKeys:userName,@"username",pwd,@"password", nil];
+                [[NSUserDefaults standardUserDefaults] setObject:userInfo forKey:@"UserInfo"];
+                
+                NSLog(@"%@",[info objectForKey:@"token"]);
+                
+                [self dismissViewControllerAnimated:YES completion:nil];
+                
+            }else {
+                NSString *msg=@"";
+                if ([info[@"status"] isEqual:@"0"]) {
+                    msg=@"用户不存在";
+                } else if ([info[@"status"] isEqual:@"2"]){
+                    msg=@"邮箱未激活";
+                } else if ([info[@"status"] isEqual:@"3"]){
+                    msg=@"密码错误";
+                }
+                [Utiles ToastNotification:msg andView:self.view andLoading:NO andIsBottom:NO andIsHide:YES];
+            }
+        } failure:^(AFHTTPRequestOperation *operation,NSError *error){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+        }];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];
+    }
+    
+    
 }
 
 -(BOOL)shouldAutorotate{

@@ -6,6 +6,18 @@
 // project.
 
 
+// HPLTagCloudGenerator
+#define COCOAPODS_POD_AVAILABLE_HPLTagCloudGenerator
+#define COCOAPODS_VERSION_MAJOR_HPLTagCloudGenerator 0
+#define COCOAPODS_VERSION_MINOR_HPLTagCloudGenerator 0
+#define COCOAPODS_VERSION_PATCH_HPLTagCloudGenerator 3
+
+// KKProgressTimer
+#define COCOAPODS_POD_AVAILABLE_KKProgressTimer
+#define COCOAPODS_VERSION_MAJOR_KKProgressTimer 0
+#define COCOAPODS_VERSION_MINOR_KKProgressTimer 0
+#define COCOAPODS_VERSION_PATCH_KKProgressTimer 1
+
 // PonyDebugger
 #define COCOAPODS_POD_AVAILABLE_PonyDebugger
 #define COCOAPODS_VERSION_MAJOR_PonyDebugger 0

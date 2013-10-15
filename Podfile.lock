@@ -1,12 +1,22 @@
 PODS:
+  - HPLTagCloudGenerator (0.0.3)
+  - KKProgressTimer (0.0.1)
   - PonyDebugger (0.3.0):
     - SocketRocket
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
+  - HPLTagCloudGenerator (~> 0.0.3)
+  - KKProgressTimer (from `http://github.com/gin0606/KKProgressTimer.git`)
   - PonyDebugger (~> 0.3.0)
 
+EXTERNAL SOURCES:
+  KKProgressTimer:
+    :git: http://github.com/gin0606/KKProgressTimer.git
+
 SPEC CHECKSUMS:
+  HPLTagCloudGenerator: fd8f932b6e058d0af0abaf2765889f08a33d96b8
+  KKProgressTimer: 87a1001670f911a827cab5d8afb776c5db259953
   PonyDebugger: b8b504d18c6fe8cfe904295d8e908b076bdfa291
   SocketRocket: 7ac946bcce46287a791dfff3c1f8daa692821dae
 

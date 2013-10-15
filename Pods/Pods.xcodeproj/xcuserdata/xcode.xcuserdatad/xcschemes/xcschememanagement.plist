@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-HPLTagCloudGenerator.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Pods-KKProgressTimer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>Pods-PonyDebugger.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -22,7 +32,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>3366F8DDB562474DA5E30C51</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5A1419C269C2472790B69A26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CE4F0B235024F3FB0D394BA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6D2B62E99CA74D58ADC3647D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>70D21B297DB340CE819A0A0C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>89929261692A4C3290B97909</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8A8146515D184C479BBB4CDD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C7C54605FDC44ECA7847523</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -32,7 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>C4CA75B02CCF4B05B9DE5839</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>CDEBF078932A40AAB8CD01FB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE6B1AD41C0F438289A40945</key>
 		<dict>
 			<key>primary</key>
 			<true/>

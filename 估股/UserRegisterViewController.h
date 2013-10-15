@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KKProgressTimer.h"
 
 
-
-@interface UserRegisterViewController :UIViewController<UITextFieldDelegate>{
+@interface UserRegisterViewController :UIViewController<UITextFieldDelegate,KKProgressTimerDelegate>{
     NSInteger selectedTextFieldTag;
 }
 
 @property UserActionType actionType;
+
+@property (nonatomic,retain) UIButton *getCheckCodeBt;
+
+@property (nonatomic,retain) KKProgressTimer *timer;
 
 @end

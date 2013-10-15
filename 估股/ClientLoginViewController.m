@@ -70,6 +70,9 @@
 
 
 -(void)viewDidAppear:(BOOL)animated{
+    if([Utiles isLogin]){
+        [self viewDisMiss];
+    }
     [[BaiduMobStat defaultStat] pageviewStartWithName:[NSString stringWithUTF8String:object_getClassName(self)]];
     if([[Utiles getConfigureInfoFrom:@"userconfigure" andKey:@"rememberPwd" inUserDomain:YES] isEqual:@"1"]){
         id userInfo=[[NSUserDefaults standardUserDefaults] objectForKey:@"UserInfo"];

@@ -8,6 +8,7 @@
 
 #import "FinPicKeyWordListViewController.h"
 #import "FinancePicViewController.h"
+#import "HPLTagCloudGenerator.h"
 
 @interface FinPicKeyWordListViewController ()
 
@@ -26,15 +27,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor purpleColor]];
     self.title=@"金融图汇";
     
-    self.cusTabView=[[UITableView alloc] init];
-    self.cusTabView.frame=CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT-44);
-    self.cusTabView.delegate=self;
-    self.cusTabView.dataSource=self;
-    [self.view addSubview:self.cusTabView];
+    NSDictionary *tagDict = @{@"tag1": @3,
+                              @"tag2": @5,
+                              @"tag3": @7,
+                              @"tag3": @6,
+                              @"tag3": @4,
+                              @"tag3": @9,
+                              @"tag3": @1,
+                              @"tag4": @2};
     
-    [self getKeyWordList];
+    HPLTagCloudGenerator *tagGenerator = [[HPLTagCloudGenerator alloc] init];
+    tagGenerator.size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    tagGenerator.tagDict = tagDict;
+    
+    NSArray *views = [tagGenerator generateTagViews];
+    
+    for(UIView *v in views) {
+        [self.view addSubview:v];
+    }
 
 }
 
