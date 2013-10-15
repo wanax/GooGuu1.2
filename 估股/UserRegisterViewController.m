@@ -16,9 +16,9 @@
 typedef enum{
     
     PhoneNum=100,
-    CheckCode=101,
-    Pwd=102,
-    CheckPwd=103
+    Pwd=101,
+    Pwd2=102,
+    CheckCode=103,
     
 } TextFieldType;
 
@@ -53,28 +53,41 @@ typedef enum{
 }
 
 -(void)initComponents{
-    
-    [self addSingleLabel:@"手机号码" frame:CGRectMake(10,50,80,25)];
-    [self addTextField:@"限大陆11位手机号码" frame:CGRectMake(100,50,200,30) tag:PhoneNum];
-    
-    UIButton *getCheckCodeBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [getCheckCodeBt setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [getCheckCodeBt setFrame:CGRectMake(10,90,80,30)];
-    [getCheckCodeBt addTarget:self action:@selector(getCheckCode:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:getCheckCodeBt];
-    
-    [self addTextField:@"输入验证码" frame:CGRectMake(130,90,110,30) tag:CheckCode];
-    
+
+    if (self.actionType!=UserResetPwd) {
+        [self addSingleLabel:@"手机号码" frame:CGRectMake(10,50,80,25)];
+        [self addTextField:@"限大陆11位手机号码" frame:CGRectMake(100,50,200,30) tag:PhoneNum type:UIKeyboardTypeDecimalPad isSecure:NO];
+    }else{
+        [self addSingleLabel:@"用户名" frame:CGRectMake(10,50,80,25)];
+        [self addTextField:@"昵称/手机号/邮箱" frame:CGRectMake(100,50,200,30) tag:PhoneNum type:UIKeyboardTypeDefault isSecure:NO];
+    }
+
     if (self.actionType==UserResetPwd) {
-        [self addSingleLabel:@"老密码" frame:CGRectMake(10,135,80,25)];
-        [self addSingleLabel:@"新密码" frame:CGRectMake(10,175,80,25)];
-        [self addTextField:@"" frame:CGRectMake(100,135,200,30) tag:Pwd];
-        [self addTextField:@"" frame:CGRectMake(100,175,200,30) tag:CheckPwd];
-    } else {
-        [self addSingleLabel:@"密码" frame:CGRectMake(10,135,80,25)];
-        [self addSingleLabel:@"确认密码" frame:CGRectMake(10,175,80,25)];
-        [self addTextField:@"" frame:CGRectMake(100,135,200,30) tag:Pwd];
-        [self addTextField:@"" frame:CGRectMake(100,175,200,30) tag:CheckPwd];
+        [self addSingleLabel:@"老密码" frame:CGRectMake(10,90,80,25)];
+        [self addTextField:@"" frame:CGRectMake(100,90,200,30) tag:Pwd type:UIKeyboardTypeDefault isSecure:YES];
+        [self addSingleLabel:@"新密码" frame:CGRectMake(10,130,80,25)];
+        [self addTextField:@"" frame:CGRectMake(100,130,200,30) tag:Pwd2 type:UIKeyboardTypeDefault isSecure:YES];
+    } else if(self.actionType==UserRegister){
+        [self addSingleLabel:@"密码" frame:CGRectMake(10,90,80,25)];
+        [self addTextField:@"" frame:CGRectMake(100,90,200,30) tag:Pwd type:UIKeyboardTypeDefault isSecure:YES];
+        [self addSingleLabel:@"确认密码" frame:CGRectMake(10,130,80,25)];
+        [self addTextField:@"" frame:CGRectMake(100,130,200,30) tag:Pwd2 type:UIKeyboardTypeDefault isSecure:YES];
+    } else if(self.actionType==UserFindPwd){
+        [self addSingleLabel:@"新密码" frame:CGRectMake(10,90,80,25)];
+        [self addTextField:@"" frame:CGRectMake(100,90,200,30) tag:Pwd type:UIKeyboardTypeDefault isSecure:YES];
+    }
+    
+    if (self.actionType!=UserResetPwd) {
+        UIButton *getCheckCodeBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [getCheckCodeBt setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [getCheckCodeBt setFrame:CGRectMake(10,170,80,30)];
+        [getCheckCodeBt addTarget:self action:@selector(getCheckCode:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:getCheckCodeBt];
+        if (self.actionType==UserRegister) {
+            [self addTextField:@"输入验证码" frame:CGRectMake(130,170,110,30) tag:CheckCode type:UIKeyboardTypeDecimalPad isSecure:NO];
+        } else if(self.actionType==UserFindPwd){
+            [self addTextField:@"输入验证码" frame:CGRectMake(130,170,110,30) tag:CheckCode-1 type:UIKeyboardTypeDecimalPad isSecure:NO];
+        }
     }
     
     UIButton *regBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -83,12 +96,14 @@ typedef enum{
     if (self.actionType==UserResetPwd) {
         [regBt setTitle:@"重置密码" forState:UIControlStateNormal];
         [regBt addTarget:self action:@selector(resetPwd:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:regBt];
-    } else {
+    } else if(self.actionType==UserRegister){
         [regBt setTitle:@"注册" forState:UIControlStateNormal];
         [regBt addTarget:self action:@selector(userReg:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:regBt];
+    } else if(self.actionType==UserFindPwd){
+        [regBt setTitle:@"找回密码" forState:UIControlStateNormal];
+        [regBt addTarget:self action:@selector(findPwd:) forControlEvents:UIControlEventTouchUpInside];
     }
+    [self.view addSubview:regBt];
 
     UIButton *backBt=[UIButton buttonWithType:UIButtonTypeRoundedRect];
     [backBt setTitle:@"返回" forState:UIControlStateNormal];
@@ -105,9 +120,6 @@ typedef enum{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)resetPwd:(UIButton *)bt{
-    
-}
 
 -(void)getCheckCode:(UIButton *)bt{
     
@@ -124,25 +136,71 @@ typedef enum{
     
 }
 
--(void)userReg:(UIButton *)bt{
+-(void)findPwd:(UIButton *)bt{
     
-    [MBProgressHUD showHUDAddedTo:self.view withTitle:@"" animated:YES];
     NSString *phoneNum=[(UITextField *)[self.view viewWithTag:PhoneNum] text];
-    NSString *code=[(UITextField *)[self.view viewWithTag:CheckCode] text];
     NSString *passWord=[(UITextField *)[self.view viewWithTag:Pwd] text];
-    
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"mobile",code,@"code",[Utiles md5:passWord],@"password", nil];
-    
-    [Utiles postNetInfoWithPath:@"UserRegister" andParams:params besidesBlock:^(id obj) {
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if([[obj objectForKey:@"status"] integerValue]!=1){
-            [Utiles showToastView:self.view withTitle:nil andContent:[obj objectForKey:@"msg"] duration:2.0];
-        }
-        
+    NSString *code=[(UITextField *)[self.view viewWithTag:(CheckCode-1)] text];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"mobile",code,@"code",[Utiles md5:passWord],@"newpass", nil];
+    [Utiles postNetInfoWithPath:@"UserFindPwd" andParams:params besidesBlock:^(id obj) {
+        [MBProgressHUD hideHUDForView:self.view animated:NO];
+        [Utiles showToastView:self.view withTitle:nil andContent:[obj objectForKey:@"msg"] duration:2.0];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [Utiles showToastView:self.view withTitle:nil andContent:@"网络错误" duration:1.0];
     }];
+}
+
+-(void)resetPwd:(UIButton *)bt{
+
+    NSString *userName=[(UITextField *)[self.view viewWithTag:PhoneNum] text];
+    NSString *oldPwd=[(UITextField *)[self.view viewWithTag:Pwd] text];
+    NSString *newPwd=[(UITextField *)[self.view viewWithTag:Pwd2] text];
+    
+    if (![oldPwd isEqualToString:newPwd]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:userName,@"username",[Utiles md5:oldPwd],@"oldpass",[Utiles md5:newPwd],@"newpass", nil];
+        [Utiles postNetInfoWithPath:@"UserResetPwd" andParams:params besidesBlock:^(id obj) {
+
+            [MBProgressHUD hideHUDForView:self.view animated:NO];
+            [Utiles showToastView:self.view withTitle:nil andContent:[obj objectForKey:@"msg"] duration:2.0];
+            if([[obj objectForKey:@"status"] integerValue]==1){
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络错误" duration:1.0];
+        }];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"修改前后密码相同" duration:1.5];
+    }
+    
+}
+
+-(void)userReg:(UIButton *)bt{
+
+    NSString *phoneNum=[(UITextField *)[self.view viewWithTag:PhoneNum] text];
+    NSString *passWord=[(UITextField *)[self.view viewWithTag:Pwd] text];
+    NSString *checkPwd=[(UITextField *)[self.view viewWithTag:Pwd2] text];
+    NSString *code=[(UITextField *)[self.view viewWithTag:CheckCode] text];
+    
+    if ([passWord isEqualToString:checkPwd]) {
+        [MBProgressHUD showHUDAddedTo:self.view withTitle:@"" animated:YES];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"mobile",code,@"code",[Utiles md5:passWord],@"password", nil];
+        
+        [Utiles postNetInfoWithPath:@"UserRegister" andParams:params besidesBlock:^(id obj) {
+            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            if([[obj objectForKey:@"status"] integerValue]!=1){
+                [Utiles showToastView:self.view withTitle:nil andContent:[obj objectForKey:@"msg"] duration:2.0];
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [Utiles showToastView:self.view withTitle:nil andContent:@"网络错误" duration:1.0];
+        }];
+    } else {
+        [Utiles showToastView:self.view withTitle:nil andContent:@"密码输入不匹配" duration:1.5];
+    }
+    
     
 }
 
@@ -157,7 +215,7 @@ typedef enum{
     [self.view addSubview:label];
 }
 
--(void)addTextField:(NSString *)title frame:(CGRect)rect tag:(NSInteger)tag{
+-(void)addTextField:(NSString *)title frame:(CGRect)rect tag:(NSInteger)tag type:(UIKeyboardType)type isSecure:(BOOL)isPwd{
     UITextField *textField = [[[UITextField alloc] initWithFrame:rect] autorelease];
     textField.delegate = self;
     textField.keyboardType=UIKeyboardTypeDecimalPad;
@@ -172,13 +230,11 @@ typedef enum{
     [textField addPreviousNextDoneOnKeyboardWithTarget:self previousAction:@selector(previousClicked:) nextAction:@selector(nextClicked:) doneAction:@selector(doneClicked:)];
     if (tag == PhoneNum){
         [textField setEnablePrevious:NO next:YES];
-    }else if(tag== CheckPwd){
-        [textField setEnablePrevious:YES next:NO];
+    }else if(tag== Pwd2){
+        //[textField setEnablePrevious:YES next:NO];
     }
-    if (tag>101) {
-        textField.keyboardType=UIKeyboardTypeDefault;
-        textField.secureTextEntry = YES;
-    }
+    textField.keyboardType=type;
+    textField.secureTextEntry = isPwd;
     [self.view addSubview:textField];
 }
 

@@ -111,11 +111,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if(section==0){
-        if ([Utiles isLogin]) {
-            return 3;
-        } else {
-            return 2;
-        }
+        return 3;
     }else if(section==1){
         return 2;
     }else if(section==2){
@@ -196,7 +192,12 @@
             cell.detailTextLabel.text=@"";
         } else if(row==2){
             cell.textLabel.textAlignment=NSTextAlignmentCenter;
-            cell.textLabel.text=@"                           密码重置";
+            if ([Utiles isLogin]) {
+                cell.textLabel.text=@"                           密码重置";
+            } else {
+                cell.textLabel.text=@"                           找回密码";
+            }
+            
             cell.detailTextLabel.text=@"";
         }
         
@@ -354,8 +355,12 @@
                 }
             }else if(row==2){
                 UserRegisterViewController *regVC=[[[UserRegisterViewController alloc] init] autorelease];
-                regVC.actionType=UserResetPwd;
-                //[self.navigationController push]
+                if ([Utiles isLogin]) {
+                    regVC.actionType=UserResetPwd;
+                } else {
+                    regVC.actionType=UserFindPwd;
+                }
+                [self presentViewController:regVC animated:YES completion:nil];
             }
         } else {
             [Utiles showToastView:self.view withTitle:nil andContent:@"网络异常" duration:1.5];

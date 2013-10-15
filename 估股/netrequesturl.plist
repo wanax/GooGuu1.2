@@ -4,7 +4,7 @@
 <dict>
 	<key>UserFindPwd</key>
 	<string>/m/findpassword</string>
-	<key>UserEditPwd</key>
+	<key>UserResetPwd</key>
 	<string>/m/editpassword</string>
 	<key>UserRegVaildCode</key>
 	<string>/m/vaildcode</string>

@@ -43,10 +43,12 @@ typedef enum{
   
 } FinancalToolsType;
 
+//用户注册信息相关
 typedef enum{
     
     UserRegister,
-    UserResetPwd
+    UserResetPwd,
+    UserFindPwd
     
 } UserActionType;
 

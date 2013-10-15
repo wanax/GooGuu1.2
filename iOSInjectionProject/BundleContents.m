@@ -3,7 +3,7 @@
 */
 
 #define INJECTION_NOIMPL
-#define INJECTION_BUNDLE InjectionBundle9
+#define INJECTION_BUNDLE InjectionBundle3
 
 #import "/Applications/Injection Plugin.app/Contents/Resources/BundleInjection.h"
 
@@ -21,9 +21,9 @@
 #import "/Users/xcode/wanax/oc/GooGuu-f5fb0263a822938a0d6a4aa39e2d5d738805387c/估股/UserRegisterViewController.m"
 
 
-@interface InjectionBundle9 : NSObject
+@interface InjectionBundle3 : NSObject
 @end
-@implementation InjectionBundle9
+@implementation InjectionBundle3
 
 + (void)load {
     Class bundleInjection = NSClassFromString(@"BundleInjection");

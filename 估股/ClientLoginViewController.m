@@ -146,6 +146,7 @@
 -(IBAction)freeRegBtClicked:(id)sender{
     //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.googuu.net/pages/user/newRegister.htm"]];
     UserRegisterViewController *regVC=[[[UserRegisterViewController alloc] init] autorelease];
+    regVC.actionType=UserRegister;
     [self presentViewController:regVC animated:YES completion:nil];
 }
 
